@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Support Tickets - SupportHUB</title>
+  <meta name="description" content="View and track your submitted SupportHUB customer support tickets, status updates, and officer replies.">
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Theme Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+  <link rel="stylesheet" href="../css/responsive.css?v=14.0">
+
+  <style>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 - My Tickets Portal Styles
+       Brand: Primary Blue #000985 | Accent Yellow #F5CC00 | Pure White Surface
+       Theme: Subtle Glassmorphism, Rounded Cards (16px), Soft Shadows
+       ========================================================================== */
+
+    :root {
+      --mt-primary: #000985;
+      --mt-primary-dark: #00065c;
+      --mt-primary-light: #eff2ff;
+      --mt-accent: #F5CC00;
+      --mt-accent-hover: #e0bb00;
+      --mt-accent-light: #fffbeb;
+      --mt-bg-page: #f8fafc;
+      --mt-surface-white: #ffffff;
+      --mt-glass-bg: rgba(255, 255, 255, 0.88);
+      --mt-glass-border: rgba(0, 9, 133, 0.08);
+      --mt-glass-blur: blur(14px) saturate(180%);
+      --mt-shadow-soft: 0 10px 30px -5px rgba(0, 9, 133, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --mt-shadow-hover: 0 16px 36px -6px rgba(0, 9, 133, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+      --mt-border-subtle: #e2e8f0;
+      --mt-text-title: #0f172a;
+      --mt-text-body: #475569;
+      --mt-text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--mt-bg-page);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--mt-text-body);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem 3.5rem 1.75rem !important;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* --------------------------------------------------------------------------
+       Sticky Top Header
+       -------------------------------------------------------------------------- */
+    .top-header {
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: var(--mt-glass-blur);
+      -webkit-backdrop-filter: var(--mt-glass-blur);
+      border-bottom: 1px solid var(--mt-glass-border);
+      padding: 0.85rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--mt-text-muted);
+    }
+
+    .header-breadcrumb a {
+      color: var(--mt-primary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .header-breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .header-breadcrumb .divider {
+      color: #cbd5e1;
+      font-size: 0.75rem;
+    }
+
+    .header-breadcrumb .current {
+      color: var(--mt-text-title);
+      font-weight: 700;
+    }
+
+    .header-profile-capsule {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--mt-border-subtle);
+      padding: 0.35rem 0.85rem 0.35rem 0.45rem;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--mt-primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.775rem;
+      font-weight: 700;
+      border: 2px solid var(--mt-accent);
+    }
+
+    /* --------------------------------------------------------------------------
+       Page Header Row
+       -------------------------------------------------------------------------- */
+    .mt-page-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .mt-title-group h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--mt-text-title);
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .mt-title-group p {
+      font-size: 0.875rem;
+      color: var(--mt-text-body);
+      margin: 0;
+    }
+
+    .btn-create-ticket-cta {
+      background: var(--mt-primary);
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(0, 9, 133, 0.28);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-create-ticket-cta:hover {
+      background: var(--mt-primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 9, 133, 0.35);
+    }
+
+    /* --------------------------------------------------------------------------
+       Status Filter Tabs / Metric Cards
+       -------------------------------------------------------------------------- */
+    .status-metric-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .status-tab-btn {
+      background: var(--mt-surface-white);
+      border: 1px solid var(--mt-border-subtle);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      box-shadow: var(--mt-shadow-soft);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      text-align: left;
+    }
+
+    .status-tab-btn:hover {
+      border-color: var(--mt-primary);
+      transform: translateY(-2px);
+    }
+
+    .status-tab-btn.active {
+      background: var(--mt-primary-light);
+      border-color: var(--mt-primary);
+      box-shadow: 0 0 0 2px var(--mt-primary);
+    }
+
+    .status-tab-label {
+      font-size: 0.725rem;
+      font-weight: 700;
+      color: var(--mt-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .status-tab-btn.active .status-tab-label {
+      color: var(--mt-primary);
+    }
+
+    .status-tab-count {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--mt-text-title);
+      line-height: 1;
+    }
+
+    .status-tab-btn.active .status-tab-count {
+      color: var(--mt-primary);
+    }
+
+    /* --------------------------------------------------------------------------
+       Filters & Search Toolbar Card
+       -------------------------------------------------------------------------- */
+    .toolbar-card {
+      background: var(--mt-surface-white);
+      border: 1px solid var(--mt-border-subtle);
+      border-radius: 16px;
+      padding: 1.15rem 1.35rem;
+      box-shadow: var(--mt-shadow-soft);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+      max-width: 820px;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search-input-wrap i {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--mt-primary);
+      font-size: 0.85rem;
+    }
+
+    .search-input-sh {
+      width: 100%;
+      padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: var(--mt-text-title);
+      outline: none;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .search-input-sh:focus {
+      border-color: var(--mt-primary);
+      box-shadow: 0 0 0 2px rgba(0, 9, 133, 0.12);
+    }
+
+    .filter-select-sh {
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.825rem;
+      color: var(--mt-text-title);
+      font-weight: 600;
+      background: #ffffff;
+      outline: none;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .filter-select-sh:focus {
+      border-color: var(--mt-primary);
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .counter-info-text {
+      font-size: 0.825rem;
+      color: var(--mt-text-muted);
+      font-weight: 700;
+    }
+
+    /* --------------------------------------------------------------------------
+       Responsive Table Card
+       -------------------------------------------------------------------------- */
+    .table-container-card {
+      background: var(--mt-surface-white);
+      border: 1px solid var(--mt-border-subtle);
+      border-radius: 16px;
+      box-shadow: var(--mt-shadow-soft);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .cust-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .cust-table thead tr {
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .cust-table th {
+      padding: 0.85rem 1.15rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .cust-table tbody tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.12s ease;
+      cursor: pointer;
+    }
+
+    .cust-table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .cust-table td {
+      padding: 1rem 1.15rem;
+      color: var(--mt-text-title);
+      vertical-align: middle;
+    }
+
+    .ticket-ref-code {
+      font-family: monospace;
+      font-weight: 800;
+      font-size: 0.875rem;
+      color: var(--mt-primary);
+      letter-spacing: 0.02em;
+    }
+
+    .ticket-subject-cell {
+      font-weight: 700;
+      color: var(--mt-text-title);
+      max-width: 320px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Status Badges */
+    .badge-status {
+      font-size: 0.725rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-status.status-OPEN {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-status.status-IN_PROGRESS {
+      background: #fffbeb;
+      color: #d97706;
+      border: 1px solid #fde68a;
+    }
+
+    .badge-status.status-WAITING_FOR_CUSTOMER {
+      background: #faf5ff;
+      color: #9333ea;
+      border: 1px solid #e9d5ff;
+    }
+
+    .badge-status.status-RESOLVED {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-status.status-CLOSED {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+
+    /* Priority Badges */
+    .badge-priority {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-priority.priority-LOW {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .badge-priority.priority-MEDIUM {
+      background: #eef2ff;
+      color: var(--mt-primary);
+    }
+
+    .badge-priority.priority-HIGH {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .badge-priority.priority-URGENT {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .btn-action-view {
+      background: #ffffff;
+      border: 1px solid var(--mt-border-subtle);
+      border-radius: 8px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--mt-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-view:hover {
+      background: var(--mt-primary-light);
+      border-color: var(--mt-primary);
+    }
+
+    /* Pagination Bar */
+    .pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.35rem;
+      background: #ffffff;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .btn-page-step {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--mt-text-title);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .btn-page-step:hover:not(:disabled) {
+      background: var(--mt-primary-light);
+      color: var(--mt-primary);
+      border-color: var(--mt-primary);
+    }
+
+    .btn-page-step:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* Empty and Loading States */
+    .state-card {
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .state-card i {
+      font-size: 2.5rem;
+      color: #94a3b8;
+      margin-bottom: 0.85rem;
+      display: block;
+    }
+
+    .state-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--mt-text-title);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .state-card p {
+      font-size: 0.85rem;
+      color: var(--mt-text-body);
+      max-width: 480px;
+      margin: 0 auto 1.5rem auto;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1024px) {
+      .status-metric-tabs { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .status-metric-tabs { grid-template-columns: repeat(2, 1fr); }
+      .page-body { padding: 1rem !important; }
+      .toolbar-card { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- Standard SupportHUB Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo"><span class="logo-support">Support</span><span class="logo-hub">HUB</span></div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+      <!-- Sticky Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="header-breadcrumb">
+            <a href="customer-dashboard.html">Dashboard</a>
+            <span class="divider">/</span>
+            <span class="current" id="breadcrumb-current-page">My Tickets</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; color: #0f172a;">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+
+          <!-- Customer Profile Capsule -->
+          <div class="header-profile-capsule" id="header-profile-capsule">
+            <div class="header-avatar" id="header-user-avatar">CU</div>
+            <div style="text-align: left; line-height: 1.2;">
+              <div id="header-user-name" style="font-size: 0.775rem; font-weight: 700; color: #0f172a;">Customer</div>
+              <div id="header-user-role" style="font-size: 0.675rem; color: #64748b;">Customer Account</div>
+            </div>
+          </div>
+
+          <!-- Sign Out Button -->
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out" style="margin-left: 0.5rem;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Page Body Content -->
+      <div class="page-body">
+
+        <!-- 3. Page Header Row -->
+        <div class="mt-page-header-row">
+          <div class="mt-title-group">
+            <h1>My Support Tickets</h1>
+            <p>Track your support requests, inquiries, assigned officers, and resolution updates.</p>
+          </div>
+          <a href="create-ticket.html" class="btn-create-ticket-cta" id="btn-raise-ticket-top">
+            <i class="fa-solid fa-circle-plus" style="color: var(--mt-accent);"></i> Raise a Support Ticket
+          </a>
+        </div>
+
+        <!-- 3. Status Filter Metric Cards / Tabs -->
+        <div class="status-metric-tabs" id="status-metric-tabs">
+          <button type="button" class="status-tab-btn active" id="tab-all" onclick="filterByStatus('', this)">
+            <span class="status-tab-label"><i class="fa-solid fa-layer-group"></i> All Tickets</span>
+            <span class="status-tab-count" id="count-all">0</span>
+          </button>
+          <button type="button" class="status-tab-btn" id="tab-open" onclick="filterByStatus('OPEN', this)">
+            <span class="status-tab-label"><i class="fa-solid fa-circle-dot" style="color: #2563eb;"></i> Open</span>
+            <span class="status-tab-count" id="count-open">0</span>
+          </button>
+          <button type="button" class="status-tab-btn" id="tab-in-progress" onclick="filterByStatus('IN_PROGRESS', this)">
+            <span class="status-tab-label"><i class="fa-solid fa-spinner" style="color: #d97706;"></i> In Progress</span>
+            <span class="status-tab-count" id="count-progress">0</span>
+          </button>
+          <button type="button" class="status-tab-btn" id="tab-waiting" onclick="filterByStatus('WAITING_FOR_CUSTOMER', this)">
+            <span class="status-tab-label"><i class="fa-solid fa-clock" style="color: #9333ea;"></i> Waiting</span>
+            <span class="status-tab-count" id="count-waiting">0</span>
+          </button>
+          <button type="button" class="status-tab-btn" id="tab-resolved" onclick="filterByStatus('RESOLVED', this)">
+            <span class="status-tab-label"><i class="fa-solid fa-circle-check" style="color: #059669;"></i> Resolved</span>
+            <span class="status-tab-count" id="count-resolved">0</span>
+          </button>
+          <button type="button" class="status-tab-btn" id="tab-closed" onclick="filterByStatus('CLOSED', this)">
+            <span class="status-tab-label"><i class="fa-solid fa-box-archive" style="color: #64748b;"></i> Closed</span>
+            <span class="status-tab-count" id="count-closed">0</span>
+          </button>
+        </div>
+
+        <!-- 3. Search & Filters Toolbar -->
+        <div class="toolbar-card">
+          <div class="toolbar-left">
+            <!-- Search Input -->
+            <div class="search-input-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="filter-search-input" class="search-input-sh" placeholder="Search by ticket #, subject, or category..." oninput="handleSearchInput(this.value)" />
+            </div>
+
+            <!-- Priority Filter -->
+            <select id="filter-priority-select" class="filter-select-sh" onchange="handlePriorityFilter(this.value)">
+              <option value="">All Priorities</option>
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+              <option value="URGENT">Urgent</option>
+            </select>
+
+            <!-- Category Filter -->
+            <select id="filter-category-select" class="filter-select-sh" onchange="handleCategoryFilter(this.value)">
+              <option value="">All Categories</option>
+            </select>
+
+            <!-- Sort Option -->
+            <select id="filter-sort-select" class="filter-select-sh" onchange="handleSortFilter(this.value)">
+              <option value="recent">Most Recent</option>
+              <option value="oldest">Oldest First</option>
+              <option value="priority_desc">Priority (High to Low)</option>
+            </select>
+          </div>
+
+          <div class="toolbar-right">
+            <span class="counter-info-text" id="tickets-count-info">Loading tickets...</span>
+          </div>
+        </div>
+
+        <!-- 3. Responsive Ticket Table Container -->
+        <div class="table-container-card">
+          <div style="overflow-x: auto;">
+            <table class="cust-table" id="my-tickets-table">
+              <thead>
+                <tr>
+                  <th>Ticket #</th>
+                  <th>Subject</th>
+                  <th>Category</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Assigned Officer</th>
+                  <th>Created Date</th>
+                  <th>Last Updated</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="my-tickets-tbody">
+                <tr>
+                  <td colspan="9" style="text-align: center; padding: 3rem; color: #64748b;">
+                    <i class="fa-solid fa-spinner fa-spin" style="margin-right: 0.4rem;"></i> Loading your support tickets...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State Container -->
+          <div id="tickets-empty-container" class="state-card" style="display: none;">
+            <i class="fa-solid fa-folder-open"></i>
+            <h3 id="empty-state-title">No Support Tickets Found</h3>
+            <p id="empty-state-desc">You currently have no tickets matching the selected filters. Submit a support ticket if you require assistance.</p>
+            <a href="create-ticket.html" class="btn-create-ticket-cta">
+              <i class="fa-solid fa-circle-plus" style="color: var(--mt-accent);"></i> Raise a Support Ticket
+            </a>
+          </div>
+
+          <!-- Pagination Bar -->
+          <div class="pagination-bar" id="pagination-controls" style="display: none;">
+            <div>
+              <span style="font-size: 0.8rem; color: #64748b;" id="pagination-page-info">Page 1 of 1</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="btn-page-step" id="btn-prev-page" onclick="changePage(-1)">
+                <i class="fa-solid fa-chevron-left"></i> Previous
+              </button>
+              <button type="button" class="btn-page-step" id="btn-next-page" onclick="changePage(1)">
+                Next <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 — Customer My Tickets Controller
+       ========================================================================== */
+
+    let currentUser = null;
+    let allCustomerTickets = [];
+    let allActiveCategories = [];
+    let currentStatusFilter = '';
+    let currentPriorityFilter = '';
+    let currentCategoryFilter = '';
+    let currentSearchQuery = '';
+    let currentSort = 'recent';
+    let currentPage = 1;
+    const PAGE_SIZE = 10;
+    let searchDebounceTimer = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. RBAC Authentication Check
+      if (!Auth.requireRole(['CUSTOMER', 'CUSTOMER_SERVICE_OFFICER', 'OPERATIONS_SUPERVISOR', 'CUSTOMER_SUPPORT_MANAGER', 'QA_EXECUTIVE'])) {
+        return;
+      }
+
+      currentUser = Auth.getUser();
+      initHeaderProfile();
+      Auth.renderSidebar();
+
+      if (typeof NotificationsEngine !== 'undefined') {
+        NotificationsEngine.init();
+      }
+
+      // 2. Fetch categories and tickets in parallel
+      await Promise.allSettled([
+        loadCategories(),
+        loadCustomerTickets()
+      ]);
+
+      // 3. Check URL query parameters (e.g. ?status=OPEN)
+      handleUrlParameters();
+    });
+
+    /* ==========================================================================
+       1. Header Profile & Capsule
+       ========================================================================== */
+    function initHeaderProfile() {
+      if (!currentUser) return;
+
+      const nameEl = document.getElementById('header-user-name');
+      const roleEl = document.getElementById('header-user-role');
+      const avatarEl = document.getElementById('header-user-avatar');
+
+      const name = currentUser.fullName || currentUser.email || 'Customer';
+      if (nameEl) nameEl.textContent = name;
+      if (roleEl) roleEl.textContent = (currentUser.role || 'CUSTOMER').replace(/_/g, ' ');
+
+      if (avatarEl) {
+        avatarEl.textContent = name.substring(0, 2).toUpperCase();
+      }
+    }
+
+    /* ==========================================================================
+       2. Categories Loader
+       ========================================================================== */
+    async function loadCategories() {
+      const select = document.getElementById('filter-category-select');
+      try {
+        const res = await API.get('/categories/active');
+        allActiveCategories = res.data || [];
+
+        select.innerHTML = '<option value="">All Categories</option>' + 
+          allActiveCategories.map(c => `
+            <option value="${c.id}">${escapeHtml(c.name)}</option>
+          `).join('');
+      } catch (err) {
+        console.warn('Could not load categories:', err);
+      }
+    }
+
+    /* ==========================================================================
+       3. Tickets Loader (Strict Authenticated Customer Data from GET /api/tickets/my)
+       ========================================================================== */
+    async function loadCustomerTickets() {
+      const tbody = document.getElementById('my-tickets-tbody');
+      try {
+        // Fetch tickets from customer's personal queue
+        const res = await API.get('/tickets/my?page=0&size=200');
+        const pageData = res.data || {};
+        allCustomerTickets = pageData.content || (Array.isArray(pageData) ? pageData : []);
+
+        // Calculate and render status counts
+        updateStatusMetricCounts();
+
+        // Apply filters and render table
+        applyFiltersAndRenderTable();
+
+      } catch (err) {
+        console.error('Failed to load tickets:', err);
+        allCustomerTickets = [];
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9" style="text-align: center; padding: 3rem; color: #ef4444;">
+              <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+              Failed to load your tickets. Please check your connection and try again.
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    /* ==========================================================================
+       4. Status Metric Tabs Calculation
+       ========================================================================== */
+    function updateStatusMetricCounts() {
+      const counts = {
+        all: allCustomerTickets.length,
+        open: 0,
+        in_progress: 0,
+        waiting: 0,
+        resolved: 0,
+        closed: 0
+      };
+
+      allCustomerTickets.forEach(t => {
+        const st = (t.status || 'OPEN').toUpperCase();
+        if (st === 'OPEN') counts.open++;
+        else if (st === 'IN_PROGRESS' || st === 'ESCALATED') counts.in_progress++;
+        else if (st === 'WAITING_FOR_CUSTOMER') counts.waiting++;
+        else if (st === 'RESOLVED') counts.resolved++;
+        else if (st === 'CLOSED') counts.closed++;
+      });
+
+      document.getElementById('count-all').textContent = counts.all;
+      document.getElementById('count-open').textContent = counts.open;
+      document.getElementById('count-progress').textContent = counts.in_progress;
+      document.getElementById('count-waiting').textContent = counts.waiting;
+      document.getElementById('count-resolved').textContent = counts.resolved;
+      document.getElementById('count-closed').textContent = counts.closed;
+    }
+
+    function filterByStatus(status, btnEl) {
+      currentStatusFilter = status;
+      currentPage = 1;
+
+      document.querySelectorAll('.status-tab-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      applyFiltersAndRenderTable();
+    }
+
+    /* ==========================================================================
+       5. Filters, Search & Sorting
+       ========================================================================== */
+    function handleSearchInput(query) {
+      if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        currentSearchQuery = (query || '').toLowerCase().trim();
+        currentPage = 1;
+        applyFiltersAndRenderTable();
+      }, 200);
+    }
+
+    function handlePriorityFilter(priority) {
+      currentPriorityFilter = priority;
+      currentPage = 1;
+      applyFiltersAndRenderTable();
+    }
+
+    function handleCategoryFilter(categoryId) {
+      currentCategoryFilter = categoryId;
+      currentPage = 1;
+      applyFiltersAndRenderTable();
+    }
+
+    function handleSortFilter(sort) {
+      currentSort = sort;
+      currentPage = 1;
+      applyFiltersAndRenderTable();
+    }
+
+    function applyFiltersAndRenderTable() {
+      const tbody = document.getElementById('my-tickets-tbody');
+      const emptyContainer = document.getElementById('tickets-empty-container');
+      const table = document.getElementById('my-tickets-table');
+      const countInfo = document.getElementById('tickets-count-info');
+      const paginationControls = document.getElementById('pagination-controls');
+
+      // 1. Filter Tickets
+      let filtered = allCustomerTickets.filter(t => {
+        // Status filter
+        let matchStatus = true;
+        if (currentStatusFilter) {
+          if (currentStatusFilter === 'IN_PROGRESS') {
+            matchStatus = t.status === 'IN_PROGRESS' || t.status === 'ESCALATED';
+          } else {
+            matchStatus = t.status === currentStatusFilter;
+          }
+        }
+
+        // Priority filter
+        let matchPriority = !currentPriorityFilter || t.priority === currentPriorityFilter;
+
+        // Category filter
+        let matchCategory = !currentCategoryFilter || String(t.categoryId) === String(currentCategoryFilter);
+
+        // Search query (number, subject, category, description)
+        let matchSearch = true;
+        if (currentSearchQuery) {
+          const num = (t.ticketNumber || '').toLowerCase();
+          const sub = (t.subject || '').toLowerCase();
+          const cat = (t.categoryName || '').toLowerCase();
+          const desc = (t.description || '').toLowerCase();
+          matchSearch = num.includes(currentSearchQuery) || sub.includes(currentSearchQuery) || cat.includes(currentSearchQuery) || desc.includes(currentSearchQuery);
+        }
+
+        return matchStatus && matchPriority && matchCategory && matchSearch;
+      });
+
+      // 2. Sort Tickets
+      filtered.sort((a, b) => {
+        if (currentSort === 'recent') {
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        } else if (currentSort === 'oldest') {
+          return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+        } else if (currentSort === 'priority_desc') {
+          const priorityWeights = { 'URGENT': 4, 'HIGH': 3, 'MEDIUM': 2, 'LOW': 1 };
+          return (priorityWeights[b.priority] || 0) - (priorityWeights[a.priority] || 0);
+        }
+        return 0;
+      });
+
+      // Update count info
+      if (countInfo) {
+        countInfo.textContent = `Showing ${filtered.length} of ${allCustomerTickets.length} tickets`;
+      }
+
+      // Empty State handling
+      if (filtered.length === 0) {
+        table.style.display = 'none';
+        emptyContainer.style.display = 'block';
+        paginationControls.style.display = 'none';
+
+        if (allCustomerTickets.length === 0) {
+          document.getElementById('empty-state-title').textContent = "You haven't created any support tickets yet";
+          document.getElementById('empty-state-desc').textContent = "Need help with an inquiry, service, or issue? Create a support ticket and our team will assist you.";
+        } else {
+          document.getElementById('empty-state-title').textContent = "No Tickets Match Your Filters";
+          document.getElementById('empty-state-desc').textContent = "Try clearing your search query or adjusting the selected status and priority filters.";
+        }
+        return;
+      }
+
+      table.style.display = 'table';
+      emptyContainer.style.display = 'none';
+
+      // 3. Paginate
+      const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * PAGE_SIZE;
+      const pageTickets = filtered.slice(startIndex, startIndex + PAGE_SIZE);
+
+      // Render table rows
+      tbody.innerHTML = pageTickets.map(t => {
+        const ticketNum = escapeHtml(t.ticketNumber || `#${t.id}`);
+        const subject = escapeHtml(t.subject || 'No Subject');
+        const category = escapeHtml(t.categoryName || 'General Support');
+        const priority = t.priority || 'MEDIUM';
+        const status = t.status || 'OPEN';
+        const statusText = status.replace(/_/g, ' ');
+        const officer = escapeHtml(t.assignedAgentName || 'Unassigned / Queued');
+        const createdDate = t.createdAt ? Utils.formatDate(t.createdAt) : '--';
+        const updatedDate = t.updatedAt ? Utils.formatDate(t.updatedAt) : createdDate;
+
+        return `
+          <tr onclick="navigateToTicketDetails(${t.id})">
+            <td>
+              <span class="ticket-ref-code">${ticketNum}</span>
+            </td>
+            <td>
+              <div class="ticket-subject-cell" title="${subject}">
+                ${subject}
+              </div>
+            </td>
+            <td>
+              <span style="font-weight: 600; font-size: 0.8rem; color: #475569;">${category}</span>
+            </td>
+            <td>
+              <span class="badge-priority priority-${priority}">${priority}</span>
+            </td>
+            <td>
+              <span class="badge-status status-${status}">
+                <i class="fa-solid fa-circle" style="font-size: 0.4rem;"></i> ${statusText}
+              </span>
+            </td>
+            <td>
+              <span style="font-weight: 600; font-size: 0.8rem; color: #1e40af;">${officer}</span>
+            </td>
+            <td style="color: #64748b; font-size: 0.8rem; white-space: nowrap;">
+              ${createdDate}
+            </td>
+            <td style="color: #64748b; font-size: 0.8rem; white-space: nowrap;">
+              ${updatedDate}
+            </td>
+            <td style="text-align: right; white-space: nowrap;" onclick="event.stopPropagation()">
+              <a href="ticket-details.html?id=${t.id}" class="btn-action-view">
+                View Details &rarr;
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Render Pagination Controls
+      if (totalPages > 1) {
+        paginationControls.style.display = 'flex';
+        document.getElementById('pagination-page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+        document.getElementById('btn-prev-page').disabled = (currentPage === 1);
+        document.getElementById('btn-next-page').disabled = (currentPage === totalPages);
+      } else {
+        paginationControls.style.display = 'none';
+      }
+    }
+
+    function changePage(delta) {
+      currentPage += delta;
+      applyFiltersAndRenderTable();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigateToTicketDetails(ticketId) {
+      window.location.href = `ticket-details.html?id=${ticketId}`;
+    }
+
+    function handleUrlParameters() {
+      const params = new URLSearchParams(window.location.search);
+      const statusParam = params.get('status');
+      if (statusParam) {
+        const tab = document.getElementById(`tab-${statusParam.toLowerCase().replace(/_/g, '-')}`);
+        filterByStatus(statusParam, tab);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+
+</html>

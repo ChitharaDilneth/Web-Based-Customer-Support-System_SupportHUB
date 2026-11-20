@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Officer Profile & Performance - SupportHUB</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-light: rgba(245, 204, 0, 0.15);
+      --bg-canvas: #f8fafc;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem !important;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Officer Profile Hero Banner */
+    .profile-hero-card {
+      background: linear-gradient(135deg, #000985 0%, #00065a 100%);
+      color: #ffffff;
+      border-radius: 20px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 9, 133, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-hero-card::after {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: var(--accent-yellow-light);
+      pointer-events: none;
+    }
+
+    .hero-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .hero-avatar {
+      width: 74px;
+      height: 74px;
+      border-radius: 20px;
+      background: #ffffff;
+      color: var(--primary-blue);
+      font-size: 1.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .hero-meta h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      margin: 0 0 0.35rem 0;
+      color: #ffffff;
+    }
+
+    .hero-tags {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-tag-role {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.775rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-tag-emp {
+      background: var(--accent-yellow);
+      color: #0f172a;
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.775rem;
+      font-weight: 800;
+    }
+
+    /* Presence Switcher in Hero */
+    .hero-presence-box {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 200px;
+    }
+
+    .presence-hero-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #cbd5e1;
+    }
+
+    .presence-hero-select {
+      background: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: #0f172a;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* 2-Column Profile Content */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 992px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .info-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      margin-bottom: 1.5rem;
+    }
+
+    .info-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .info-card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-card-title i {
+      color: var(--primary-blue);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #f8fafc;
+      font-size: 0.85rem;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .info-value {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Category Badges Grid */
+    .categories-badges-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .category-card-item {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cat-name-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .cat-name-group i {
+      color: var(--primary-blue);
+      font-size: 1rem;
+    }
+
+    .cat-title-text {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .cat-sla-tag {
+      font-size: 0.725rem;
+      font-weight: 700;
+      background: #e0e7ff;
+      color: var(--primary-blue);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    /* Performance Metrics Grid */
+    .perf-metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .perf-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.15rem;
+      text-align: center;
+    }
+
+    .perf-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+
+    .perf-val {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.1;
+    }
+
+    .perf-sub {
+      font-size: 0.725rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="logo-support">Support</span><span class="logo-hub">HUB</span>
+        </div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left"></div>
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+                <span>Notifications</span>
+                <button onclick="NotificationsEngine.markAllRead()" style="background: none; border: none; color: var(--primary-blue); font-size: 0.75rem; cursor: pointer; font-weight: 600;">Mark all read</button>
+              </div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <div id="header-profile-capsule"></div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="page-body">
+        
+        <!-- Officer Hero Banner -->
+        <div class="profile-hero-card">
+          <div class="hero-left">
+            <div class="hero-avatar" id="hero-initials">SO</div>
+            <div class="hero-meta">
+              <h1 id="hero-name">Support Officer</h1>
+              <div class="hero-tags">
+                <span class="hero-tag-role" id="hero-role">CUSTOMER SERVICE OFFICER</span>
+                <span class="hero-tag-emp" id="hero-code">EMP-0000</span>
+                <span style="font-size: 0.775rem; color: #cbd5e1; display: flex; align-items: center; gap: 0.35rem;">
+                  <i class="fa-regular fa-calendar-check"></i> Member since <span id="hero-since">2026</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-Time Presence Controller -->
+          <div class="hero-presence-box">
+            <span class="presence-hero-label">Live Working Status:</span>
+            <select id="hero-presence-select" class="presence-hero-select" onchange="updateWorkingStatus(this.value)">
+              <option value="AVAILABLE">● AVAILABLE (Accepting Tickets)</option>
+              <option value="BUSY">● BUSY (Handling Active Tasks)</option>
+              <option value="OFFLINE">● OFFLINE (Shift Concluded)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 2-Column Content Layout -->
+        <div class="profile-grid">
+          
+          <!-- Left Column: Officer Account Info & Assigned Categories -->
+          <div>
+            <!-- Account Details -->
+            <div class="info-card">
+              <div class="info-card-header">
+                <div class="info-card-title">
+                  <i class="fa-solid fa-user-lock"></i>
+                  <span>Account Credentials & Identification</span>
+                </div>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Full Name</span>
+                <span class="info-value" id="info-fullname">--</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Official Email</span>
+                <span class="info-value" id="info-email" style="color: var(--primary-blue);">--</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Contact Phone</span>
+                <span class="info-value" id="info-phone">--</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Employee Code</span>
+                <span class="info-value" id="info-empcode">--</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Account Status</span>
+                <span class="info-value" style="color: #16a34a;"><i class="fa-solid fa-circle-check"></i> Active & Verified</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">System Role</span>
+                <span class="info-value">Customer Service Officer</span>
+              </div>
+            </div>
+
+            <!-- Assigned Specialization Categories -->
+            <div class="info-card">
+              <div class="info-card-header">
+                <div class="info-card-title">
+                  <i class="fa-solid fa-layer-group"></i>
+                  <span>Assigned Support Categories</span>
+                </div>
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0 0 1rem 0;">
+                Tickets in these categories are automatically routed to your queue based on your skill specializations.
+              </p>
+              <div class="categories-badges-wrap" id="categories-container">
+                <div style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading categories...</div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #f1f5f9; font-size: 0.75rem; color: var(--text-muted);">
+                <i class="fa-solid fa-circle-info"></i> Category allocations are managed by Operations Supervisors.
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Performance Statistics & Quick Triage Links -->
+          <div>
+            <!-- Personal Performance Card -->
+            <div class="info-card">
+              <div class="info-card-header">
+                <div class="info-card-title">
+                  <i class="fa-solid fa-chart-line"></i>
+                  <span>Personal Performance Summary</span>
+                </div>
+              </div>
+              
+              <div class="perf-metrics-grid">
+                <div class="perf-card">
+                  <div class="perf-title">Total Assigned</div>
+                  <div class="perf-val" id="perf-total">0</div>
+                  <div class="perf-sub">Cumulative caseload</div>
+                </div>
+
+                <div class="perf-card">
+                  <div class="perf-title">Tickets Resolved</div>
+                  <div class="perf-val" id="perf-resolved" style="color: #16a34a;">0</div>
+                  <div class="perf-sub">Completed inquiries</div>
+                </div>
+
+                <div class="perf-card">
+                  <div class="perf-title">Active Workload</div>
+                  <div class="perf-val" id="perf-active" style="color: #ea580c;">0</div>
+                  <div class="perf-sub">Open & In Progress</div>
+                </div>
+
+                <div class="perf-card">
+                  <div class="perf-title">SLA Compliance</div>
+                  <div class="perf-val" id="perf-sla" style="color: var(--primary-blue);">100%</div>
+                  <div class="perf-sub">On-time delivery</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Navigation Card -->
+            <div class="info-card">
+              <div class="info-card-header">
+                <div class="info-card-title">
+                  <i class="fa-solid fa-compass"></i>
+                  <span>Operational Workspaces</span>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <a href="officer-dashboard.html" class="canned-pill-btn" style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.15rem; text-decoration: none; font-size: 0.85rem;">
+                  <span><i class="fa-solid fa-gauge" style="color: var(--primary-blue); margin-right: 0.5rem;"></i> Command Center Dashboard</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="assigned-tickets.html" class="canned-pill-btn" style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.15rem; text-decoration: none; font-size: 0.85rem;">
+                  <span><i class="fa-solid fa-list-check" style="color: var(--primary-blue); margin-right: 0.5rem;"></i> Assigned Tickets Queue</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="../customer/knowledge-base.html" class="canned-pill-btn" style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.15rem; text-decoration: none; font-size: 0.85rem;">
+                  <span><i class="fa-solid fa-book-bookmark" style="color: var(--primary-blue); margin-right: 0.5rem;"></i> Search Knowledge Base Articles</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    let officerData = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.requireRole(['CUSTOMER_SERVICE_OFFICER'])) return;
+
+      Auth.renderSidebar();
+      Auth.renderUserHeader();
+      NotificationsEngine.init();
+
+      await loadProfile();
+      await loadPerformanceStats();
+    });
+
+    async function loadProfile() {
+      try {
+        const res = await API.get('/agents/me');
+        officerData = res.data;
+        renderOfficerProfile();
+      } catch (err) {
+        console.warn('Could not load officer agent profile via /agents/me', err);
+        // Fallback to Auth.getUser()
+        const user = Auth.getUser();
+        if (user) {
+          document.getElementById('hero-name').textContent = user.fullName || user.email;
+          document.getElementById('info-fullname').textContent = user.fullName || 'Support Officer';
+          document.getElementById('info-email').textContent = user.email;
+          const initials = (user.fullName || user.email).substring(0, 2).toUpperCase();
+          document.getElementById('hero-initials').textContent = initials;
+        }
+      }
+    }
+
+    function renderOfficerProfile() {
+      if (!officerData) return;
+
+      const d = officerData;
+      const initials = (d.fullName || d.email || 'SO').substring(0, 2).toUpperCase();
+
+      document.getElementById('hero-initials').textContent = initials;
+      document.getElementById('hero-name').textContent = d.fullName || 'Support Officer';
+      document.getElementById('hero-code').textContent = d.employeeCode || 'EMP-1049';
+      
+      if (d.createdAt) {
+        document.getElementById('hero-since').textContent = new Date(d.createdAt).getFullYear();
+      }
+
+      // Presence select sync
+      const presenceSelect = document.getElementById('hero-presence-select');
+      if (presenceSelect && d.status) {
+        presenceSelect.value = d.status;
+      }
+
+      // Details
+      document.getElementById('info-fullname').textContent = d.fullName || 'Support Officer';
+      document.getElementById('info-email').textContent = d.email || 'N/A';
+      document.getElementById('info-phone').textContent = d.phone || 'Not provided';
+      document.getElementById('info-empcode').textContent = d.employeeCode || 'EMP-1049';
+
+      // Categories
+      renderCategories(d.assignedCategories || []);
+    }
+
+    function renderCategories(categories) {
+      const container = document.getElementById('categories-container');
+      if (!categories || categories.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); padding: 1.5rem; background: #f8fafc; border-radius: 10px;">
+            <i class="fa-solid fa-folder-open" style="font-size: 1.8rem; margin-bottom: 0.5rem; display: block;"></i>
+            No categories currently assigned.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = categories.map(cat => {
+        return `
+          <div class="category-card-item">
+            <div class="cat-name-group">
+              <i class="fa-solid fa-layer-group"></i>
+              <div>
+                <div class="cat-title-text">${Utils.escapeHtml(cat.name)}</div>
+                <div style="font-size: 0.725rem; color: var(--text-muted);">${Utils.escapeHtml(cat.description || 'Specialized handling')}</div>
+              </div>
+            </div>
+            <span class="cat-sla-tag">SLA: ${cat.slaHours || 24}h</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function loadPerformanceStats() {
+      try {
+        const res = await API.get('/tickets/assigned?page=0&size=100');
+        const tickets = res && res.data && res.data.content ? res.data.content : [];
+
+        const total = tickets.length;
+        const resolved = tickets.filter(t => t.status === 'RESOLVED' || t.status === 'CLOSED').length;
+        const active = tickets.filter(t => t.status !== 'RESOLVED' && t.status !== 'CLOSED').length;
+        const breached = tickets.filter(t => t.isSlaBreached || (t.slaRemainingHours != null && t.slaRemainingHours < 0)).length;
+        const slaRate = total > 0 ? Math.round(((total - breached) / total) * 100) : 100;
+
+        document.getElementById('perf-total').textContent = total;
+        document.getElementById('perf-resolved').textContent = resolved;
+        document.getElementById('perf-active').textContent = active;
+        document.getElementById('perf-sla').textContent = `${slaRate}%`;
+      } catch (err) {
+        console.warn('Failed to load performance stats', err);
+      }
+    }
+
+    async function updateWorkingStatus(status) {
+      try {
+        await API.patch(`/agents/my-status?status=${status}`);
+        Utils.showToast(`Working status updated to ${status}`, 'success');
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to update working status', 'error');
+      }
+    }
+  </script>
+</body>
+
+</html>

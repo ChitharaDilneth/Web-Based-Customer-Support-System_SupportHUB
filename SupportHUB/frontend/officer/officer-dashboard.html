@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Officer Command Center - SupportHUB</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* SupportHUB Brand Tokens & High-Density SaaS Polish */
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-light: rgba(245, 204, 0, 0.15);
+      --bg-canvas: #f8fafc;
+      --card-bg: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-logo, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem !important;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Header & Welcome Bar */
+    .officer-welcome-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 4px rgba(0, 9, 133, 0.02);
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .welcome-text h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      margin: 0 0 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .welcome-text p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .officer-presence-widget {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.5rem 0.85rem;
+    }
+
+    .presence-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .presence-select {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .presence-select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.1);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .status-dot.available { background: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+    .status-dot.busy { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
+    .status-dot.offline { background: #64748b; box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.2); }
+
+    .live-clock-pill {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* 6 Top Metric Cards */
+    .metric-grid-6 {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 1400px) {
+      .metric-grid-6 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .metric-grid-6 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .metric-grid-6 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card-officer {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1rem 1.15rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card-officer:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px -4px rgba(0, 9, 133, 0.08);
+      border-color: #cbd5e1;
+    }
+
+    .stat-card-officer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .stat-card-officer.card-total::before { background: var(--primary-blue); }
+    .stat-card-officer.card-open::before { background: #3b82f6; }
+    .stat-card-officer.card-progress::before { background: #f59e0b; }
+    .stat-card-officer.card-waiting::before { background: #8b5cf6; }
+    .stat-card-officer.card-resolved::before { background: #10b981; }
+    .stat-card-officer.card-overdue::before { background: #ef4444; }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .stat-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .stat-icon-wrap {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+    }
+
+    .stat-value {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .stat-footer-text {
+      font-size: 0.725rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* 2-Column Main Workspace Grid */
+    .cmd-workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1200px) {
+      .cmd-workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-box {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      margin-bottom: 1.25rem;
+    }
+
+    .panel-box-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .panel-box-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-box-title i {
+      color: var(--primary-blue);
+    }
+
+    /* Priority Queue Action Feed */
+    .priority-feed-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .priority-ticket-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--primary-blue);
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .priority-ticket-card:hover {
+      box-shadow: 0 4px 14px rgba(0, 9, 133, 0.06);
+      transform: translateY(-2px);
+      border-color: #cbd5e1;
+    }
+
+    .priority-ticket-card.urgent { border-left-color: #dc2626; }
+    .priority-ticket-card.high { border-left-color: #ea580c; }
+    .priority-ticket-card.medium { border-left-color: #f59e0b; }
+    .priority-ticket-card.low { border-left-color: #10b981; }
+
+    .pt-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pt-ref-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pt-number {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      background: rgba(0, 9, 133, 0.06);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    .pt-subject {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .pt-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .pt-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Badges */
+    .badge-priority {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.18rem 0.5rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .badge-priority.urgent { background: #fee2e2; color: #dc2626; }
+    .badge-priority.high { background: #ffedd5; color: #ea580c; }
+    .badge-priority.medium { background: #fef3c7; color: #d97706; }
+    .badge-priority.low { background: #e0f2fe; color: #0284c7; }
+
+    .badge-status {
+      font-size: 0.725rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+    }
+    .badge-status.open { background: #eff6ff; color: #2563eb; }
+    .badge-status.in_progress { background: #fff7ed; color: #ea580c; }
+    .badge-status.waiting_for_customer { background: #faf5ff; color: #9333ea; }
+    .badge-status.escalated { background: #fef2f2; color: #dc2626; }
+    .badge-status.resolved { background: #f0fdf4; color: #16a34a; }
+    .badge-status.closed { background: #f1f5f9; color: #475569; }
+
+    .btn-workspace {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-workspace:hover {
+      background: var(--primary-hover);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* High-Density Data Table */
+    .officer-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.825rem;
+    }
+
+    .officer-table thead th {
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: #f8fafc;
+      white-space: nowrap;
+    }
+
+    .officer-table tbody td {
+      padding: 0.75rem 0.85rem;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+
+    .officer-table tbody tr:hover td {
+      background: #fbfcfe;
+    }
+
+    /* Right Sidebar Widgets */
+    .sidebar-widget {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+    }
+
+    .widget-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0 0 0.85rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quick-action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .qa-card-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.85rem 0.75rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .qa-card-btn:hover {
+      background: #ffffff;
+      border-color: var(--primary-blue);
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .qa-card-btn i {
+      font-size: 1.25rem;
+      color: var(--primary-blue);
+    }
+
+    .qa-card-btn span {
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* SLA Risk Meter */
+    .sla-summary-card {
+      background: linear-gradient(135deg, #000985 0%, #00065a 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sla-summary-card::after {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--accent-yellow-light);
+      pointer-events: none;
+    }
+
+    .sla-rate-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #cbd5e1;
+      margin-bottom: 0.25rem;
+    }
+
+    .sla-rate-val {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin-bottom: 0.5rem;
+    }
+
+    .sla-breakdown {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 0.65rem;
+      font-size: 0.775rem;
+    }
+
+    .sla-breakdown-item strong {
+      color: var(--accent-yellow);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Standard SupportHUB Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="logo-support">Support</span><span class="logo-hub">HUB</span>
+        </div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-content">
+      <!-- Standard Top Header -->
+      <header class="top-header">
+        <div class="header-left"></div>
+        <div class="header-right">
+          <div class="live-clock-pill" id="live-clock">
+            <i class="fa-regular fa-clock"></i>
+            <span>--:--:--</span>
+          </div>
+          <!-- Notifications Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+                <span>Notifications</span>
+                <button onclick="NotificationsEngine.markAllRead()" style="background: none; border: none; color: var(--primary-blue); font-size: 0.75rem; cursor: pointer; font-weight: 600;">Mark all read</button>
+              </div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <!-- User Profile Capsule -->
+          <div id="header-profile-capsule"></div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="page-body">
+        
+        <!-- Welcome Section & Presence Controller -->
+        <div class="officer-welcome-bar">
+          <div class="welcome-text">
+            <h1 id="welcome-greeting">Welcome Back, Support Officer</h1>
+            <p>Here is your support workload, priority queue, and performance overview for today.</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+            <div class="officer-presence-widget">
+              <span class="status-dot available" id="presence-dot"></span>
+              <span class="presence-label">Working Presence:</span>
+              <select id="presence-select" class="presence-select" onchange="handlePresenceChange(this.value)">
+                <option value="AVAILABLE">● Available</option>
+                <option value="BUSY">● Busy</option>
+                <option value="OFFLINE">● Offline</option>
+              </select>
+            </div>
+            <a href="assigned-tickets.html" class="btn-workspace">
+              <i class="fa-solid fa-list-check"></i> My Assigned Queue →
+            </a>
+          </div>
+        </div>
+
+        <!-- 6 KPI Metric Cards -->
+        <div class="metric-grid-6">
+          <a href="assigned-tickets.html" class="stat-card-officer card-total">
+            <div class="stat-top">
+              <span class="stat-title">Total Assigned</span>
+              <div class="stat-icon-wrap" style="background: #e0e7ff; color: var(--primary-blue);">
+                <i class="fa-solid fa-inbox"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-total">0</div>
+            <div class="stat-footer-text"><i class="fa-solid fa-folder"></i> In your active caseload</div>
+          </a>
+
+          <a href="assigned-tickets.html?status=OPEN" class="stat-card-officer card-open">
+            <div class="stat-top">
+              <span class="stat-title">New / Open</span>
+              <div class="stat-icon-wrap" style="background: #eff6ff; color: #2563eb;">
+                <i class="fa-solid fa-envelope-open-text"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-open">0</div>
+            <div class="stat-footer-text"><i class="fa-solid fa-bolt"></i> Needs initial review</div>
+          </a>
+
+          <a href="assigned-tickets.html?status=IN_PROGRESS" class="stat-card-officer card-progress">
+            <div class="stat-top">
+              <span class="stat-title">In Progress</span>
+              <div class="stat-icon-wrap" style="background: #fff7ed; color: #ea580c;">
+                <i class="fa-solid fa-spinner"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-progress">0</div>
+            <div class="stat-footer-text"><i class="fa-solid fa-gear"></i> Currently handling</div>
+          </a>
+
+          <a href="assigned-tickets.html?status=WAITING_FOR_CUSTOMER" class="stat-card-officer card-waiting">
+            <div class="stat-top">
+              <span class="stat-title">Waiting Customer</span>
+              <div class="stat-icon-wrap" style="background: #faf5ff; color: #9333ea;">
+                <i class="fa-solid fa-user-clock"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-waiting">0</div>
+            <div class="stat-footer-text"><i class="fa-solid fa-clock"></i> Info requested</div>
+          </a>
+
+          <a href="assigned-tickets.html?status=RESOLVED" class="stat-card-officer card-resolved">
+            <div class="stat-top">
+              <span class="stat-title">Resolved</span>
+              <div class="stat-icon-wrap" style="background: #f0fdf4; color: #16a34a;">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-resolved">0</div>
+            <div class="stat-footer-text"><i class="fa-solid fa-handshake"></i> Solved issues</div>
+          </a>
+
+          <a href="assigned-tickets.html?filter=overdue" class="stat-card-officer card-overdue">
+            <div class="stat-top">
+              <span class="stat-title">SLA Overdue</span>
+              <div class="stat-icon-wrap" style="background: #fef2f2; color: #dc2626;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-overdue" style="color: #dc2626;">0</div>
+            <div class="stat-footer-text" style="color: #dc2626;"><i class="fa-solid fa-circle-exclamation"></i> Attention required</div>
+          </a>
+        </div>
+
+        <!-- 2-Column Main Workspace -->
+        <div class="cmd-workspace-grid">
+          
+          <!-- Left Column (70%): Priority Action Queue & Recent Assigned Table -->
+          <div class="workspace-main-column">
+            
+            <!-- Priority Action Queue -->
+            <div class="panel-box">
+              <div class="panel-box-head">
+                <div class="panel-box-title">
+                  <i class="fa-solid fa-fire" style="color: #ea580c;"></i>
+                  <span>Priority Action Queue (Urgent & Approaching SLA)</span>
+                </div>
+                <a href="assigned-tickets.html?priority=HIGH" style="font-size: 0.8rem; font-weight: 700; color: var(--primary-blue); text-decoration: none;">
+                  View All Urgent →
+                </a>
+              </div>
+              <div class="priority-feed-list" id="priority-feed">
+                <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                  <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+                  Loading priority queue...
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Assigned Tickets Table -->
+            <div class="panel-box">
+              <div class="panel-box-head">
+                <div class="panel-box-title">
+                  <i class="fa-solid fa-ticket"></i>
+                  <span>Recently Assigned Tickets</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                  <a href="assigned-tickets.html" style="font-size: 0.8rem; font-weight: 700; color: var(--primary-blue); text-decoration: none;">
+                    Open Full Queue →
+                  </a>
+                </div>
+              </div>
+              <div style="overflow-x: auto;">
+                <table class="officer-table">
+                  <thead>
+                    <tr>
+                      <th>Ticket #</th>
+                      <th>Customer</th>
+                      <th>Subject</th>
+                      <th>Priority</th>
+                      <th>Status</th>
+                      <th>SLA Remaining</th>
+                      <th style="text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-tickets-tbody">
+                    <tr>
+                      <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading tickets...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column (30%): SLA Meter, Workload Distribution, Quick Actions -->
+          <div class="workspace-side-column">
+            
+            <!-- SLA Compliance Card -->
+            <div class="sla-summary-card">
+              <div class="sla-rate-title">On-Time SLA Compliance</div>
+              <div class="sla-rate-val" id="sla-compliance-rate">100%</div>
+              <div class="sla-breakdown">
+                <div class="sla-breakdown-item">Healthy: <strong id="sla-healthy-count">0</strong></div>
+                <div class="sla-breakdown-item">At Risk (&lt;4h): <strong id="sla-risk-count">0</strong></div>
+                <div class="sla-breakdown-item">Breached: <strong id="sla-breached-count">0</strong></div>
+              </div>
+            </div>
+
+            <!-- Chart Widget: Tickets By Status -->
+            <div class="sidebar-widget">
+              <div class="widget-title">
+                <span>Caseload Distribution</span>
+                <i class="fa-solid fa-chart-pie" style="color: var(--primary-blue);"></i>
+              </div>
+              <div style="position: relative; height: 180px; width: 100%;">
+                <canvas id="statusChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="sidebar-widget">
+              <div class="widget-title">
+                <span>Officer Quick Actions</span>
+                <i class="fa-solid fa-bolt" style="color: var(--accent-yellow);"></i>
+              </div>
+              <div class="quick-action-grid">
+                <a href="assigned-tickets.html" class="qa-card-btn">
+                  <i class="fa-solid fa-list-check"></i>
+                  <span>Assigned Queue</span>
+                </a>
+                <a href="assigned-tickets.html?priority=URGENT" class="qa-card-btn">
+                  <i class="fa-solid fa-fire" style="color: #dc2626;"></i>
+                  <span>Urgent Tickets</span>
+                </a>
+                <a href="assigned-tickets.html?filter=overdue" class="qa-card-btn">
+                  <i class="fa-solid fa-clock-rotate-left" style="color: #ea580c;"></i>
+                  <span>Overdue Tickets</span>
+                </a>
+                <a href="../customer/knowledge-base.html" class="qa-card-btn">
+                  <i class="fa-solid fa-book-open"></i>
+                  <span>Knowledge Base</span>
+                </a>
+                <a href="officer-profile.html" class="qa-card-btn" style="grid-column: span 2;">
+                  <i class="fa-solid fa-user-gear"></i>
+                  <span>My Profile & Specializations</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    let assignedTickets = [];
+    let officerProfile = null;
+    let statusChartInstance = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Enforce Role Security
+      if (!Auth.requireRole(['CUSTOMER_SERVICE_OFFICER'])) return;
+
+      // 2. Render Standard Navigation & Header
+      Auth.renderSidebar();
+      Auth.renderUserHeader();
+      NotificationsEngine.init();
+
+      // 3. Initialize Live Clock & Greeting
+      initLiveClock();
+      updateGreeting();
+
+      // 4. Fetch Officer Profile & Assigned Data
+      await loadOfficerProfile();
+      await fetchDashboardTickets();
+    });
+
+    window.addEventListener('pageshow', () => {
+      fetchDashboardTickets();
+    });
+
+    function initLiveClock() {
+      const clockEl = document.getElementById('live-clock');
+      function tick() {
+        const now = new Date();
+        if (clockEl) {
+          clockEl.querySelector('span').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+      }
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    function updateGreeting() {
+      const user = Auth.getUser();
+      const hour = new Date().getHours();
+      let timeOfDay = 'Good morning';
+      if (hour >= 12 && hour < 17) timeOfDay = 'Good afternoon';
+      else if (hour >= 17) timeOfDay = 'Good evening';
+
+      const name = user && (user.fullName || user.email) ? (user.fullName || user.email).split(' ')[0] : 'Officer';
+      const el = document.getElementById('welcome-greeting');
+      if (el) {
+        el.textContent = `${timeOfDay}, ${name}`;
+      }
+    }
+
+    async function loadOfficerProfile() {
+      try {
+        const res = await API.get('/agents/me');
+        if (res && res.data) {
+          officerProfile = res.data;
+          // Sync presence select
+          const select = document.getElementById('presence-select');
+          if (select && officerProfile.status) {
+            select.value = officerProfile.status;
+            updatePresenceDot(officerProfile.status);
+          }
+        }
+      } catch (err) {
+        console.warn('Could not load officer agent profile; presence fallback active', err);
+      }
+    }
+
+    function updatePresenceDot(status) {
+      const dot = document.getElementById('presence-dot');
+      if (!dot) return;
+      dot.className = 'status-dot ' + (status ? status.toLowerCase() : 'available');
+    }
+
+    async function handlePresenceChange(status) {
+      updatePresenceDot(status);
+      try {
+        await API.patch(`/agents/my-status?status=${status}`);
+        Utils.showToast(`Presence status updated to ${status}`, 'success');
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to update availability', 'error');
+      }
+    }
+
+    async function fetchDashboardTickets() {
+      try {
+        const res = await API.get('/tickets/assigned?page=0&size=100');
+        assignedTickets = res && res.data && res.data.content ? res.data.content : [];
+        renderStatistics();
+        renderPriorityQueue();
+        renderRecentTable();
+        renderSlaBreakdown();
+        renderChart();
+      } catch (err) {
+        console.error('Failed to fetch assigned tickets', err);
+        Utils.showToast('Unable to load assigned tickets queue', 'error');
+      }
+    }
+
+    function renderStatistics() {
+      const total = assignedTickets.length;
+      const open = assignedTickets.filter(t => t.status === 'OPEN').length;
+      const inProgress = assignedTickets.filter(t => t.status === 'IN_PROGRESS').length;
+      const waiting = assignedTickets.filter(t => t.status === 'WAITING_FOR_CUSTOMER').length;
+      const resolved = assignedTickets.filter(t => t.status === 'RESOLVED').length;
+      const overdue = assignedTickets.filter(t => t.isSlaBreached || (t.slaRemainingHours != null && t.slaRemainingHours < 0 && t.status !== 'RESOLVED' && t.status !== 'CLOSED')).length;
+
+      document.getElementById('kpi-total').textContent = total;
+      document.getElementById('kpi-open').textContent = open;
+      document.getElementById('kpi-progress').textContent = inProgress;
+      document.getElementById('kpi-waiting').textContent = waiting;
+      document.getElementById('kpi-resolved').textContent = resolved;
+      document.getElementById('kpi-overdue').textContent = overdue;
+    }
+
+    function renderSlaBreakdown() {
+      const active = assignedTickets.filter(t => t.status !== 'RESOLVED' && t.status !== 'CLOSED');
+      let healthy = 0;
+      let atRisk = 0;
+      let breached = 0;
+
+      active.forEach(t => {
+        if (t.isSlaBreached || (t.slaRemainingHours != null && t.slaRemainingHours < 0)) {
+          breached++;
+        } else if (t.slaRemainingHours != null && t.slaRemainingHours <= 4) {
+          atRisk++;
+        } else {
+          healthy++;
+        }
+      });
+
+      const totalActive = active.length;
+      const compliance = totalActive > 0 ? Math.round(((totalActive - breached) / totalActive) * 100) : 100;
+
+      document.getElementById('sla-compliance-rate').textContent = `${compliance}%`;
+      document.getElementById('sla-healthy-count').textContent = healthy;
+      document.getElementById('sla-risk-count').textContent = atRisk;
+      document.getElementById('sla-breached-count').textContent = breached;
+    }
+
+    function renderPriorityQueue() {
+      const feedEl = document.getElementById('priority-feed');
+      if (!feedEl) return;
+
+      // Filter active tickets and sort by urgency (Urgent > High > Medium > Low) and SLA
+      const pWeights = { 'URGENT': 4, 'HIGH': 3, 'MEDIUM': 2, 'LOW': 1 };
+      const priorityTickets = assignedTickets
+        .filter(t => t.status !== 'RESOLVED' && t.status !== 'CLOSED')
+        .sort((a, b) => {
+          const wDiff = (pWeights[b.priority] || 0) - (pWeights[a.priority] || 0);
+          if (wDiff !== 0) return wDiff;
+          const slaA = a.slaRemainingHours != null ? a.slaRemainingHours : 999;
+          const slaB = b.slaRemainingHours != null ? b.slaRemainingHours : 999;
+          return slaA - slaB;
+        })
+        .slice(0, 4);
+
+      if (priorityTickets.length === 0) {
+        feedEl.innerHTML = `
+          <div style="text-align: center; padding: 2.5rem 1rem; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; color: var(--text-muted);">
+            <i class="fa-solid fa-circle-check" style="font-size: 2.2rem; color: #10b981; margin-bottom: 0.5rem; display: block;"></i>
+            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">All Priority Tickets Handled</div>
+            <div style="font-size: 0.8rem; margin-top: 0.2rem;">Your priority queue is clear and on schedule.</div>
+          </div>
+        `;
+        return;
+      }
+
+      feedEl.innerHTML = priorityTickets.map(t => {
+        const p = (t.priority || 'MEDIUM').toLowerCase();
+        const pClass = p === 'urgent' ? 'urgent' : (p === 'high' ? 'high' : (p === 'medium' ? 'medium' : 'low'));
+        const sClass = (t.status || 'OPEN').toLowerCase();
+        const custName = t.customerName || 'Customer';
+        const orderInfo = t.orderNumber ? `<span class="pt-meta-item"><i class="fa-solid fa-box" style="color: var(--primary-blue);"></i> Order #${t.orderNumber}</span>` : '';
+        
+        let slaText = 'Standard SLA';
+        let slaStyle = '';
+        if (t.isSlaBreached) {
+          slaText = '<i class="fa-solid fa-triangle-exclamation"></i> Breached';
+          slaStyle = 'color: #dc2626; font-weight: 700;';
+        } else if (t.slaRemainingHours != null) {
+          slaText = `<i class="fa-regular fa-clock"></i> ${t.slaRemainingHours}h remaining`;
+          if (t.slaRemainingHours <= 4) slaStyle = 'color: #ea580c; font-weight: 700;';
+        }
+
+        return `
+          <div class="priority-ticket-card ${pClass}" onclick="window.location.href='ticket-details.html?id=${t.id}'">
+            <div class="pt-top-row">
+              <div class="pt-ref-group">
+                <span class="pt-number">${t.ticketNumber}</span>
+                <span class="badge-priority ${pClass}">${t.priority || 'MEDIUM'}</span>
+                <span class="badge-status ${sClass}">${(t.status || 'OPEN').replace(/_/g, ' ')}</span>
+              </div>
+              <a href="ticket-details.html?id=${t.id}" class="btn-workspace" onclick="event.stopPropagation();">
+                Open Workspace →
+              </a>
+            </div>
+            <h4 class="pt-subject">${Utils.escapeHtml(t.subject || 'No Subject')}</h4>
+            <div class="pt-meta-row">
+              <span class="pt-meta-item"><i class="fa-solid fa-user"></i> ${Utils.escapeHtml(custName)}</span>
+              <span class="pt-meta-item"><i class="fa-solid fa-layer-group"></i> ${Utils.escapeHtml(t.categoryName || 'Support')}</span>
+              ${orderInfo}
+              <span class="pt-meta-item" style="${slaStyle}">${slaText}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderRecentTable() {
+      const tbody = document.getElementById('recent-tickets-tbody');
+      if (!tbody) return;
+
+      if (assignedTickets.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">No tickets assigned to your queue.</td></tr>';
+        return;
+      }
+
+      const recent = assignedTickets.slice(0, 6);
+      tbody.innerHTML = recent.map(t => {
+        const pClass = (t.priority || 'MEDIUM').toLowerCase();
+        const sClass = (t.status || 'OPEN').toLowerCase();
+        const slaRem = t.isSlaBreached 
+          ? '<span style="color: #dc2626; font-weight: 700;"><i class="fa-solid fa-triangle-exclamation"></i> Breached</span>'
+          : (t.slaRemainingHours != null && t.status !== 'RESOLVED' && t.status !== 'CLOSED' 
+              ? `${t.slaRemainingHours}h remaining` 
+              : '-');
+
+        return `
+          <tr>
+            <td>
+              <a href="ticket-details.html?id=${t.id}" style="color: var(--primary-blue); font-weight: 700; text-decoration: none;">
+                ${t.ticketNumber}
+              </a>
+            </td>
+            <td><strong>${Utils.escapeHtml(t.customerName || 'Customer')}</strong></td>
+            <td>${Utils.escapeHtml(t.subject || '-')}</td>
+            <td><span class="badge-priority ${pClass}">${t.priority || 'MEDIUM'}</span></td>
+            <td><span class="badge-status ${sClass}">${(t.status || 'OPEN').replace(/_/g, ' ')}</span></td>
+            <td>${slaRem}</td>
+            <td style="text-align: right;">
+              <a href="ticket-details.html?id=${t.id}" class="btn-workspace" style="padding: 0.25rem 0.65rem; font-size: 0.725rem;">
+                Open →
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderChart() {
+      const ctx = document.getElementById('statusChart');
+      if (!ctx) return;
+
+      const open = assignedTickets.filter(t => t.status === 'OPEN').length;
+      const inProgress = assignedTickets.filter(t => t.status === 'IN_PROGRESS').length;
+      const waiting = assignedTickets.filter(t => t.status === 'WAITING_FOR_CUSTOMER').length;
+      const escalated = assignedTickets.filter(t => t.status === 'ESCALATED').length;
+      const resolved = assignedTickets.filter(t => t.status === 'RESOLVED').length;
+
+      const data = [open, inProgress, waiting, escalated, resolved];
+
+      if (statusChartInstance) {
+        statusChartInstance.destroy();
+      }
+
+      statusChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Open', 'In Progress', 'Waiting', 'Escalated', 'Resolved'],
+          datasets: [{
+            data: data.every(v => v === 0) ? [1] : data,
+            backgroundColor: data.every(v => v === 0) 
+              ? ['#e2e8f0'] 
+              : ['#3b82f6', '#f59e0b', '#8b5cf6', '#ef4444', '#10b981'],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                boxWidth: 10,
+                font: { size: 10, family: 'Inter' }
+              }
+            }
+          },
+          cutout: '68%'
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

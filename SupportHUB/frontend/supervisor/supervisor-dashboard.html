@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations Supervisor Dashboard - SupportHUB</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-light: rgba(245, 204, 0, 0.15);
+      --bg-canvas: #f8fafc;
+      --card-bg: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem !important;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Supervisor Hero Banner */
+    .supervisor-welcome-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .welcome-text h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      margin: 0 0 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .welcome-text p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .live-clock-pill {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* 8 Top Metric Cards */
+    .metric-grid-8 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 1280px) {
+      .metric-grid-8 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .metric-grid-8 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card-sup {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card-sup:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px -4px rgba(0, 9, 133, 0.08);
+      border-color: #cbd5e1;
+    }
+
+    .stat-card-sup::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+    }
+
+    .stat-card-sup.c-total::before { background: var(--primary-blue); }
+    .stat-card-sup.c-unassigned::before { background: #ea580c; }
+    .stat-card-sup.c-open::before { background: #3b82f6; }
+    .stat-card-sup.c-progress::before { background: #f59e0b; }
+    .stat-card-sup.c-waiting::before { background: #8b5cf6; }
+    .stat-card-sup.c-escalated::before { background: #dc2626; }
+    .stat-card-sup.c-resolved::before { background: #10b981; }
+    .stat-card-sup.c-agents::before { background: var(--accent-yellow); }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .stat-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .stat-value {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .stat-sub {
+      font-size: 0.725rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+    }
+
+    /* 2-Column Main Workspace Grid */
+    .cmd-workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1200px) {
+      .cmd-workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-box {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      margin-bottom: 1.25rem;
+    }
+
+    .panel-box-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .panel-box-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-box-title i {
+      color: var(--primary-blue);
+    }
+
+    /* Officer Workload Table */
+    .sup-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.825rem;
+    }
+
+    .sup-table thead th {
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: #f8fafc;
+      white-space: nowrap;
+    }
+
+    .sup-table tbody td {
+      padding: 0.75rem 0.85rem;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+
+    .sup-table tbody tr:hover td {
+      background: #fbfcfe;
+    }
+
+    /* Badges & Pills */
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.4rem;
+    }
+    .status-dot.available { background: #10b981; }
+    .status-dot.busy { background: #f59e0b; }
+    .status-dot.offline { background: #64748b; }
+
+    .caseload-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+    }
+    .caseload-badge.low { background: #f0fdf4; color: #16a34a; }
+    .caseload-badge.med { background: #fefce8; color: #ca8a04; }
+    .caseload-badge.high { background: #fef2f2; color: #dc2626; }
+
+    .btn-action-primary {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-primary:hover {
+      background: var(--primary-hover);
+      color: #ffffff;
+    }
+
+    .btn-action-secondary {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: #f8fafc;
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    /* SLA Banner */
+    .sla-health-card {
+      background: linear-gradient(135deg, #000985 0%, #00065a 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sla-health-card::after {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--accent-yellow-light);
+      pointer-events: none;
+    }
+
+    .sla-val-big {
+      font-size: 2.15rem;
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0.25rem 0 0.5rem 0;
+    }
+
+    .quick-tiles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .quick-tile-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.85rem 0.75rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .quick-tile-btn:hover {
+      background: #ffffff;
+      border-color: var(--primary-blue);
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .quick-tile-btn i {
+      font-size: 1.25rem;
+      color: var(--primary-blue);
+    }
+
+    .quick-tile-btn span {
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="logo-support">Support</span><span class="logo-hub">HUB</span>
+        </div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left"></div>
+        <div class="header-right">
+          <div class="live-clock-pill" id="live-clock">
+            <i class="fa-regular fa-clock"></i>
+            <span>--:--:--</span>
+          </div>
+          <!-- Notifications Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+                <span>Notifications</span>
+                <button onclick="NotificationsEngine.markAllRead()" style="background: none; border: none; color: var(--primary-blue); font-size: 0.75rem; cursor: pointer; font-weight: 600;">Mark all read</button>
+              </div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <div id="header-profile-capsule"></div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="page-body">
+        
+        <!-- Welcome Section -->
+        <div class="supervisor-welcome-bar">
+          <div class="welcome-text">
+            <h1 id="welcome-greeting">Welcome Back, Operations Supervisor</h1>
+            <p>Operational health overview, team workload balancing, triage queues, and SLA enforcement.</p>
+          </div>
+          <div style="display: flex; gap: 0.65rem; align-items: center; flex-wrap: wrap;">
+            <button onclick="triggerSlaBreachCheck()" class="btn-action-secondary" title="Run automated SLA breach evaluation">
+              <i class="fa-solid fa-bolt" style="color: var(--accent-yellow);"></i> Scan SLA Deadlines
+            </button>
+            <a href="team-tickets.html?status=UNASSIGNED" class="btn-action-primary">
+              <i class="fa-solid fa-inbox"></i> Triage Unassigned (<span id="btn-unassigned-count">0</span>)
+            </a>
+          </div>
+        </div>
+
+        <!-- 8 Top Metric Cards -->
+        <div class="metric-grid-8">
+          <a href="team-tickets.html" class="stat-card-sup c-total">
+            <div class="stat-top">
+              <span class="stat-title">Total Team Tickets</span>
+              <div class="stat-icon-wrap" style="background: #e0e7ff; color: var(--primary-blue);"><i class="fa-solid fa-layer-group"></i></div>
+            </div>
+            <div class="stat-value" id="kpi-total">0</div>
+            <div class="stat-sub"><i class="fa-solid fa-chart-line"></i> Total operational volume</div>
+          </a>
+
+          <a href="team-tickets.html?status=UNASSIGNED" class="stat-card-sup c-unassigned">
+            <div class="stat-top">
+              <span class="stat-title">Unassigned</span>
+              <div class="stat-icon-wrap" style="background: #ffedd5; color: #ea580c;"><i class="fa-solid fa-inbox"></i></div>
+            </div>
+            <div class="stat-value" id="kpi-unassigned" style="color: #ea580c;">0</div>
+            <div class="stat-sub"><i class="fa-solid fa-clock"></i> Awaiting officer assignment</div>
+          </a>
+
+          <a href="team-tickets.html?status=OPEN" class="stat-card-sup c-open">
+            <div class="stat-top">
+              <span class="stat-title">Open Tickets</span>
+              <div class="stat-icon-wrap" style="background: #eff6ff; color: #2563eb;"><i class="fa-solid fa-circle-dot"></i></div>
+            </div>
+            <div class="stat-value" id="kpi-open">0</div>
+            <div class="stat-sub"><i class="fa-solid fa-bolt"></i> Ready for investigation</div>
+          </a>
+
+          <a href="team-tickets.html?status=IN_PROGRESS" class="stat-card-sup c-progress">
+            <div class="stat-top">
+              <span class="stat-title">In Progress</span>
+              <div class="stat-icon-wrap" style="background: #fefce8; color: #ca8a04;"><i class="fa-solid fa-spinner"></i></div>
+            </div>
+            <div class="stat-value" id="kpi-progress">0</div>
+            <div class="stat-sub"><i class="fa-solid fa-gear"></i> Active handling by staff</div>
+          </a>
+
+          <a href="team-tickets.html?status=WAITING_FOR_CUSTOMER" class="stat-card-sup c-waiting">
+            <div class="stat-top">
+              <span class="stat-title">Waiting Customer</span>
+              <div class="stat-icon-wrap" style="background: #faf5ff; color: #9333ea;"><i class="fa-solid fa-user-clock"></i></div>
+            </div>
+            <div class="stat-value" id="kpi-waiting">0</div>
+            <div class="stat-sub"><i class="fa-solid fa-hourglass-half"></i> Info pending from client</div>
+          </a>
+
+          <a href="escalations.html" class="stat-card-sup c-escalated">
+            <div class="stat-top">
+              <span class="stat-title">Escalated</span>
+              <div class="stat-icon-wrap" style="background: #fef2f2; color: #dc2626;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            </div>
+            <div class="stat-value" id="kpi-escalated" style="color: #dc2626;">0</div>
+            <div class="stat-sub"><i class="fa-solid fa-arrow-up-right-from-square"></i> Needs supervisor decision</div>
+          </a>
+
+          <a href="team-tickets.html?status=RESOLVED" class="stat-card-sup c-resolved">
+            <div class="stat-top">
+              <span class="stat-title">Resolved</span>
+              <div class="stat-icon-wrap" style="background: #f0fdf4; color: #16a34a;"><i class="fa-solid fa-circle-check"></i></div>
+            </div>
+            <div class="stat-value" id="kpi-resolved">0</div>
+            <div class="stat-sub"><i class="fa-solid fa-check-double"></i> Solved issues</div>
+          </a>
+
+          <a href="agents.html" class="stat-card-sup c-agents">
+            <div class="stat-top">
+              <span class="stat-title">Support Officers</span>
+              <div class="stat-icon-wrap" style="background: #fef9c3; color: #854d0e;"><i class="fa-solid fa-users-gear"></i></div>
+            </div>
+            <div class="stat-value" id="kpi-agents">0</div>
+            <div class="stat-sub"><i class="fa-solid fa-circle-dot" style="color: #10b981;"></i> Active roster</div>
+          </a>
+        </div>
+
+        <!-- 2-Column Main Workspace -->
+        <div class="cmd-workspace-grid">
+          
+          <!-- Left Column (70%): Officer Workload Distribution & Category Caseload -->
+          <div class="workspace-main-column">
+            
+            <!-- Officer Workload Distribution Table -->
+            <div class="panel-box">
+              <div class="panel-box-head">
+                <div class="panel-box-title">
+                  <i class="fa-solid fa-users-viewfinder"></i>
+                  <span>Support Officer Caseload & Availability</span>
+                </div>
+                <a href="agents.html" class="btn-action-secondary" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;">
+                  Manage Staff →
+                </a>
+              </div>
+              <div style="overflow-x: auto;">
+                <table class="sup-table">
+                  <thead>
+                    <tr>
+                      <th>Officer</th>
+                      <th>Status</th>
+                      <th>Assigned Categories</th>
+                      <th>Active Caseload</th>
+                      <th style="text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="officer-workload-tbody">
+                    <tr>
+                      <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading officer workload...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Categories Caseload Summary -->
+            <div class="panel-box">
+              <div class="panel-box-head">
+                <div class="panel-box-title">
+                  <i class="fa-solid fa-folder-tree"></i>
+                  <span>Ticket Categories & SLA Targets</span>
+                </div>
+                <a href="categories.html" class="btn-action-secondary" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;">
+                  Configure Categories →
+                </a>
+              </div>
+              <div style="overflow-x: auto;">
+                <table class="sup-table">
+                  <thead>
+                    <tr>
+                      <th>Category Name</th>
+                      <th>SLA Target</th>
+                      <th>Active Tickets</th>
+                      <th>Status</th>
+                      <th style="text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="category-summary-tbody">
+                    <tr>
+                      <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading categories...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column (30%): SLA Meter, Chart.js Distribution, Quick Triage Actions -->
+          <div class="workspace-side-column">
+            
+            <!-- SLA Compliance Meter -->
+            <div class="sla-health-card">
+              <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #cbd5e1;">Team SLA Compliance</div>
+              <div class="sla-val-big" id="sla-rate-text">100%</div>
+              <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 0.65rem; font-size: 0.775rem;">
+                <span>Healthy: <strong id="sla-healthy-count" style="color: var(--accent-yellow);">0</strong></span>
+                <span>At Risk: <strong id="sla-risk-count" style="color: #fde68a;">0</strong></span>
+                <span>Breached: <strong id="sla-breached-count" style="color: #fca5a5;">0</strong></span>
+              </div>
+            </div>
+
+            <!-- Chart.js: Ticket Status Distribution -->
+            <div class="panel-box">
+              <div class="panel-box-head">
+                <div class="panel-box-title" style="font-size: 0.95rem;">
+                  <i class="fa-solid fa-chart-pie"></i>
+                  <span>Status Distribution</span>
+                </div>
+              </div>
+              <div style="position: relative; height: 180px; width: 100%;">
+                <canvas id="supStatusChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Quick Triage Actions -->
+            <div class="panel-box">
+              <div class="panel-box-head">
+                <div class="panel-box-title" style="font-size: 0.95rem;">
+                  <i class="fa-solid fa-bolt" style="color: var(--accent-yellow);"></i>
+                  <span>Supervisor Actions</span>
+                </div>
+              </div>
+              <div class="quick-tiles-grid">
+                <a href="team-tickets.html?status=UNASSIGNED" class="quick-tile-btn">
+                  <i class="fa-solid fa-inbox"></i>
+                  <span>Unassigned Queue</span>
+                </a>
+                <a href="escalations.html" class="quick-tile-btn">
+                  <i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i>
+                  <span>Escalations Queue</span>
+                </a>
+                <a href="sla-monitoring.html" class="quick-tile-btn">
+                  <i class="fa-solid fa-stopwatch" style="color: #ea580c;"></i>
+                  <span>SLA Health</span>
+                </a>
+                <a href="reports.html" class="quick-tile-btn">
+                  <i class="fa-solid fa-chart-pie"></i>
+                  <span>Operations Reports</span>
+                </a>
+                <a href="agents.html" class="quick-tile-btn">
+                  <i class="fa-solid fa-users-gear"></i>
+                  <span>Support Officers</span>
+                </a>
+                <a href="categories.html" class="quick-tile-btn">
+                  <i class="fa-solid fa-folder-tree"></i>
+                  <span>Categories & SLA</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    let teamTickets = [];
+    let allAgents = [];
+    let allCategories = [];
+    let statusChartInstance = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.requireRole(['OPERATIONS_SUPERVISOR'])) return;
+
+      Auth.renderSidebar();
+      Auth.renderUserHeader();
+      NotificationsEngine.init();
+
+      initLiveClock();
+      updateGreeting();
+
+      await loadDashboardData();
+    });
+
+    window.addEventListener('pageshow', () => {
+      loadDashboardData();
+    });
+
+    function initLiveClock() {
+      const clockEl = document.getElementById('live-clock');
+      function tick() {
+        const now = new Date();
+        if (clockEl) {
+          clockEl.querySelector('span').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+      }
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    function updateGreeting() {
+      const user = Auth.getUser();
+      const hour = new Date().getHours();
+      let timeOfDay = 'Good morning';
+      if (hour >= 12 && hour < 17) timeOfDay = 'Good afternoon';
+      else if (hour >= 17) timeOfDay = 'Good evening';
+
+      const name = user && (user.fullName || user.email) ? (user.fullName || user.email).split(' ')[0] : 'Supervisor';
+      const el = document.getElementById('welcome-greeting');
+      if (el) {
+        el.textContent = `${timeOfDay}, ${name}`;
+      }
+    }
+
+    async function loadDashboardData() {
+      try {
+        const [ticketsRes, agentsRes, catsRes] = await Promise.all([
+          API.get('/tickets?page=0&size=200').catch(() => ({ data: { content: [] } })),
+          API.get('/agents').catch(() => ({ data: [] })),
+          API.get('/categories').catch(() => ({ data: [] }))
+        ]);
+
+        teamTickets = (ticketsRes && ticketsRes.data && Array.isArray(ticketsRes.data.content)) 
+          ? ticketsRes.data.content 
+          : (Array.isArray(ticketsRes.data) ? ticketsRes.data : []);
+        allAgents = agentsRes && Array.isArray(agentsRes.data) ? agentsRes.data : [];
+        allCategories = catsRes && Array.isArray(catsRes.data) ? catsRes.data : [];
+
+        renderKPIs();
+        renderOfficerWorkload();
+        renderCategorySummary();
+        renderSlaMeter();
+        renderStatusChart();
+      } catch (err) {
+        console.error('Failed to load supervisor dashboard data', err);
+        Utils.showToast('Unable to load operational dashboard data', 'error');
+      }
+    }
+
+    function renderKPIs() {
+      const total = teamTickets.length;
+      const unassigned = teamTickets.filter(t => !t.assignedAgentId && t.status !== 'RESOLVED' && t.status !== 'CLOSED').length;
+      const open = teamTickets.filter(t => t.status === 'OPEN').length;
+      const progress = teamTickets.filter(t => t.status === 'IN_PROGRESS').length;
+      const waiting = teamTickets.filter(t => t.status === 'WAITING_FOR_CUSTOMER' || t.status === 'WAITING_CUSTOMER').length;
+      const escalated = teamTickets.filter(t => t.isEscalated || t.escalated || t.status === 'ESCALATED').length;
+      const resolved = teamTickets.filter(t => t.status === 'RESOLVED').length;
+      const agentsCount = allAgents.length;
+
+      document.getElementById('kpi-total').textContent = total;
+      document.getElementById('kpi-unassigned').textContent = unassigned;
+      document.getElementById('kpi-open').textContent = open;
+      document.getElementById('kpi-progress').textContent = progress;
+      document.getElementById('kpi-waiting').textContent = waiting;
+      document.getElementById('kpi-escalated').textContent = escalated;
+      document.getElementById('kpi-resolved').textContent = resolved;
+      document.getElementById('kpi-agents').textContent = agentsCount;
+      document.getElementById('btn-unassigned-count').textContent = unassigned;
+    }
+
+    function renderOfficerWorkload() {
+      const tbody = document.getElementById('officer-workload-tbody');
+      if (!tbody) return;
+
+      if (allAgents.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No support officers provisioned yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = allAgents.map(ag => {
+        const status = (ag.status || 'AVAILABLE').toUpperCase();
+        const dotClass = status === 'AVAILABLE' ? 'available' : (status === 'BUSY' ? 'busy' : 'offline');
+        const activeCount = ag.activeTicketCount || 0;
+        
+        let caseloadClass = 'low';
+        if (activeCount > 8) caseloadClass = 'high';
+        else if (activeCount > 4) caseloadClass = 'med';
+
+        const categories = (ag.assignedCategories || []).map(c => c.name).join(', ') || 'General Support';
+
+        return `
+          <tr>
+            <td>
+              <div style="font-weight: 700; color: var(--text-main);">${Utils.escapeHtml(ag.fullName || 'Officer')}</div>
+              <div style="font-size: 0.725rem; color: var(--text-muted);">${ag.employeeCode || 'EMP-N/A'} • ${ag.email}</div>
+            </td>
+            <td>
+              <span class="status-dot ${dotClass}"></span>
+              <strong style="font-size: 0.775rem;">${status}</strong>
+            </td>
+            <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${Utils.escapeHtml(categories)}">
+              ${Utils.escapeHtml(categories)}
+            </td>
+            <td>
+              <span class="caseload-badge ${caseloadClass}">${activeCount} Active Tickets</span>
+            </td>
+            <td style="text-align: right;">
+              <a href="team-tickets.html?agentId=${ag.id}" class="btn-action-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.725rem;">
+                View Queue →
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderCategorySummary() {
+      const tbody = document.getElementById('category-summary-tbody');
+      if (!tbody) return;
+
+      if (allCategories.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No categories found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = allCategories.map(cat => {
+        const catTickets = teamTickets.filter(t => t.categoryId === cat.id && t.status !== 'RESOLVED' && t.status !== 'CLOSED').length;
+        const statusBadge = cat.active !== false
+          ? '<span style="font-size: 0.725rem; font-weight: 700; color: #16a34a;"><i class="fa-solid fa-circle-check"></i> Active</span>'
+          : '<span style="font-size: 0.725rem; font-weight: 700; color: #64748b;"><i class="fa-solid fa-ban"></i> Inactive</span>';
+
+        return `
+          <tr>
+            <td><strong>${Utils.escapeHtml(cat.name)}</strong></td>
+            <td><i class="fa-regular fa-clock" style="color: var(--primary-blue);"></i> ${cat.slaHours || 24} Hours</td>
+            <td><strong>${catTickets}</strong> active</td>
+            <td>${statusBadge}</td>
+            <td style="text-align: right;">
+              <a href="team-tickets.html?categoryId=${cat.id}" class="btn-action-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.725rem;">
+                Filter →
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderSlaMeter() {
+      const activeTickets = teamTickets.filter(t => t.status !== 'RESOLVED' && t.status !== 'CLOSED');
+      let healthy = 0;
+      let atRisk = 0;
+      let breached = 0;
+
+      activeTickets.forEach(t => {
+        if (t.isSlaBreached || t.escalated || (t.slaRemainingHours != null && t.slaRemainingHours < 0) || (t.slaDueAt && new Date(t.slaDueAt).getTime() < Date.now())) {
+          breached++;
+        } else if (t.slaRemainingHours != null && t.slaRemainingHours <= 4) {
+          atRisk++;
+        } else {
+          healthy++;
+        }
+      });
+
+      const totalActive = activeTickets.length;
+      const rate = totalActive > 0 ? Math.round(((totalActive - breached) / totalActive) * 100) : 100;
+
+      document.getElementById('sla-rate-text').textContent = `${rate}%`;
+      document.getElementById('sla-healthy-count').textContent = healthy;
+      document.getElementById('sla-risk-count').textContent = atRisk;
+      document.getElementById('sla-breached-count').textContent = breached;
+    }
+
+    function renderStatusChart() {
+      const ctx = document.getElementById('supStatusChart');
+      if (!ctx) return;
+
+      const unassigned = teamTickets.filter(t => !t.assignedAgentId && t.status !== 'RESOLVED' && t.status !== 'CLOSED').length;
+      const open = teamTickets.filter(t => t.status === 'OPEN').length;
+      const progress = teamTickets.filter(t => t.status === 'IN_PROGRESS').length;
+      const waiting = teamTickets.filter(t => t.status === 'WAITING_FOR_CUSTOMER' || t.status === 'WAITING_CUSTOMER').length;
+      const escalated = teamTickets.filter(t => t.isEscalated || t.escalated || t.status === 'ESCALATED').length;
+      const resolved = teamTickets.filter(t => t.status === 'RESOLVED').length;
+
+      const data = [unassigned, open, progress, waiting, escalated, resolved];
+
+      if (statusChartInstance) {
+        statusChartInstance.destroy();
+      }
+
+      statusChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Unassigned', 'Open', 'In Progress', 'Waiting', 'Escalated', 'Resolved'],
+          datasets: [{
+            data: data.every(v => v === 0) ? [1] : data,
+            backgroundColor: data.every(v => v === 0)
+              ? ['#e2e8f0']
+              : ['#ea580c', '#3b82f6', '#f59e0b', '#8b5cf6', '#dc2626', '#10b981'],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                boxWidth: 10,
+                font: { size: 10, family: 'Inter' }
+              }
+            }
+          },
+          cutout: '68%'
+        }
+      });
+    }
+
+    async function triggerSlaBreachCheck() {
+      try {
+        const res = await API.post('/tickets/check-sla');
+        const count = res && res.data != null ? res.data : 0;
+        Utils.showToast(`SLA check completed. Escalated tickets: ${count}`, 'success');
+        await loadDashboardData();
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to execute SLA scan', 'error');
+      }
+    }
+  </script>
+</body>
+
+</html>

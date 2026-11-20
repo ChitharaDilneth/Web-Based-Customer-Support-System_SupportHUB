@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escalation Queue & Decision Center - SupportHUB</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-light: rgba(245, 204, 0, 0.15);
+      --bg-canvas: #f8fafc;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem !important;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Page Header */
+    .esc-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .esc-title h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      margin: 0 0 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .esc-title p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Top 4 KPI Cards */
+    .esc-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .esc-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .esc-kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .esc-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.15rem 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .esc-card-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .esc-card-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.1;
+    }
+
+    .esc-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    /* Main Table Container */
+    .esc-table-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+    }
+
+    .esc-table-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .search-box-wrap {
+      position: relative;
+      min-width: 300px;
+    }
+
+    .search-box-wrap i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-box-wrap input {
+      width: 100%;
+      padding: 0.5rem 1rem 0.5rem 2.4rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      outline: none;
+      box-sizing: border-box;
+      background: #f8fafc;
+    }
+
+    .search-box-wrap input:focus {
+      border-color: var(--primary-blue);
+      background: #ffffff;
+    }
+
+    .esc-data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.825rem;
+    }
+
+    .esc-data-table thead th {
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      padding: 0.75rem 1rem;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-subtle);
+      white-space: nowrap;
+    }
+
+    .esc-data-table tbody td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+
+    .esc-data-table tbody tr:hover td {
+      background: #fbfcfe;
+    }
+
+    /* Badges */
+    .badge-priority {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .badge-priority.urgent { background: #fee2e2; color: #dc2626; }
+    .badge-priority.high { background: #ffedd5; color: #ea580c; }
+    .badge-priority.medium { background: #fef3c7; color: #d97706; }
+    .badge-priority.low { background: #e0f2fe; color: #0284c7; }
+
+    .badge-escalated {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      font-size: 0.725rem;
+      font-weight: 800;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-action-primary {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-primary:hover {
+      background: var(--primary-hover);
+      color: #ffffff;
+    }
+
+    .btn-action-secondary {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: #f8fafc;
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 540px;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="logo-support">Support</span><span class="logo-hub">HUB</span>
+        </div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left"></div>
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+                <span>Notifications</span>
+                <button onclick="NotificationsEngine.markAllRead()" style="background: none; border: none; color: var(--primary-blue); font-size: 0.75rem; cursor: pointer; font-weight: 600;">Mark all read</button>
+              </div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <div id="header-profile-capsule"></div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="page-body">
+        
+        <!-- Page Header Row -->
+        <div class="esc-header-row">
+          <div class="esc-title">
+            <h1>Escalated Issues Queue</h1>
+            <p>Review, reassign, guide, or deliver decisions on tickets flagged by frontline support officers.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button onclick="loadEscalatedTickets()" class="btn-action-secondary">
+              <i class="fa-solid fa-rotate"></i> Refresh Queue
+            </button>
+            <a href="team-tickets.html" class="btn-action-primary">
+              <i class="fa-solid fa-list-check"></i> Full Team Queue
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 Top KPI Cards -->
+        <div class="esc-kpi-grid">
+          <div class="esc-card">
+            <div>
+              <div class="esc-card-title">Pending Escalations</div>
+              <div class="esc-card-val" id="kpi-pending-escalations" style="color: #dc2626;">0</div>
+            </div>
+            <div class="esc-card-icon" style="background: #fee2e2; color: #dc2626;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+          </div>
+
+          <div class="esc-card">
+            <div>
+              <div class="esc-card-title">High & Urgent</div>
+              <div class="esc-card-val" id="kpi-urgent-escalations" style="color: #ea580c;">0</div>
+            </div>
+            <div class="esc-card-icon" style="background: #ffedd5; color: #ea580c;">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+          </div>
+
+          <div class="esc-card">
+            <div>
+              <div class="esc-card-title">SLA At Risk / Breached</div>
+              <div class="esc-card-val" id="kpi-sla-breached-count" style="color: #854d0e;">0</div>
+            </div>
+            <div class="esc-card-icon" style="background: #fef9c3; color: #854d0e;">
+              <i class="fa-solid fa-stopwatch"></i>
+            </div>
+          </div>
+
+          <div class="esc-card">
+            <div>
+              <div class="esc-card-title">Available Officers</div>
+              <div class="esc-card-val" id="kpi-available-officers" style="color: #16a34a;">0</div>
+            </div>
+            <div class="esc-card-icon" style="background: #f0fdf4; color: #16a34a;">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Escalated Tickets Table -->
+        <div class="esc-table-card">
+          <div class="esc-table-head">
+            <div class="search-box-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="filter-search" placeholder="Search ticket #, officer, customer, subject..." oninput="renderEscalatedTable()" />
+            </div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);" id="counter-info">
+              Showing 0 escalations
+            </div>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="esc-data-table">
+              <thead>
+                <tr>
+                  <th>Ticket Ref</th>
+                  <th>Requesting / Assigned</th>
+                  <th>Customer</th>
+                  <th>Subject</th>
+                  <th>Category</th>
+                  <th>Priority</th>
+                  <th>SLA Status</th>
+                  <th style="text-align: right;">Supervisor Actions</th>
+                </tr>
+              </thead>
+              <tbody id="escalations-tbody">
+                <tr>
+                  <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading escalated tickets...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Supervisor Decision Modal -->
+  <div class="modal-backdrop" id="decision-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Supervisor Escalation Decision</h3>
+        <button onclick="closeDecisionModal()" class="close-modal">&times;</button>
+      </div>
+      <form onsubmit="handleDecisionSubmit(event)">
+        <input type="hidden" id="modal-ticket-id" />
+        
+        <div style="background: #f8fafc; border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.85rem; margin-bottom: 1rem;">
+          <div style="font-size: 0.775rem; font-weight: 700; color: var(--primary-blue);" id="modal-ticket-number">TCK-0000</div>
+          <div style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin-top: 0.2rem;" id="modal-ticket-subject">Subject</div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">Supervisor Decision *</label>
+          <select id="decision-action-select" class="filter-select" style="width: 100%; box-sizing: border-box;" onchange="handleDecisionTypeChange(this.value)" required>
+            <option value="REASSIGN">Reassign to Qualified Officer</option>
+            <option value="GUIDE">Add Supervisory Internal Guidance</option>
+            <option value="DEESCALATE">De-escalate & Return to Current Officer</option>
+            <option value="RESOLVE">Approve & Mark Resolved</option>
+          </select>
+        </div>
+
+        <!-- Target Officer Selection (for Reassign) -->
+        <div id="target-officer-group" style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">Target Support Officer *</label>
+          <select id="target-officer-select" class="filter-select" style="width: 100%; box-sizing: border-box;">
+            <option value="">Select an officer...</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">Decision Rationale / Internal Note *</label>
+          <textarea id="decision-notes" class="form-control" rows="3" placeholder="Provide instructions for the officer or record the resolution basis..." required style="width: 100%; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.65rem; font-family: inherit; font-size: 0.825rem; box-sizing: border-box;"></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" onclick="closeDecisionModal()" class="btn-action-secondary">Cancel</button>
+          <button type="submit" class="btn-action-primary">Confirm Decision</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    let escalatedTickets = [];
+    let availableAgents = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.requireRole(['OPERATIONS_SUPERVISOR'])) return;
+
+      Auth.renderSidebar();
+      Auth.renderUserHeader();
+      NotificationsEngine.init();
+
+      await loadAgents();
+      await loadEscalatedTickets();
+    });
+
+    async function loadAgents() {
+      try {
+        const res = await API.get('/agents');
+        availableAgents = res && res.data ? res.data : [];
+        
+        // Populate Target Officer select
+        const sel = document.getElementById('target-officer-select');
+        if (sel && availableAgents.length > 0) {
+          sel.innerHTML = '<option value="">Select an officer...</option>' + 
+            availableAgents.map(a => `<option value="${a.id}">${a.fullName} (${a.employeeCode || 'EMP'} - ${a.status} - ${a.activeTicketCount || 0} active)</option>`).join('');
+        }
+
+        const availCount = availableAgents.filter(a => a.status === 'AVAILABLE').length;
+        document.getElementById('kpi-available-officers').textContent = availCount;
+      } catch (err) {
+        console.warn('Could not load agents roster', err);
+      }
+    }
+
+    async function loadEscalatedTickets() {
+      try {
+        const res = await API.get('/tickets/escalated');
+        escalatedTickets = (res && res.data && Array.isArray(res.data))
+          ? res.data
+          : (res && res.data && Array.isArray(res.data.content) ? res.data.content : []);
+        renderKPIs();
+        renderEscalatedTable();
+      } catch (err) {
+        console.error('Failed to load escalated tickets', err);
+        Utils.showToast('Unable to load escalated tickets', 'error');
+      }
+    }
+
+    function renderKPIs() {
+      const pending = escalatedTickets.length;
+      const urgent = escalatedTickets.filter(t => t.priority === 'URGENT' || t.priority === 'HIGH').length;
+      const breached = escalatedTickets.filter(t => t.isSlaBreached || (t.slaRemainingHours != null && t.slaRemainingHours < 0)).length;
+
+      document.getElementById('kpi-pending-escalations').textContent = pending;
+      document.getElementById('kpi-urgent-escalations').textContent = urgent;
+      document.getElementById('kpi-sla-breached-count').textContent = breached;
+    }
+
+    function renderEscalatedTable() {
+      const search = (document.getElementById('filter-search').value || '').trim().toLowerCase();
+      const tbody = document.getElementById('escalations-tbody');
+      if (!tbody) return;
+
+      let filtered = escalatedTickets;
+      if (search) {
+        filtered = filtered.filter(t => 
+          (t.ticketNumber && t.ticketNumber.toLowerCase().includes(search)) ||
+          (t.customerName && t.customerName.toLowerCase().includes(search)) ||
+          (t.assignedAgentName && t.assignedAgentName.toLowerCase().includes(search)) ||
+          (t.subject && t.subject.toLowerCase().includes(search))
+        );
+      }
+
+      document.getElementById('counter-info').textContent = `Showing ${filtered.length} of ${escalatedTickets.length} escalations`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 3rem 1.5rem; color: var(--text-muted);">
+              <i class="fa-solid fa-circle-check" style="font-size: 2rem; color: #10b981; margin-bottom: 0.5rem; display: block;"></i>
+              <strong style="color: var(--text-main);">No Pending Escalations in Queue</strong>
+              <div style="font-size: 0.8rem; margin-top: 0.25rem;">All tickets are operating within standard frontline tiers.</div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(t => {
+        const p = (t.priority || 'MEDIUM').toLowerCase();
+        const pClass = p === 'urgent' ? 'urgent' : (p === 'high' ? 'high' : (p === 'medium' ? 'medium' : 'low'));
+        const officerName = t.assignedAgentName || 'Unassigned';
+
+        const slaRem = t.isSlaBreached
+          ? '<span style="color: #dc2626; font-weight: 700;"><i class="fa-solid fa-triangle-exclamation"></i> Breached</span>'
+          : (t.slaRemainingHours != null 
+              ? `${t.slaRemainingHours}h remaining` 
+              : 'Standard');
+
+        return `
+          <tr>
+            <td>
+              <a href="../officer/ticket-details.html?id=${t.id}" style="color: var(--primary-blue); font-weight: 800; text-decoration: none;">
+                ${t.ticketNumber}
+              </a>
+            </td>
+            <td><strong>${Utils.escapeHtml(officerName)}</strong></td>
+            <td>${Utils.escapeHtml(t.customerName || 'Customer')}</td>
+            <td>
+              <div style="font-weight: 700; color: var(--text-main);">${Utils.escapeHtml(t.subject || 'No Subject')}</div>
+            </td>
+            <td>${Utils.escapeHtml(t.categoryName || 'Support')}</td>
+            <td><span class="badge-priority ${pClass}">${t.priority || 'MEDIUM'}</span></td>
+            <td>${slaRem}</td>
+            <td style="text-align: right; white-space: nowrap;">
+              <button onclick="openDecisionModal(${t.id}, '${t.ticketNumber}', '${Utils.escapeHtml(t.subject || '')}', ${t.assignedAgentId || null})" class="btn-action-primary" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; margin-right: 0.35rem;">
+                <i class="fa-solid fa-gavel"></i> Decide
+              </button>
+              <a href="../officer/ticket-details.html?id=${t.id}" class="btn-action-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.75rem;">
+                Workspace →
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openDecisionModal(id, ticketNumber, subject, currentAgentId) {
+      document.getElementById('modal-ticket-id').value = id;
+      document.getElementById('modal-ticket-number').textContent = ticketNumber;
+      document.getElementById('modal-ticket-subject').textContent = subject;
+      document.getElementById('decision-notes').value = '';
+      document.getElementById('decision-action-select').value = 'REASSIGN';
+      handleDecisionTypeChange('REASSIGN');
+      
+      const targetSel = document.getElementById('target-officer-select');
+      if (targetSel && currentAgentId) {
+        targetSel.value = currentAgentId;
+      }
+
+      document.getElementById('decision-modal').classList.add('show');
+    }
+
+    function closeDecisionModal() {
+      document.getElementById('decision-modal').classList.remove('show');
+    }
+
+    function handleDecisionTypeChange(action) {
+      const officerGroup = document.getElementById('target-officer-group');
+      const targetSel = document.getElementById('target-officer-select');
+      if (action === 'REASSIGN') {
+        officerGroup.style.display = 'block';
+        targetSel.required = true;
+      } else {
+        officerGroup.style.display = 'none';
+        targetSel.required = false;
+      }
+    }
+
+    async function handleDecisionSubmit(e) {
+      e.preventDefault();
+      const ticketId = document.getElementById('modal-ticket-id').value;
+      const action = document.getElementById('decision-action-select').value;
+      const note = document.getElementById('decision-notes').value.trim();
+      const agentId = document.getElementById('target-officer-select').value;
+
+      try {
+        if (action === 'REASSIGN') {
+          if (!agentId) {
+            Utils.showToast('Please select a target officer to assign', 'warning');
+            return;
+          }
+          await API.put(`/tickets/${ticketId}/assign`, { agentId: parseInt(agentId) });
+          if (note) {
+            await API.post(`/tickets/${ticketId}/replies`, {
+              message: `[SUPERVISOR ESCALATION DECISION - REASSIGNED]: ${note}`,
+              isInternal: true
+            });
+          }
+          Utils.showToast('Ticket reassigned and de-escalated successfully', 'success');
+        } else if (action === 'GUIDE') {
+          await API.post(`/tickets/${ticketId}/replies`, {
+            message: `[SUPERVISORY GUIDANCE]: ${note}`,
+            isInternal: true
+          });
+          Utils.showToast('Supervisory guidance note posted to ticket thread', 'success');
+        } else if (action === 'DEESCALATE') {
+          await API.patch(`/tickets/${ticketId}/status`, {
+            status: 'IN_PROGRESS',
+            note: `[ESCALATION REJECTED/RETURNED]: ${note}`
+          });
+          Utils.showToast('Ticket returned to assigned officer', 'success');
+        } else if (action === 'RESOLVE') {
+          await API.patch(`/tickets/${ticketId}/status`, {
+            status: 'RESOLVED',
+            note: `[RESOLVED BY SUPERVISOR]: ${note}`
+          });
+          Utils.showToast('Ticket resolved directly by supervisor', 'success');
+        }
+
+        closeDecisionModal();
+        await loadEscalatedTickets();
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to execute supervisor decision', 'error');
+      }
+    }
+  </script>
+</body>
+
+</html>

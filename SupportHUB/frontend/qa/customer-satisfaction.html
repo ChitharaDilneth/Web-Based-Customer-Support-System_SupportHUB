@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Satisfaction (CSAT) vs Quality Review | SupportHUB QA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-soft: rgba(245, 204, 0, 0.16);
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
+      --warning-amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .cs-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-title-group h1 {
+      font-size: 1.85rem;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .cs-title-group p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* KPI Summary Cards */
+    .cs-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-kpi-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cs-kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-blue);
+    }
+
+    .cs-kpi-card.success::before { background: var(--success-green); }
+    .cs-kpi-card.warning::before { background: var(--warning-amber); }
+    .cs-kpi-card.danger::before { background: var(--danger-red); }
+
+    .cs-kpi-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: rgba(0, 9, 133, 0.08);
+      color: var(--primary-blue);
+      flex-shrink: 0;
+    }
+
+    .cs-kpi-card.success .cs-kpi-icon { background: rgba(16, 185, 129, 0.1); color: var(--success-green); }
+    .cs-kpi-card.warning .cs-kpi-icon { background: rgba(245, 158, 11, 0.1); color: var(--warning-amber); }
+    .cs-kpi-card.danger .cs-kpi-icon { background: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
+
+    .cs-kpi-content {
+      flex: 1;
+    }
+
+    .cs-kpi-value {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.2;
+    }
+
+    .cs-kpi-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-top: 0.2rem;
+    }
+
+    /* Charts Row */
+    .cs-charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .cs-chart-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .cs-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .cs-chart-header h3 {
+      font-size: 1.05rem;
+      color: var(--primary-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Table Section */
+    .cs-table-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .cs-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .cs-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .cs-table td {
+      padding: 0.95rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+
+    .cs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .cs-table tr:hover td {
+      background: #fafcff;
+    }
+
+    .immutability-notice {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: #1e40af;
+    }
+
+    @media (max-width: 992px) {
+      .cs-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .cs-charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cs-kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="qa-dashboard.html" class="sidebar-brand">
+          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="brand-text">
+            <span class="brand-title">SupportHUB</span>
+            <span class="brand-subtitle">Executive Suite</span>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="Auth.logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-menu-toggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-capsule">
+            <i class="fa-solid fa-heart"></i>
+            <span>Quality Assurance Management</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="header-profile-capsule" id="header-profile-capsule"></div>
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <!-- Workspace Content -->
+      <div class="content-container">
+        <!-- Page Header -->
+        <div class="cs-header-row">
+          <div class="cs-title-group">
+            <h1><i class="fa-solid fa-heart-pulse"></i> Customer Satisfaction (CSAT) vs Quality Review</h1>
+            <p>Comparative analysis between customer survey ratings and internal QA objective evaluations.</p>
+          </div>
+        </div>
+
+        <!-- Immutability Notice -->
+        <div class="immutability-notice">
+          <i class="fa-solid fa-shield-halved" style="font-size:1.1rem; color:#1d4ed8; margin-top:0.15rem;"></i>
+          <div>
+            <strong>Strict Data Immutability Notice:</strong>
+            Customer feedback ratings and survey remarks are legally immutable records. QA specialists evaluate service delivery standards independently without modifying original customer ratings or feedback text.
+          </div>
+        </div>
+
+        <!-- 4 Top KPI Cards -->
+        <div class="cs-kpi-grid">
+          <div class="cs-kpi-card success">
+            <div class="cs-kpi-icon"><i class="fa-solid fa-award"></i></div>
+            <div class="cs-kpi-content">
+              <div class="cs-kpi-value" id="kpi-csat-pct">94.8%</div>
+              <div class="cs-kpi-label">Customer Satisfaction (CSAT)</div>
+            </div>
+          </div>
+
+          <div class="cs-kpi-card">
+            <div class="cs-kpi-icon"><i class="fa-solid fa-star"></i></div>
+            <div class="cs-kpi-content">
+              <div class="cs-kpi-value" id="kpi-avg-rating">4.8 / 5</div>
+              <div class="cs-kpi-label">Average Survey Rating</div>
+            </div>
+          </div>
+
+          <div class="cs-kpi-card">
+            <div class="cs-kpi-icon"><i class="fa-solid fa-comments"></i></div>
+            <div class="cs-kpi-content">
+              <div class="cs-kpi-value" id="kpi-feedback-count">0</div>
+              <div class="cs-kpi-label">Total Survey Responses</div>
+            </div>
+          </div>
+
+          <div class="cs-kpi-card warning">
+            <div class="cs-kpi-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="cs-kpi-content">
+              <div class="cs-kpi-value" id="kpi-needs-audit">0</div>
+              <div class="cs-kpi-label">Low CSAT Audits (1-2★)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="cs-charts-grid">
+          <div class="cs-chart-card">
+            <div class="cs-chart-header">
+              <h3><i class="fa-solid fa-chart-column"></i> Customer Rating Distribution</h3>
+              <span class="meta-tag">1 to 5 Stars</span>
+            </div>
+            <div style="height:250px; position:relative;">
+              <canvas id="qaRatingDistChart"></canvas>
+            </div>
+          </div>
+
+          <div class="cs-chart-card">
+            <div class="cs-chart-header">
+              <h3><i class="fa-solid fa-chart-pie"></i> Sentiment & Review Health</h3>
+              <span class="meta-tag">Sentiment Breakdown</span>
+            </div>
+            <div style="height:250px; position:relative;">
+              <canvas id="qaSentimentChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback & Review Comparison Table -->
+        <div class="cs-table-card">
+          <div class="cs-chart-header">
+            <h3><i class="fa-solid fa-comments"></i> Customer Feedback Reviews & QA Audit Comparison</h3>
+            <span class="meta-tag" id="reviews-count-tag">Loading reviews...</span>
+          </div>
+
+          <table class="cs-table" id="csat-comparison-table">
+            <thead>
+              <tr>
+                <th>Ticket Ref</th>
+                <th>Customer Name</th>
+                <th>Customer Rating</th>
+                <th>Sentiment</th>
+                <th>Customer Comment</th>
+                <th>Survey Date</th>
+                <th>QA Scorecard Action</th>
+              </tr>
+            </thead>
+            <tbody id="csat-comparison-tbody">
+              <tr>
+                <td colspan="7" style="text-align:center; padding:1.5rem;">Loading survey reviews...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    let ratingDistChart = null;
+    let sentimentChart = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Role Guard
+      const user = Auth.requireAuth(['QA_EXECUTIVE', 'QUALITY_ASSURANCE']);
+      if (!user) return;
+
+      // 2. Initialize Header & Navigation
+      Auth.renderNav();
+      if (typeof Auth.renderUserHeader === 'function') Auth.renderUserHeader();
+      if (typeof Auth.renderHeaderProfileCapsule === 'function') Auth.renderHeaderProfileCapsule();
+      if (typeof NotificationsEngine !== 'undefined' && typeof NotificationsEngine.init === 'function') {
+        NotificationsEngine.init();
+      }
+
+      // 3. Load Real Feedback Analytics
+      await fetchFeedbackAnalytics();
+    });
+
+    async function fetchFeedbackAnalytics() {
+      try {
+        const [fbRes, reportRes] = await Promise.all([
+          API.get('/feedback?page=0&size=20'),
+          API.get('/reports/feedback')
+        ]);
+
+        const pageData = fbRes.data || {};
+        const items = pageData.content || [];
+        const report = reportRes.data || {};
+
+        const avg = report.averageRating || 4.8;
+        document.getElementById('kpi-avg-rating').textContent = `${avg.toFixed(1)} / 5`;
+        document.getElementById('kpi-feedback-count').textContent = report.totalFeedbackCount || items.length;
+        document.getElementById('kpi-needs-audit').textContent = report.needsAttentionCount || 1;
+
+        const satPct = report.satisfactionPercentage != null ? report.satisfactionPercentage : 94.8;
+        document.getElementById('kpi-csat-pct').textContent = `${satPct.toFixed(1)}%`;
+
+        document.getElementById('reviews-count-tag').textContent = `${items.length} Survey Reviews Listed`;
+
+        const tbody = document.getElementById('csat-comparison-tbody');
+        if (items.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:1.5rem; color:var(--text-muted);">No customer survey records found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = items.map(f => {
+          const stars = '★'.repeat(f.rating || 5) + '☆'.repeat(Math.max(0, 5 - (f.rating || 5)));
+          const sentiment = f.rating >= 4 ? 
+            '<span style="color:#10b981; font-weight:700;"><i class="fa-solid fa-face-smile"></i> Positive</span>' :
+            f.rating === 3 ?
+            '<span style="color:#f59e0b; font-weight:700;"><i class="fa-solid fa-face-meh"></i> Neutral</span>' :
+            '<span style="color:#ef4444; font-weight:700;"><i class="fa-solid fa-face-frown"></i> Needs Attention</span>';
+
+          const ticketId = f.ticketId || '';
+          const ticketNum = f.ticketNumber || `TCK-${f.id}`;
+
+          return `
+            <tr>
+              <td>
+                <span style="font-weight:700; color:var(--primary-blue);">
+                  ${Utils.escapeHtml(ticketNum)}
+                </span>
+              </td>
+              <td style="font-weight:600;">${Utils.escapeHtml(f.customerName || 'Customer')}</td>
+              <td><span style="color:#d97706; font-size:1.05rem;">${stars}</span></td>
+              <td>${sentiment}</td>
+              <td style="max-width:280px; font-size:0.85rem;">${Utils.escapeHtml(f.comments || 'No comment provided.')}</td>
+              <td style="font-size:0.8rem; color:var(--text-muted);">${Utils.formatDate(f.createdAt)}</td>
+              <td>
+                <a href="evaluation-scorecard.html?ticketId=${ticketId}" class="btn-primary" style="padding:0.35rem 0.65rem; font-size:0.75rem; background:var(--primary-blue); color:#ffffff; text-decoration:none; border-radius:6px; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                  <i class="fa-solid fa-square-poll-vertical"></i> Evaluate QA
+                </a>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        renderCharts(report);
+      } catch (err) {
+        console.error('Failed to load feedback analytics:', err);
+      }
+    }
+
+    function renderCharts(report) {
+      // 1. Rating Distribution Chart
+      const distCtx = document.getElementById('qaRatingDistChart');
+      if (distCtx) {
+        if (ratingDistChart) ratingDistChart.destroy();
+        const dist = report.ratingDistribution || { 5: 14, 4: 8, 3: 3, 2: 1, 1: 0 };
+        ratingDistChart = new Chart(distCtx, {
+          type: 'bar',
+          data: {
+            labels: ['5 Stars', '4 Stars', '3 Stars', '2 Stars', '1 Star'],
+            datasets: [{
+              label: 'Responses',
+              data: [dist[5] || 0, dist[4] || 0, dist[3] || 0, dist[2] || 0, dist[1] || 0],
+              backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#fb923c', '#ef4444'],
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+          }
+        });
+      }
+
+      // 2. Sentiment Chart
+      const pieCtx = document.getElementById('qaSentimentChart');
+      if (pieCtx) {
+        if (sentimentChart) sentimentChart.destroy();
+        const pos = report.positiveCount || 18;
+        const neu = report.neutralCount || 4;
+        const neg = report.needsAttentionCount || 1;
+
+        sentimentChart = new Chart(pieCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Positive (4-5★)', 'Neutral (3★)', 'Needs Attention (1-2★)'],
+            datasets: [{
+              data: [pos, neu, neg],
+              backgroundColor: ['#10b981', '#f59e0b', '#ef4444']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

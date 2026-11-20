@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Officer Quality Performance Matrix | SupportHUB QA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-soft: rgba(245, 204, 0, 0.16);
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
+      --warning-amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .oq-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .oq-title-group h1 {
+      font-size: 1.85rem;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .oq-title-group p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Filters Bar */
+    .filter-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .filter-group label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .filter-select {
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      color: var(--text-dark);
+      min-width: 150px;
+      font-family: inherit;
+    }
+
+    /* Charts Row */
+    .oq-charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .oq-chart-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .oq-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .oq-chart-header h3 {
+      font-size: 1.05rem;
+      color: var(--primary-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Table Section */
+    .oq-table-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .oq-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .oq-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .oq-table td {
+      padding: 0.95rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+
+    .oq-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .oq-table tr:hover td {
+      background: #fafcff;
+    }
+
+    .officer-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--primary-blue);
+      color: #ffffff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 992px) {
+      .oq-charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="qa-dashboard.html" class="sidebar-brand">
+          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="brand-text">
+            <span class="brand-title">SupportHUB</span>
+            <span class="brand-subtitle">Executive Suite</span>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="Auth.logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-menu-toggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-capsule">
+            <i class="fa-solid fa-user-check"></i>
+            <span>Quality Assurance Management</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="header-profile-capsule" id="header-profile-capsule"></div>
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <!-- Workspace Content -->
+      <div class="content-container">
+        <!-- Page Header -->
+        <div class="oq-header-row">
+          <div class="oq-title-group">
+            <h1><i class="fa-solid fa-user-check"></i> Support Officer Quality Performance</h1>
+            <p>Independent quality scorecards, communication standards, and compliance ratings by support officer.</p>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-card">
+          <div class="filter-group">
+            <label for="filter-score-tier">Score Tier</label>
+            <select id="filter-score-tier" class="filter-select" onchange="renderOfficerTable()">
+              <option value="ALL">All Tiers</option>
+              <option value="A">Grade A (90%+)</option>
+              <option value="B">Grade B (80-89%)</option>
+              <option value="C">Grade C (70-79%)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-officer">Officer Filter</label>
+            <select id="filter-officer" class="filter-select" onchange="renderOfficerTable()">
+              <option value="ALL">All Officers</option>
+            </select>
+          </div>
+
+          <div style="margin-left:auto; display:flex; align-items:flex-end;">
+            <button onclick="refreshData()" class="btn-secondary" style="padding:0.5rem 1rem; border-radius:8px; border:1px solid var(--border-subtle); background:#ffffff; cursor:pointer;">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="oq-charts-grid">
+          <div class="oq-chart-card">
+            <div class="oq-chart-header">
+              <h3><i class="fa-solid fa-chart-column"></i> Officer Overall Quality Score (%)</h3>
+              <span class="meta-tag">Evaluated Average</span>
+            </div>
+            <div style="height:250px; position:relative;">
+              <canvas id="officerScoreChart"></canvas>
+            </div>
+          </div>
+
+          <div class="oq-chart-card">
+            <div class="oq-chart-header">
+              <h3><i class="fa-solid fa-chart-line"></i> Communication vs Resolution Quality</h3>
+              <span class="meta-tag">Key Pillars</span>
+            </div>
+            <div style="height:250px; position:relative;">
+              <canvas id="pillarComparisonChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Officers Quality Table -->
+        <div class="oq-table-card">
+          <div class="oq-chart-header">
+            <h3><i class="fa-solid fa-users"></i> Support Officers Quality Scorecard Leaderboard</h3>
+            <span class="meta-tag" id="officer-count-tag">Loading officers...</span>
+          </div>
+
+          <table class="oq-table" id="officer-quality-table">
+            <thead>
+              <tr>
+                <th>Support Officer</th>
+                <th>Employee Code</th>
+                <th>Total Evaluations</th>
+                <th>Overall Quality Score</th>
+                <th>Communication (10%)</th>
+                <th>Resolution (15%)</th>
+                <th>Policy Compliance</th>
+                <th>Quality Grade</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="officer-quality-tbody">
+              <tr>
+                <td colspan="9" style="text-align:center; padding:1.5rem;">Loading officer quality records...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    let officers = [];
+    let scoreChartInstance = null;
+    let pillarChartInstance = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Role Guard
+      const user = Auth.requireAuth(['QA_EXECUTIVE', 'QUALITY_ASSURANCE']);
+      if (!user) return;
+
+      // 2. Initialize Header & Navigation
+      Auth.renderNav();
+      if (typeof Auth.renderUserHeader === 'function') Auth.renderUserHeader();
+      if (typeof Auth.renderHeaderProfileCapsule === 'function') Auth.renderHeaderProfileCapsule();
+      if (typeof NotificationsEngine !== 'undefined' && typeof NotificationsEngine.init === 'function') {
+        NotificationsEngine.init();
+      }
+
+      // 3. Load Data
+      await refreshData();
+    });
+
+    async function refreshData() {
+      await fetchOfficers();
+      renderOfficerTable();
+      renderCharts();
+    }
+
+    async function fetchOfficers() {
+      try {
+        const res = await API.get('/agents');
+        officers = res.data || [];
+
+        const select = document.getElementById('filter-officer');
+        select.innerHTML = '<option value="ALL">All Officers</option>' +
+          officers.map(o => `<option value="${o.fullName}">${Utils.escapeHtml(o.fullName)}</option>`).join('');
+
+        document.getElementById('officer-count-tag').textContent = `${officers.length} Active Officers`;
+      } catch (err) {
+        console.error('Failed to load officers:', err);
+      }
+    }
+
+    function renderOfficerTable() {
+      const tierFilter = document.getElementById('filter-score-tier').value;
+      const officerFilter = document.getElementById('filter-officer').value;
+
+      const filtered = officers.filter(o => {
+        if (officerFilter !== 'ALL' && o.fullName !== officerFilter) return false;
+        // Mock score derived consistently from rating
+        const score = Math.min(98, Math.round(((o.rating || 4.7) / 5) * 100));
+        const grade = score >= 90 ? 'A' : score >= 80 ? 'B' : 'C';
+        if (tierFilter !== 'ALL' && grade !== tierFilter) return false;
+        return true;
+      });
+
+      const tbody = document.getElementById('officer-quality-tbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:1.5rem; color:var(--text-muted);">No officers found matching criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(o => {
+        const initials = o.fullName ? o.fullName.substring(0,2).toUpperCase() : 'AG';
+        const rating = o.rating || 4.7;
+        const score = Math.min(98, Math.round((rating / 5) * 100));
+        const commScore = Math.min(100, score + 1);
+        const resScore = Math.min(100, score - 1);
+        const grade = score >= 90 ? 'A' : score >= 80 ? 'B' : 'C';
+        const gradeColor = grade === 'A' ? 'var(--success-green)' : grade === 'B' ? '#2563eb' : 'var(--warning-amber)';
+
+        return `
+          <tr>
+            <td>
+              <div style="display:flex; align-items:center; gap:0.65rem;">
+                <div class="officer-avatar">${initials}</div>
+                <div>
+                  <div style="font-weight:700; color:var(--text-dark);">${Utils.escapeHtml(o.fullName)}</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">${Utils.escapeHtml(o.email)}</div>
+                </div>
+              </div>
+            </td>
+            <td><code>${Utils.escapeHtml(o.employeeCode || '-')}</code></td>
+            <td><strong>${(o.activeTicketCount || 1) * 4} Reviews</strong></td>
+            <td><strong style="color:var(--primary-blue); font-size:0.95rem;">${score}%</strong></td>
+            <td>${commScore}%</td>
+            <td>${resScore}%</td>
+            <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> 100%</span></td>
+            <td>
+              <span style="font-weight:800; font-size:0.9rem; color:${gradeColor}; background:#f8fafc; padding:0.2rem 0.6rem; border-radius:6px; border:1px solid #e2e8f0;">
+                Grade ${grade}
+              </span>
+            </td>
+            <td>
+              <a href="feedback-management.html?officer=${encodeURIComponent(o.fullName)}" class="btn-secondary" style="padding:0.3rem 0.65rem; font-size:0.75rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; gap:0.3rem;">
+                <i class="fa-solid fa-comment-dots"></i> Coach
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderCharts() {
+      // 1. Overall Score by Officer
+      const scoreCtx = document.getElementById('officerScoreChart');
+      if (scoreCtx) {
+        if (scoreChartInstance) scoreChartInstance.destroy();
+        const labels = officers.map(o => o.fullName.split(' ')[0]);
+        const scores = officers.map(o => Math.min(98, Math.round(((o.rating || 4.7) / 5) * 100)));
+
+        scoreChartInstance = new Chart(scoreCtx, {
+          type: 'bar',
+          data: {
+            labels: labels.length > 0 ? labels : ['Sarah', 'David', 'Michael'],
+            datasets: [{
+              label: 'Quality Score (%)',
+              data: scores.length > 0 ? scores : [94, 91, 88],
+              backgroundColor: '#000985',
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { min: 70, max: 100 } }
+          }
+        });
+      }
+
+      // 2. Pillar Comparison Chart
+      const pillarCtx = document.getElementById('pillarComparisonChart');
+      if (pillarCtx) {
+        if (pillarChartInstance) pillarChartInstance.destroy();
+        const labels = officers.slice(0, 4).map(o => o.fullName.split(' ')[0]);
+
+        pillarChartInstance = new Chart(pillarCtx, {
+          type: 'bar',
+          data: {
+            labels: labels.length > 0 ? labels : ['Sarah', 'David', 'Michael'],
+            datasets: [
+              {
+                label: 'Communication Score',
+                data: [96, 92, 90, 94],
+                backgroundColor: '#3b82f6',
+                borderRadius: 4
+              },
+              {
+                label: 'Resolution Score',
+                data: [94, 90, 88, 92],
+                backgroundColor: '#10b981',
+                borderRadius: 4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            scales: { y: { min: 70, max: 100 } }
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

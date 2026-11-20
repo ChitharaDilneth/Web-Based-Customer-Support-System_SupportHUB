@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Configuration & Operating Standards | SupportHUB Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-soft: rgba(245, 204, 0, 0.16);
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
+      --warning-amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .cfg-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cfg-title-group h1 {
+      font-size: 1.85rem;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .cfg-title-group p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .btn-save-cfg {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: 1px solid var(--primary-hover);
+      padding: 0.65rem 1.35rem;
+      border-radius: 9px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 9, 133, 0.25);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-save-cfg:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Grid Layout */
+    .cfg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cfg-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .cfg-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .cfg-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .cfg-card-header h2 {
+      font-size: 1.15rem;
+      color: var(--primary-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Working Days Chips */
+    .days-selector {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .day-chip {
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      background: #f8fafc;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+
+    .day-chip.active {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border-color: var(--primary-hover);
+    }
+
+    /* Table */
+    .cfg-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .cfg-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.75rem 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .cfg-table td {
+      padding: 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+
+    .cfg-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Switch toggle */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 38px;
+      height: 20px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: .3s;
+      border-radius: 20px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: var(--primary-blue);
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(18px);
+    }
+
+    @media (max-width: 992px) {
+      .cfg-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="manager-dashboard.html" class="sidebar-brand">
+          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="brand-text">
+            <span class="brand-title">SupportHUB</span>
+            <span class="brand-subtitle">Executive Suite</span>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="Auth.logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-menu-toggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-capsule">
+            <i class="fa-solid fa-gear"></i>
+            <span>Customer Support Manager Management</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="header-profile-capsule" id="header-profile-capsule"></div>
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <!-- Workspace Content -->
+      <div class="content-container">
+        <!-- Page Header -->
+        <div class="cfg-header-row">
+          <div class="cfg-title-group">
+            <h1><i class="fa-solid fa-sliders"></i> Service Configuration & Operating Standards</h1>
+            <p>Establish business operating hours, holiday schedules, customer-facing tier standards, and SLA clocks.</p>
+          </div>
+          <div>
+            <button class="btn-save-cfg" id="btn-save-all-configs" onclick="saveAllConfigurations()">
+              <i class="fa-solid fa-floppy-disk"></i> Save Configurations
+            </button>
+          </div>
+        </div>
+
+        <!-- Configuration Grid -->
+        <div class="cfg-grid">
+          <!-- Card 1: Operating Hours & Working Days -->
+          <div class="cfg-card">
+            <div class="cfg-card-header">
+              <h2><i class="fa-solid fa-business-time"></i> Support Operating Hours & Schedule</h2>
+              <span style="font-size:0.75rem; background:#f1f5f9; padding:0.2rem 0.6rem; border-radius:6px; font-weight:700; color:var(--text-muted);">SLA Clock Active</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="op-time-start">Daily Shift Start (EST) *</label>
+                <input type="time" id="op-time-start" class="form-control" value="08:00">
+              </div>
+              <div class="form-group">
+                <label for="op-time-end">Daily Shift End (EST) *</label>
+                <input type="time" id="op-time-end" class="form-control" value="18:00">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Standard Working Days (SLA Clock Running)</label>
+              <div class="days-selector" id="working-days-container">
+                <div class="day-chip active" data-day="MON" onclick="toggleDay(this)">MON</div>
+                <div class="day-chip active" data-day="TUE" onclick="toggleDay(this)">TUE</div>
+                <div class="day-chip active" data-day="WED" onclick="toggleDay(this)">WED</div>
+                <div class="day-chip active" data-day="THU" onclick="toggleDay(this)">THU</div>
+                <div class="day-chip active" data-day="FRI" onclick="toggleDay(this)">FRI</div>
+                <div class="day-chip" data-day="SAT" onclick="toggleDay(this)">SAT</div>
+                <div class="day-chip" data-day="SUN" onclick="toggleDay(this)">SUN</div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border-subtle);">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:700; font-size:0.875rem;">Weekend Emergency On-Call Mode</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Only URGENT critical outage tickets dispatch weekend officer alerts.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="weekend-oncall-toggle" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:0.75rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:700; font-size:0.875rem;">Pause SLA Deadlines Outside Working Hours</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Halts non-urgent ticket resolution timers during overnight shifts.</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="pause-sla-night-toggle" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Public Holiday Calendar & Exceptions -->
+          <div class="cfg-card">
+            <div class="cfg-card-header">
+              <h2><i class="fa-solid fa-calendar-xmark"></i> Public Holiday Calendar & Exceptions</h2>
+              <button class="btn-secondary" onclick="addHolidayRow()" style="font-size:0.75rem; padding:0.3rem 0.6rem; border-radius:6px; cursor:pointer;">
+                <i class="fa-solid fa-plus"></i> Add Holiday
+              </button>
+            </div>
+
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0;">SLA timers are automatically paused during declared public operational holidays.</p>
+
+            <table class="cfg-table" id="holidays-table">
+              <thead>
+                <tr>
+                  <th>Holiday Name</th>
+                  <th>Date</th>
+                  <th>Coverage Mode</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="holidays-tbody">
+                <tr>
+                  <td style="font-weight:600;">New Year's Day</td>
+                  <td>2026-01-01</td>
+                  <td><span style="font-size:0.75rem; background:#fee2e2; color:#b91c1c; padding:0.2rem 0.5rem; border-radius:4px; font-weight:700;">Full Closure</span></td>
+                  <td><button onclick="removeHolidayRow(this)" style="background:none; border:none; color:var(--danger-red); cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Memorial Day</td>
+                  <td>2026-05-25</td>
+                  <td><span style="font-size:0.75rem; background:#fee2e2; color:#b91c1c; padding:0.2rem 0.5rem; border-radius:4px; font-weight:700;">Full Closure</span></td>
+                  <td><button onclick="removeHolidayRow(this)" style="background:none; border:none; color:var(--danger-red); cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Independence Day</td>
+                  <td>2026-07-04</td>
+                  <td><span style="font-size:0.75rem; background:#fee2e2; color:#b91c1c; padding:0.2rem 0.5rem; border-radius:4px; font-weight:700;">Full Closure</span></td>
+                  <td><button onclick="removeHolidayRow(this)" style="background:none; border:none; color:var(--danger-red); cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Thanksgiving Day</td>
+                  <td>2026-11-26</td>
+                  <td><span style="font-size:0.75rem; background:#fee2e2; color:#b91c1c; padding:0.2rem 0.5rem; border-radius:4px; font-weight:700;">Full Closure</span></td>
+                  <td><button onclick="removeHolidayRow(this)" style="background:none; border:none; color:var(--danger-red); cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Card 3: Scheduled System Maintenance Windows (Full Width) -->
+          <div class="cfg-card full-width">
+            <div class="cfg-card-header">
+              <h2><i class="fa-solid fa-wrench"></i> Scheduled Maintenance Windows & SLA Exception Periods</h2>
+              <span style="font-size:0.75rem; background:#f1f5f9; padding:0.2rem 0.6rem; border-radius:6px; font-weight:700; color:var(--text-muted);">SLA Clock Excluded</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="maint-day">Recurring Maintenance Day</label>
+                <select id="maint-day" class="form-control">
+                  <option value="SUNDAY" selected>Sunday (Off-peak)</option>
+                  <option value="SATURDAY">Saturday</option>
+                  <option value="NONE">None (Continuous Service)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="maint-hours">Maintenance Window Hours (EST)</label>
+                <input type="text" id="maint-hours" class="form-control" value="02:00 AM - 04:00 AM (2h Duration)">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="maint-notice">Customer-Facing Maintenance Banner Notice</label>
+              <input type="text" id="maint-notice" class="form-control" value="SupportHUB scheduled platform maintenance occurs every Sunday from 2:00 AM to 4:00 AM EST.">
+            </div>
+          </div>
+
+          <!-- Card 4: Customer-Facing Service Tiers & Policies (Full Width) -->
+          <div class="cfg-card full-width">
+            <div class="cfg-card-header">
+              <h2><i class="fa-solid fa-medal"></i> Customer Service Tiers & Public Support Commitments</h2>
+              <span class="meta-tag">Customer Portal Synchronized</span>
+            </div>
+
+            <table class="cfg-table">
+              <thead>
+                <tr>
+                  <th>Tier Level</th>
+                  <th>Eligible Channels</th>
+                  <th>First Response Commitment</th>
+                  <th>Target Resolution</th>
+                  <th>Support Coverage</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight:700; color:var(--primary-blue);">
+                    <i class="fa-solid fa-shield" style="color:var(--text-muted); margin-right:0.4rem;"></i>
+                    Standard Account
+                  </td>
+                  <td>Web Portal, Email Ticket</td>
+                  <td>Within 8 Business Hours</td>
+                  <td>Within 48 Business Hours</td>
+                  <td>Mon - Fri (8:00 AM - 6:00 PM EST)</td>
+                  <td><span style="color:var(--success-green); font-weight:700; font-size:0.8rem;"><i class="fa-solid fa-circle-check"></i> Published</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700; color:var(--primary-blue);">
+                    <i class="fa-solid fa-shield" style="color:var(--warning-amber); margin-right:0.4rem;"></i>
+                    Priority Business Tier
+                  </td>
+                  <td>Web Portal, Priority Queue, Dedicated Chat</td>
+                  <td>Within 2 Business Hours</td>
+                  <td>Within 12 Business Hours</td>
+                  <td>Mon - Sat (8:00 AM - 8:00 PM EST)</td>
+                  <td><span style="color:var(--success-green); font-weight:700; font-size:0.8rem;"><i class="fa-solid fa-circle-check"></i> Published</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700; color:var(--primary-blue);">
+                    <i class="fa-solid fa-shield-halved" style="color:var(--accent-yellow); margin-right:0.4rem;"></i>
+                    Enterprise Mission Critical
+                  </td>
+                  <td>Direct Escalation, Dedicated Account Lead, 24/7 Hotline</td>
+                  <td>Within 30 Minutes (Urgent) / 1 Hour</td>
+                  <td>Within 4 Hours (Critical Outage)</td>
+                  <td>24/7/365 Continuous Coverage</td>
+                  <td><span style="color:var(--success-green); font-weight:700; font-size:0.8rem;"><i class="fa-solid fa-circle-check"></i> Published</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Role Guard
+      const user = Auth.requireAuth(['CUSTOMER_SUPPORT_MANAGER']);
+      if (!user) return;
+
+      // 2. Initialize Header & Navigation
+      Auth.renderNav();
+      if (typeof Auth.renderUserHeader === 'function') Auth.renderUserHeader();
+      if (typeof Auth.renderHeaderProfileCapsule === 'function') Auth.renderHeaderProfileCapsule();
+      if (typeof NotificationsEngine !== 'undefined' && typeof NotificationsEngine.init === 'function') {
+        NotificationsEngine.init();
+      }
+
+      // 3. Load Configurations
+      loadConfigurations();
+    });
+
+    function toggleDay(chip) {
+      chip.classList.toggle('active');
+    }
+
+    function addHolidayRow() {
+      const name = prompt('Enter Holiday Name (e.g. Labor Day):');
+      if (!name) return;
+      const date = prompt('Enter Holiday Date (YYYY-MM-DD):', new Date().toISOString().split('T')[0]);
+      if (!date) return;
+
+      const tbody = document.getElementById('holidays-tbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight:600;">${Utils.escapeHtml(name)}</td>
+        <td>${Utils.escapeHtml(date)}</td>
+        <td><span style="font-size:0.75rem; background:#fee2e2; color:#b91c1c; padding:0.2rem 0.5rem; border-radius:4px; font-weight:700;">Full Closure</span></td>
+        <td><button onclick="removeHolidayRow(this)" style="background:none; border:none; color:var(--danger-red); cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+      `;
+      tbody.appendChild(tr);
+      Utils.showToast('Holiday added to schedule', 'success');
+    }
+
+    function removeHolidayRow(btn) {
+      const row = btn.closest('tr');
+      if (row) row.remove();
+      Utils.showToast('Holiday removed', 'info');
+    }
+
+    function loadConfigurations() {
+      try {
+        const saved = localStorage.getItem('supporthub_service_config');
+        if (saved) {
+          const cfg = JSON.parse(saved);
+          if (cfg.startTime) document.getElementById('op-time-start').value = cfg.startTime;
+          if (cfg.endTime) document.getElementById('op-time-end').value = cfg.endTime;
+          if (cfg.weekendOncall != null) document.getElementById('weekend-oncall-toggle').checked = cfg.weekendOncall;
+          if (cfg.pauseSlaNight != null) document.getElementById('pause-sla-night-toggle').checked = cfg.pauseSlaNight;
+          if (cfg.maintDay) document.getElementById('maint-day').value = cfg.maintDay;
+          if (cfg.maintHours) document.getElementById('maint-hours').value = cfg.maintHours;
+          if (cfg.maintNotice) document.getElementById('maint-notice').value = cfg.maintNotice;
+
+          if (Array.isArray(cfg.workingDays)) {
+            const chips = document.querySelectorAll('.day-chip');
+            chips.forEach(c => {
+              if (cfg.workingDays.includes(c.getAttribute('data-day'))) {
+                c.classList.add('active');
+              } else {
+                c.classList.remove('active');
+              }
+            });
+          }
+        }
+      } catch (e) {
+        console.warn('Failed to load local service configurations:', e);
+      }
+    }
+
+    function saveAllConfigurations() {
+      const activeDays = [];
+      document.querySelectorAll('.day-chip.active').forEach(c => activeDays.push(c.getAttribute('data-day')));
+
+      const configData = {
+        startTime: document.getElementById('op-time-start').value,
+        endTime: document.getElementById('op-time-end').value,
+        workingDays: activeDays,
+        weekendOncall: document.getElementById('weekend-oncall-toggle').checked,
+        pauseSlaNight: document.getElementById('pause-sla-night-toggle').checked,
+        maintDay: document.getElementById('maint-day').value,
+        maintHours: document.getElementById('maint-hours').value,
+        maintNotice: document.getElementById('maint-notice').value,
+        lastUpdated: new Date().toISOString()
+      };
+
+      try {
+        localStorage.setItem('supporthub_service_config', JSON.stringify(configData));
+        Utils.showToast('Service Operating Hours & Standards successfully saved and applied', 'success');
+      } catch (e) {
+        Utils.showToast('Failed to save service configurations', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

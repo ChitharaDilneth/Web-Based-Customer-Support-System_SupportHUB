@@ -1,0 +1,2487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knowledge Base & Resolution Guides - SupportHUB</title>
+  <meta name="description" content="SupportHUB Knowledge Base. Search official step-by-step resolution guides, order policies, and technical solutions.">
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Theme Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+  <link rel="stylesheet" href="../css/responsive.css?v=14.0">
+
+  <style>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 - Customer Knowledge Base Styles
+       Brand: Primary Blue #000985 | Accent Yellow #F5CC00 | Pure White Surface
+       Theme: Subtle Glassmorphism, Rounded Cards (16px), Soft Shadows
+       ========================================================================== */
+
+    :root {
+      --kb-primary: #000985;
+      --kb-primary-dark: #00065c;
+      --kb-primary-light: #eff2ff;
+      --kb-accent: #F5CC00;
+      --kb-accent-hover: #e0bb00;
+      --kb-accent-light: #fffbeb;
+      --kb-bg-page: #f8fafc;
+      --kb-surface-white: #ffffff;
+      --kb-glass-bg: rgba(255, 255, 255, 0.88);
+      --kb-glass-border: rgba(0, 9, 133, 0.08);
+      --kb-glass-blur: blur(14px) saturate(180%);
+      --kb-shadow-soft: 0 10px 30px -5px rgba(0, 9, 133, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --kb-shadow-hover: 0 16px 36px -6px rgba(0, 9, 133, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+      --kb-border-subtle: #e2e8f0;
+      --kb-text-title: #0f172a;
+      --kb-text-body: #475569;
+      --kb-text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--kb-bg-page);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--kb-text-body);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem 3rem 1.75rem !important;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* --------------------------------------------------------------------------
+       Top Header Customization
+       -------------------------------------------------------------------------- */
+    .top-header {
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: var(--kb-glass-blur);
+      -webkit-backdrop-filter: var(--kb-glass-blur);
+      border-bottom: 1px solid var(--kb-glass-border);
+      padding: 0.85rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--kb-text-muted);
+    }
+
+    .header-breadcrumb a {
+      color: var(--kb-primary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .header-breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .header-breadcrumb .divider {
+      color: #cbd5e1;
+      font-size: 0.75rem;
+    }
+
+    .header-breadcrumb .current {
+      color: var(--kb-text-title);
+      font-weight: 700;
+    }
+
+    .header-profile-capsule {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--kb-border-subtle);
+      padding: 0.35rem 0.85rem 0.35rem 0.45rem;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--kb-primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.775rem;
+      font-weight: 700;
+      border: 2px solid var(--kb-accent);
+    }
+
+    /* --------------------------------------------------------------------------
+       Hero Search Banner
+       -------------------------------------------------------------------------- */
+    .kb-hero-banner {
+      background: linear-gradient(135deg, var(--kb-primary) 0%, var(--kb-primary-dark) 100%);
+      border-radius: 20px;
+      padding: 2.25rem 2.25rem;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      box-shadow: 0 14px 34px -8px rgba(0, 9, 133, 0.35);
+      position: relative;
+      overflow: visible;
+    }
+
+    .kb-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .kb-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 0.35rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--kb-accent);
+      margin-bottom: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kb-hero-title {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+    }
+
+    .kb-hero-subtitle {
+      font-size: 0.925rem;
+      color: #cbd5e1;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    /* Prominent Search Box */
+    .kb-search-container {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .kb-search-input-wrap {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 0.45rem 0.65rem 0.45rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .kb-search-input-wrap:focus-within {
+      border-color: var(--kb-accent);
+      box-shadow: 0 12px 30px rgba(245, 204, 0, 0.28);
+    }
+
+    .kb-search-input-wrap i.search-icon {
+      font-size: 1.1rem;
+      color: var(--kb-primary);
+    }
+
+    .kb-search-input-wrap input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--kb-text-title);
+      background: transparent;
+    }
+
+    .kb-search-input-wrap input::placeholder {
+      color: #94a3b8;
+    }
+
+    .kb-search-clear-btn {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: none;
+      padding: 0.25rem;
+      transition: color 0.15s ease;
+    }
+
+    .kb-search-clear-btn:hover {
+      color: var(--kb-text-title);
+    }
+
+    .btn-search-submit {
+      background: var(--kb-accent);
+      color: var(--kb-primary-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      padding: 0.65rem 1.35rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .btn-search-submit:hover {
+      background: var(--kb-accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Auto-suggest overlay */
+    .kb-suggestions-overlay {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px -8px rgba(0, 9, 133, 0.22);
+      border: 1px solid var(--kb-border-subtle);
+      z-index: 150;
+      max-height: 380px;
+      overflow-y: auto;
+      text-align: left;
+      display: none;
+    }
+
+    .kb-suggestions-overlay.show {
+      display: block;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .suggestion-header {
+      padding: 0.65rem 1rem;
+      font-size: 0.725rem;
+      font-weight: 700;
+      color: var(--kb-primary);
+      background: var(--kb-primary-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(0, 9, 133, 0.08);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .suggestion-item {
+      padding: 0.75rem 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.12s ease;
+      color: var(--kb-text-title);
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+
+    .suggestion-item:hover {
+      background: #f8fafc;
+    }
+
+    .suggestion-item-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--kb-text-title);
+      margin-bottom: 0.15rem;
+    }
+
+    .suggestion-item-cat {
+      font-size: 0.725rem;
+      color: var(--kb-primary);
+      font-weight: 600;
+    }
+
+    /* Quick Keyword Search Pills */
+    .kb-hero-tags {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.15rem;
+    }
+
+    .kb-tag-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      padding: 0.28rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .kb-tag-pill:hover {
+      background: #ffffff;
+      color: var(--kb-primary);
+      border-color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* Back to Help Center Link */
+    .kb-back-hc-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-back-hc {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--kb-primary);
+      text-decoration: none;
+      background: var(--kb-primary-light);
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 9, 133, 0.1);
+      transition: all 0.15s ease;
+    }
+
+    .btn-back-hc:hover {
+      background: #e0e7ff;
+      transform: translateX(-2px);
+    }
+
+    /* --------------------------------------------------------------------------
+       Section Titles
+       -------------------------------------------------------------------------- */
+    .section-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.25rem;
+      gap: 1rem;
+    }
+
+    .section-header-wrap h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--kb-text-title);
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header-wrap p {
+      font-size: 0.825rem;
+      color: var(--kb-text-body);
+      margin: 0;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION 1: Categories Cards Grid
+       -------------------------------------------------------------------------- */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.15rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .category-card {
+      background: var(--kb-surface-white);
+      border: 1px solid var(--kb-border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: var(--kb-shadow-soft);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--kb-shadow-hover);
+      border-color: var(--kb-primary);
+    }
+
+    .category-card.active {
+      border-color: var(--kb-primary);
+      background: #fbfcfe;
+      box-shadow: 0 0 0 2px var(--kb-primary);
+    }
+
+    .cat-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .cat-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--kb-primary-light);
+      color: var(--kb-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .cat-count-pill {
+      font-size: 0.725rem;
+      font-weight: 700;
+      color: var(--kb-primary);
+      background: #eef2ff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 9, 133, 0.1);
+    }
+
+    .cat-card-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--kb-text-title);
+      margin: 0 0 0.35rem 0;
+      line-height: 1.3;
+    }
+
+    .cat-card-desc {
+      font-size: 0.775rem;
+      color: var(--kb-text-body);
+      line-height: 1.45;
+      margin: 0 0 0.85rem 0;
+    }
+
+    .cat-card-action {
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--kb-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap 0.15s ease;
+    }
+
+    .category-card:hover .cat-card-action {
+      gap: 0.55rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION 2: Article Listing Filter & Controls Toolbar
+       -------------------------------------------------------------------------- */
+    .kb-toolbar-card {
+      background: var(--kb-surface-white);
+      border: 1px solid var(--kb-border-subtle);
+      border-radius: 16px;
+      padding: 1.15rem 1.35rem;
+      box-shadow: var(--kb-shadow-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    .kb-toolbar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .kb-filter-pills-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-filter-pill {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--kb-text-body);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-filter-pill:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .btn-filter-pill.active {
+      background: var(--kb-primary);
+      color: #ffffff;
+      border-color: var(--kb-primary);
+    }
+
+    .btn-filter-pill.active i {
+      color: var(--kb-accent) !important;
+    }
+
+    .kb-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .kb-sort-select {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.775rem;
+      font-weight: 600;
+      color: var(--kb-text-title);
+      outline: none;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .kb-sort-select:focus {
+      border-color: var(--kb-primary);
+    }
+
+    .kb-counter-badge {
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION 3: Article Listing Grid
+       -------------------------------------------------------------------------- */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .article-item-card {
+      background: var(--kb-surface-white);
+      border: 1px solid var(--kb-border-subtle);
+      border-radius: 16px;
+      padding: 1.35rem;
+      box-shadow: var(--kb-shadow-soft);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .article-item-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--kb-shadow-hover);
+      border-color: var(--kb-primary);
+    }
+
+    .art-card-category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--kb-primary);
+      background: var(--kb-primary-light);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+      width: fit-content;
+    }
+
+    .art-card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--kb-text-title);
+      line-height: 1.35;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .art-card-excerpt {
+      font-size: 0.825rem;
+      color: var(--kb-text-body);
+      line-height: 1.5;
+      margin: 0 0 1rem 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .art-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .art-tag-chip {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.685rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .art-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.85rem;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.75rem;
+      color: var(--kb-text-muted);
+    }
+
+    .art-read-cta {
+      font-weight: 700;
+      color: var(--kb-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: gap 0.15s ease;
+    }
+
+    .article-item-card:hover .art-read-cta {
+      gap: 0.45rem;
+    }
+
+    /* Pagination Controls */
+    .pagination-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 2rem 0;
+    }
+
+    .btn-page-nav {
+      background: #ffffff;
+      border: 1px solid var(--kb-border-subtle);
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--kb-text-title);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-page-nav:hover:not(:disabled) {
+      background: var(--kb-primary-light);
+      border-color: var(--kb-primary);
+      color: var(--kb-primary);
+    }
+
+    .btn-page-nav:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-page-number {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 0.775rem;
+      font-weight: 700;
+      border: 1px solid var(--kb-border-subtle);
+      background: #ffffff;
+      color: var(--kb-text-body);
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-page-number.active {
+      background: var(--kb-primary);
+      color: #ffffff;
+      border-color: var(--kb-primary);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION 4: Article Detail Page View (Standalone Comprehensive Reader)
+       -------------------------------------------------------------------------- */
+    #article-detail-view {
+      display: none;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .article-detail-card {
+      background: var(--kb-surface-white);
+      border: 1px solid var(--kb-border-subtle);
+      border-radius: 20px;
+      padding: 2.25rem;
+      box-shadow: var(--kb-shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .art-detail-header {
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .art-detail-top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .btn-back-to-articles {
+      background: none;
+      border: none;
+      color: var(--kb-primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0;
+      font-family: inherit;
+      transition: transform 0.15s ease;
+    }
+
+    .btn-back-to-articles:hover {
+      transform: translateX(-3px);
+      text-decoration: underline;
+    }
+
+    .art-utility-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-utility-icon {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.825rem;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-utility-icon:hover {
+      background: var(--kb-primary-light);
+      color: var(--kb-primary);
+      border-color: var(--kb-primary);
+    }
+
+    .art-detail-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--kb-text-title);
+      line-height: 1.3;
+      margin: 0 0 0.85rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .art-detail-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 0.8rem;
+      color: #64748b;
+      flex-wrap: wrap;
+    }
+
+    .art-detail-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .art-detail-meta-item strong {
+      color: var(--kb-text-title);
+    }
+
+    /* Article Content Prose */
+    .article-body-prose {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #334155;
+      margin-bottom: 2.5rem;
+    }
+
+    .article-body-prose p {
+      margin: 0 0 1.25rem 0;
+    }
+
+    .article-body-prose h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--kb-text-title);
+      margin: 1.75rem 0 0.75rem 0;
+    }
+
+    .article-body-prose ul, .article-body-prose ol {
+      margin: 0 0 1.25rem 1.5rem;
+      padding: 0;
+    }
+
+    .article-body-prose li {
+      margin-bottom: 0.45rem;
+    }
+
+    .article-body-prose .article-callout-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--kb-primary);
+      border-radius: 0 10px 10px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 0.875rem;
+      color: #1e3a8a;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION 5: Article Helpfulness & Feedback Widget
+       -------------------------------------------------------------------------- */
+    .article-feedback-card {
+      background: #f8fafc;
+      border: 1px solid var(--kb-border-subtle);
+      border-radius: 16px;
+      padding: 1.75rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .feedback-question-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--kb-text-title);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .feedback-question-subtitle {
+      font-size: 0.825rem;
+      color: #64748b;
+      margin: 0 0 1.25rem 0;
+    }
+
+    .feedback-vote-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-feedback-vote {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0.65rem 1.45rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--kb-text-title);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .btn-feedback-vote:hover {
+      border-color: var(--kb-primary);
+      background: var(--kb-primary-light);
+      color: var(--kb-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-feedback-vote.voted-yes {
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #047857;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-feedback-vote.voted-no {
+      background: #fff1f2;
+      border-color: #f43f5e;
+      color: #be123c;
+      box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2);
+    }
+
+    .feedback-confirmation-box {
+      margin-top: 1.15rem;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: none;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .feedback-confirmation-box.positive {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    .feedback-confirmation-box.negative {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+
+    .feedback-negative-ticket-cta {
+      margin-top: 0.85rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-raise-ticket-from-article {
+      background: var(--kb-primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.825rem;
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1.25rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: background 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-raise-ticket-from-article:hover {
+      background: var(--kb-primary-dark);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION 6: Related Articles
+       -------------------------------------------------------------------------- */
+    .related-articles-section {
+      margin-top: 2rem;
+    }
+
+    .related-articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.15rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION 7: Empty, Loading & Error States
+       -------------------------------------------------------------------------- */
+    .kb-state-card {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3.5rem 1.5rem;
+      background: #ffffff;
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+    }
+
+    .kb-state-card i {
+      font-size: 2.5rem;
+      color: #94a3b8;
+      margin-bottom: 0.85rem;
+      display: block;
+    }
+
+    .kb-state-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--kb-text-title);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .kb-state-card p {
+      font-size: 0.85rem;
+      color: var(--kb-text-body);
+      max-width: 480px;
+      margin: 0 auto 1.25rem auto;
+      line-height: 1.5;
+    }
+
+    /* --------------------------------------------------------------------------
+       Ticket Modal (Raise a Ticket Integration)
+       -------------------------------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .modal-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content-card {
+      background: #ffffff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--kb-border-subtle);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+      animation: modalSlideUp 0.25s ease-out;
+    }
+
+    .modal-header-sh {
+      background: linear-gradient(135deg, var(--kb-primary) 0%, var(--kb-primary-dark) 100%);
+      color: #ffffff;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header-sh h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-close-icon {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.35rem;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.15s ease;
+    }
+
+    .modal-close-icon:hover {
+      color: #ffffff;
+    }
+
+    .modal-body-sh {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer-sh {
+      padding: 1rem 1.5rem;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--kb-text-title);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-control-sh {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0.55rem 0.85rem;
+      font-size: 0.85rem;
+      color: var(--kb-text-title);
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s ease;
+      background: #ffffff;
+    }
+
+    .form-control-sh:focus {
+      border-color: var(--kb-primary);
+      box-shadow: 0 0 0 2px rgba(0, 9, 133, 0.15);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1100px) {
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .articles-grid { grid-template-columns: repeat(2, 1fr); }
+      .related-articles-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .categories-grid { grid-template-columns: 1fr; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .related-articles-grid { grid-template-columns: 1fr; }
+      .page-body { padding: 1rem !important; }
+      .kb-hero-banner { padding: 1.75rem 1.25rem; }
+      .kb-hero-title { font-size: 1.5rem; }
+      .art-detail-meta { gap: 0.75rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- Standard SupportHUB Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo"><span class="logo-support">Support</span><span class="logo-hub">HUB</span></div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+      <!-- Sticky Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="header-breadcrumb">
+            <a href="customer-dashboard.html">Dashboard</a>
+            <span class="divider">/</span>
+            <a href="../knowledge-base.html">Help Center</a>
+            <span class="divider">/</span>
+            <span class="current" id="breadcrumb-current-page">Knowledge Base</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Live Notification Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; color: #0f172a;">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+
+          <!-- Customer Profile Capsule -->
+          <div class="header-profile-capsule" id="header-profile-capsule">
+            <div class="header-avatar" id="header-user-avatar">CU</div>
+            <div style="text-align: left; line-height: 1.2;">
+              <div id="header-user-name" style="font-size: 0.775rem; font-weight: 700; color: #0f172a;">Customer</div>
+              <div id="header-user-role" style="font-size: 0.675rem; color: #64748b;">Customer Account</div>
+            </div>
+          </div>
+
+          <!-- Sign Out Button -->
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out" style="margin-left: 0.5rem;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Page Body -->
+      <div class="page-body">
+
+        <!-- Back to Help Center Bar -->
+        <div class="kb-back-hc-bar">
+          <a href="../knowledge-base.html" class="btn-back-hc">
+            <i class="fa-solid fa-arrow-left"></i> Back to Help Center Overview
+          </a>
+          <button onclick="openTicketModal()" class="btn-search-submit" style="padding: 0.45rem 1rem; font-size: 0.775rem;">
+            <i class="fa-solid fa-circle-plus"></i> Raise a Support Ticket
+          </button>
+        </div>
+
+        <!-- ====================================================================
+             MAIN VIEW CONTAINER: Knowledge Base Home & Article Listing
+             ==================================================================== -->
+        <div id="kb-main-listing-view">
+
+          <!-- SECTION 1: Knowledge Base Hero Search Banner -->
+          <div class="kb-hero-banner">
+            <div class="kb-hero-content">
+              <div class="kb-hero-badge">
+                <i class="fa-solid fa-shield-halved"></i> SupportHUB Knowledge Base
+              </div>
+              <h1 class="kb-hero-title">Official Resolution Guides & Policies</h1>
+              <p class="kb-hero-subtitle">
+                Search verified step-by-step troubleshooting articles, delivery workflows, payment policies, and order solutions.
+              </p>
+
+              <!-- Prominent Search Field with Auto-Suggest -->
+              <div class="kb-search-container">
+                <div class="kb-search-input-wrap">
+                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                  <input type="text" id="kb-search-input" placeholder="Search guides by title, problem, or keywords (e.g. 'refund', 'tracking')..." autocomplete="off" />
+                  <button type="button" id="kb-search-clear-btn" class="kb-search-clear-btn" onclick="clearSearchInput()"><i class="fa-solid fa-xmark"></i></button>
+                  <button type="button" class="btn-search-submit" onclick="executeSearch()">
+                    Search
+                  </button>
+                </div>
+
+                <!-- Debounced Suggestions Overlay -->
+                <div id="kb-suggestions-overlay" class="kb-suggestions-overlay"></div>
+              </div>
+
+              <!-- Quick Query Pills -->
+              <div class="kb-hero-tags">
+                <span style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Popular topics:</span>
+                <span class="kb-tag-pill" onclick="quickFilterQuery('Order')">Order Issues</span>
+                <span class="kb-tag-pill" onclick="quickFilterQuery('Delivery')">Delivery Tracking</span>
+                <span class="kb-tag-pill" onclick="quickFilterQuery('Refund')">Refund Policy</span>
+                <span class="kb-tag-pill" onclick="quickFilterQuery('Account')">Account Security</span>
+                <span class="kb-tag-pill" onclick="quickFilterQuery('Payment')">Payment Methods</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 2: Browse By Category -->
+          <div class="section-header-wrap">
+            <div>
+              <h2>Browse Solution Categories</h2>
+              <p>Explore articles organized by domain and support topic.</p>
+            </div>
+          </div>
+
+          <div class="categories-grid" id="categories-grid-container">
+            <div style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 2rem;">
+              <i class="fa-solid fa-spinner fa-spin"></i> Loading categories...
+            </div>
+          </div>
+
+          <!-- SECTION 3: Filter & Sort Controls Toolbar -->
+          <div class="kb-toolbar-card">
+            <div class="kb-toolbar-row">
+              <div class="kb-filter-pills-wrap" id="category-filter-pills">
+                <button class="btn-filter-pill active" onclick="filterByCategory(null, this)">
+                  <i class="fa-solid fa-layer-group"></i> All Guides
+                </button>
+                <!-- Dynamic category pills inserted here -->
+              </div>
+
+              <div class="kb-toolbar-right">
+                <div class="kb-counter-badge" id="articles-count-badge">Loading articles...</div>
+                <select id="sort-select" class="kb-sort-select" onchange="handleSortChange(this.value)">
+                  <option value="views_desc">Most Popular (Views)</option>
+                  <option value="newest">Newest First</option>
+                  <option value="oldest">Oldest First</option>
+                  <option value="alpha_asc">Title (A - Z)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 4: Article Listing Grid -->
+          <div class="articles-grid" id="articles-grid-container">
+            <!-- Dynamic article cards inserted here -->
+          </div>
+
+          <!-- Pagination Controls -->
+          <div class="pagination-bar" id="pagination-controls" style="display: none;">
+            <button class="btn-page-nav" id="btn-prev-page" onclick="changePage(-1)"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+            <div id="pagination-page-numbers" style="display: flex; gap: 0.35rem;"></div>
+            <button class="btn-page-nav" id="btn-next-page" onclick="changePage(1)">Next <i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+
+        </div>
+
+        <!-- ====================================================================
+             ARTICLE DETAIL VIEW (Deep Article Reader with Feedback Widget)
+             ==================================================================== -->
+        <div id="article-detail-view">
+
+          <div class="article-detail-card">
+            <div class="art-detail-header">
+              <div class="art-detail-top-actions">
+                <button type="button" class="btn-back-to-articles" onclick="closeArticleDetailView()">
+                  <i class="fa-solid fa-arrow-left"></i> Back to all articles
+                </button>
+                <div class="art-utility-buttons">
+                  <button type="button" class="btn-utility-icon" title="Copy article link" onclick="copyArticleLink()"><i class="fa-regular fa-copy"></i></button>
+                  <button type="button" class="btn-utility-icon" title="Print article" onclick="window.print()"><i class="fa-solid fa-print"></i></button>
+                </div>
+              </div>
+
+              <div class="art-card-category-badge" id="art-detail-category-badge">
+                <i class="fa-solid fa-book-bookmark"></i> Category
+              </div>
+
+              <h1 class="art-detail-title" id="art-detail-title">Article Title</h1>
+
+              <div class="art-detail-meta">
+                <div class="art-detail-meta-item">
+                  <i class="fa-regular fa-calendar"></i> Published: <strong id="art-detail-published-date">--</strong>
+                </div>
+                <div class="art-detail-meta-item">
+                  <i class="fa-solid fa-rotate"></i> Updated: <strong id="art-detail-updated-date">--</strong>
+                </div>
+                <div class="art-detail-meta-item">
+                  <i class="fa-regular fa-eye"></i> Views: <strong id="art-detail-view-count">0</strong>
+                </div>
+                <div class="art-detail-meta-item">
+                  <i class="fa-solid fa-user-shield"></i> Curated by: <strong id="art-detail-author">Support Team</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Safe Rendered Article Prose -->
+            <div class="article-body-prose" id="art-detail-content-body">
+              <!-- Content safely formatted -->
+            </div>
+
+            <!-- Tags Row -->
+            <div id="art-detail-tags-wrap" style="margin-bottom: 2rem; display: none;">
+              <span style="font-size: 0.775rem; font-weight: 700; color: #64748b; margin-right: 0.5rem;">Tags:</span>
+              <div id="art-detail-tags-chips" style="display: inline-flex; gap: 0.35rem; flex-wrap: wrap;"></div>
+            </div>
+
+            <!-- SECTION 5: Article Helpfulness & Feedback Section -->
+            <div class="article-feedback-card" id="article-feedback-card">
+              <h3 class="feedback-question-title">Was this article helpful?</h3>
+              <p class="feedback-question-subtitle">Your feedback helps us continuously improve our customer self-service solutions.</p>
+
+              <div class="feedback-vote-buttons" id="feedback-vote-buttons">
+                <button type="button" class="btn-feedback-vote" id="btn-vote-yes" onclick="submitArticleHelpfulVote(true)">
+                  <i class="fa-solid fa-thumbs-up" style="color: #10b981;"></i> Yes, this helped me
+                </button>
+                <button type="button" class="btn-feedback-vote" id="btn-vote-no" onclick="submitArticleHelpfulVote(false)">
+                  <i class="fa-solid fa-thumbs-down" style="color: #f43f5e;"></i> No, I still need help
+                </button>
+              </div>
+
+              <!-- Positive Confirmation Box -->
+              <div class="feedback-confirmation-box positive" id="feedback-positive-box">
+                <i class="fa-solid fa-circle-check" style="font-size: 1.1rem; margin-right: 0.4rem;"></i>
+                Thank you! We're thrilled that this guide helped resolve your issue.
+              </div>
+
+              <!-- Negative Confirmation Box with Raise Ticket Action -->
+              <div class="feedback-confirmation-box negative" id="feedback-negative-box">
+                <div style="margin-bottom: 0.45rem;">
+                  <i class="fa-solid fa-circle-exclamation" style="font-size: 1.1rem; margin-right: 0.4rem;"></i>
+                  We are sorry this article didn't resolve your issue. Our customer support team is ready to step in.
+                </div>
+                <div class="feedback-negative-ticket-cta">
+                  <span>Still need help?</span>
+                  <button type="button" class="btn-raise-ticket-from-article" onclick="raiseTicketFromCurrentArticle()">
+                    <i class="fa-solid fa-ticket"></i> Raise a Support Ticket for this Issue
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 6: Related Articles -->
+            <div class="related-articles-section" id="related-articles-section">
+              <div class="section-header-wrap" style="margin-bottom: 1rem;">
+                <div>
+                  <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">Related Guides & Solutions</h3>
+                  <p style="font-size: 0.8rem; color: #64748b; margin: 0;">Other helpful articles in this category.</p>
+                </div>
+              </div>
+
+              <div class="related-articles-grid" id="related-articles-container">
+                <!-- Related article cards -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       Raise a Support Ticket Modal (Integrated Source Article Linking)
+       ==================================================================== -->
+  <div class="modal-backdrop" id="ticket-modal">
+    <div class="modal-content-card">
+      <div class="modal-header-sh">
+        <h3><i class="fa-solid fa-circle-plus" style="color: var(--kb-accent);"></i> Raise a Support Ticket</h3>
+        <button type="button" class="modal-close-icon" onclick="closeTicketModal()">&times;</button>
+      </div>
+      <form id="create-ticket-form" onsubmit="handleTicketFormSubmit(event)">
+        <div class="modal-body-sh">
+          
+          <!-- Source Article Callout Banner -->
+          <div id="modal-article-reference-callout" style="display: none; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 0.65rem 0.85rem; margin-bottom: 1.15rem; font-size: 0.8rem; color: #1e40af;">
+            <i class="fa-solid fa-link" style="margin-right: 0.35rem;"></i>
+            <strong>Referenced Guide:</strong> <span id="modal-ref-article-title">--</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Support Category <span style="color: #ef4444;">*</span></label>
+            <select id="ticket-modal-category" class="form-control-sh" required>
+              <option value="">Select Category...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Subject / Issue Summary <span style="color: #ef4444;">*</span></label>
+            <input type="text" id="ticket-modal-subject" class="form-control-sh" placeholder="Brief summary of your question or issue" required minlength="5" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label">Related Order # (Optional)</label>
+              <input type="text" id="ticket-modal-order" class="form-control-sh" placeholder="e.g. ORD-2026-9812" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Priority</label>
+              <select id="ticket-modal-priority" class="form-control-sh">
+                <option value="LOW">Low</option>
+                <option value="MEDIUM" selected>Medium</option>
+                <option value="HIGH">High</option>
+                <option value="URGENT">Urgent</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Detailed Description <span style="color: #ef4444;">*</span></label>
+            <textarea id="ticket-modal-description" class="form-control-sh" rows="4" placeholder="Describe what happened, any error messages, and what assistance you need..." required minlength="10"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">Attachment (Optional screenshot or receipt)</label>
+            <input type="file" id="ticket-modal-file" class="form-control-sh" accept="image/*,.pdf,.doc,.docx" />
+            <div style="font-size: 0.7rem; color: #94a3b8; margin-top: 0.25rem;">Supported formats: PNG, JPG, PDF (Max 10MB)</div>
+          </div>
+
+        </div>
+        <div class="modal-footer-sh">
+          <button type="button" class="btn btn-secondary" onclick="closeTicketModal()" style="font-size: 0.85rem; border-radius: 8px;">Cancel</button>
+          <button type="submit" id="btn-submit-ticket-form" class="btn-search-submit" style="font-size: 0.85rem; border-radius: 8px;">
+            <i class="fa-solid fa-paper-plane"></i> Submit Ticket
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 — Customer Knowledge Base Controller
+       ========================================================================== */
+
+    // Application State Store
+    let currentUser = null;
+    let allPublishedArticles = [];
+    let allActiveCategories = [];
+    let selectedCategoryId = null;
+    let searchQuery = '';
+    let currentSort = 'views_desc';
+    let currentPage = 1;
+    const PAGE_SIZE = 6;
+    let searchDebounceTimer = null;
+    let currentViewingArticle = null;
+
+    // Standard Category Icon & Accent Map
+    const CATEGORY_MAP = {
+      'Order Issues': { icon: 'fa-box-open', color: '#000985' },
+      'Delivery Issues': { icon: 'fa-truck', color: '#0284c7' },
+      'Payment & Refunds': { icon: 'fa-credit-card', color: '#d97706' },
+      'Account Issues': { icon: 'fa-user-shield', color: '#7c3aed' },
+      'Product Information': { icon: 'fa-circle-info', color: '#059669' },
+      'Technical Support': { icon: 'fa-gear', color: '#475569' }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Enforce RBAC
+      if (!Auth.requireRole(['CUSTOMER', 'CUSTOMER_SERVICE_OFFICER', 'OPERATIONS_SUPERVISOR', 'CUSTOMER_SUPPORT_MANAGER', 'QA_EXECUTIVE'])) {
+        return;
+      }
+
+      currentUser = Auth.getUser();
+      initHeaderProfile();
+      Auth.renderSidebar();
+
+      if (typeof NotificationsEngine !== 'undefined') {
+        NotificationsEngine.init();
+      }
+
+      // 2. Fetch Categories & Articles in Parallel
+      await Promise.allSettled([
+        loadActiveCategories(),
+        loadPublishedArticles()
+      ]);
+
+      // 3. Setup Search Input Event Listeners
+      setupSearchInputEvents();
+
+      // 4. Check URL Params (Supports direct deep linking: ?id=12 or ?q=refund or ?cat=3)
+      handleUrlParameters();
+
+      // 5. Browser History Popstate support (Back/Forward buttons)
+      window.addEventListener('popstate', (event) => {
+        handleUrlParameters();
+      });
+    });
+
+    /* ==========================================================================
+       1. Header & Profile Capsule
+       ========================================================================== */
+    function initHeaderProfile() {
+      if (!currentUser) return;
+
+      const nameEl = document.getElementById('header-user-name');
+      const roleEl = document.getElementById('header-user-role');
+      const avatarEl = document.getElementById('header-user-avatar');
+
+      const name = currentUser.fullName || currentUser.email || 'Customer';
+      if (nameEl) nameEl.textContent = name;
+      if (roleEl) roleEl.textContent = (currentUser.role || 'CUSTOMER').replace(/_/g, ' ');
+
+      if (avatarEl) {
+        avatarEl.textContent = name.substring(0, 2).toUpperCase();
+      }
+    }
+
+    /* ==========================================================================
+       2. Data Loaders (Categories & Published Articles)
+       ========================================================================== */
+    async function loadActiveCategories() {
+      try {
+        const res = await API.get('/categories/active');
+        allActiveCategories = res.data || [];
+        renderCategoryBrowserCards();
+        renderCategoryFilterPills();
+        populateTicketModalCategories();
+      } catch (err) {
+        console.warn('Could not load categories:', err);
+        allActiveCategories = [];
+      }
+    }
+
+    async function loadPublishedArticles() {
+      const container = document.getElementById('articles-grid-container');
+      try {
+        const res = await API.get('/knowledge-base/public');
+        // Only published articles are returned by /knowledge-base/public
+        allPublishedArticles = res.data || [];
+        applyFiltersAndRenderListing();
+      } catch (err) {
+        console.error('Could not load published KB articles:', err);
+        allPublishedArticles = [];
+        container.innerHTML = `
+          <div class="kb-state-card">
+            <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>
+            <h3>Unable to Load Knowledge Base</h3>
+            <p>We encountered an issue retrieving the latest guides. Please check your connection or try again.</p>
+            <button class="btn btn-primary" onclick="loadPublishedArticles()" style="background: var(--kb-primary);">
+              <i class="fa-solid fa-rotate-right"></i> Try Again
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    /* ==========================================================================
+       3. Browse Categories Renderers
+       ========================================================================== */
+    function renderCategoryBrowserCards() {
+      const container = document.getElementById('categories-grid-container');
+      if (!container) return;
+
+      if (!allActiveCategories || allActiveCategories.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #94a3b8;">No support categories available.</div>';
+        return;
+      }
+
+      container.innerHTML = allActiveCategories.map(cat => {
+        const config = CATEGORY_MAP[cat.name] || { icon: 'fa-folder', color: '#000985' };
+        
+        // Count published articles matching this category
+        const articleCount = allPublishedArticles.filter(art => 
+          art.categoryId === cat.id || art.categoryName === cat.name
+        ).length;
+
+        const countLabel = articleCount === 1 ? '1 Guide' : `${articleCount} Guides`;
+        const desc = cat.description || `Browse official resolution steps and policies for ${cat.name}.`;
+
+        return `
+          <div class="category-card ${selectedCategoryId === cat.id ? 'active' : ''}" onclick="selectCategoryFromCard(${cat.id})">
+            <div>
+              <div class="cat-card-top">
+                <div class="cat-icon-badge" style="color: ${config.color};">
+                  <i class="fa-solid ${config.icon}"></i>
+                </div>
+                <span class="cat-count-pill">${countLabel}</span>
+              </div>
+              <h3 class="cat-card-title">${escapeHtml(cat.name)}</h3>
+              <p class="cat-card-desc">${escapeHtml(desc)}</p>
+            </div>
+            <div class="cat-card-action">
+              <span>View Articles</span> &rarr;
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderCategoryFilterPills() {
+      const container = document.getElementById('category-filter-pills');
+      if (!container) return;
+
+      let html = `
+        <button class="btn-filter-pill ${selectedCategoryId === null ? 'active' : ''}" onclick="filterByCategory(null, this)">
+          <i class="fa-solid fa-layer-group"></i> All Guides
+        </button>
+      `;
+
+      allActiveCategories.forEach(cat => {
+        const config = CATEGORY_MAP[cat.name] || { icon: 'fa-folder' };
+        const isActive = selectedCategoryId === cat.id;
+        html += `
+          <button class="btn-filter-pill ${isActive ? 'active' : ''}" onclick="filterByCategory(${cat.id}, this)">
+            <i class="fa-solid ${config.icon}"></i> ${escapeHtml(cat.name)}
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function selectCategoryFromCard(categoryId) {
+      selectedCategoryId = categoryId;
+      currentPage = 1;
+      renderCategoryFilterPills();
+      renderCategoryBrowserCards();
+      applyFiltersAndRenderListing();
+
+      // Smooth scroll down to articles toolbar
+      const toolbar = document.querySelector('.kb-toolbar-card');
+      if (toolbar) {
+        toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function filterByCategory(categoryId, btnEl) {
+      selectedCategoryId = categoryId;
+      currentPage = 1;
+
+      document.querySelectorAll('.btn-filter-pill').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      renderCategoryBrowserCards();
+      applyFiltersAndRenderListing();
+    }
+
+    /* ==========================================================================
+       4. Search Functionality & Suggestions
+       ========================================================================== */
+    function setupSearchInputEvents() {
+      const input = document.getElementById('kb-search-input');
+      const clearBtn = document.getElementById('kb-search-clear-btn');
+      const overlay = document.getElementById('kb-suggestions-overlay');
+
+      if (!input) return;
+
+      input.addEventListener('input', (e) => {
+        const val = e.target.value.trim();
+        if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
+
+        if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(() => {
+          fetchSearchSuggestions(val);
+        }, 220);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (overlay) overlay.classList.remove('show');
+          executeSearch();
+        } else if (e.key === 'Escape') {
+          if (overlay) overlay.classList.remove('show');
+        }
+      });
+
+      // Dismiss overlay when clicking outside
+      document.addEventListener('click', (e) => {
+        const searchBox = document.querySelector('.kb-search-container');
+        if (overlay && searchBox && !searchBox.contains(e.target)) {
+          overlay.classList.remove('show');
+        }
+      });
+    }
+
+    function clearSearchInput() {
+      const input = document.getElementById('kb-search-input');
+      const clearBtn = document.getElementById('kb-search-clear-btn');
+      const overlay = document.getElementById('kb-suggestions-overlay');
+
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      if (clearBtn) clearBtn.style.display = 'none';
+      if (overlay) overlay.classList.remove('show');
+
+      searchQuery = '';
+      currentPage = 1;
+      applyFiltersAndRenderListing();
+    }
+
+    function quickFilterQuery(term) {
+      const input = document.getElementById('kb-search-input');
+      const clearBtn = document.getElementById('kb-search-clear-btn');
+      if (input) {
+        input.value = term;
+        if (clearBtn) clearBtn.style.display = 'block';
+        executeSearch();
+      }
+    }
+
+    function executeSearch() {
+      const input = document.getElementById('kb-search-input');
+      searchQuery = input ? input.value.trim().toLowerCase() : '';
+      currentPage = 1;
+
+      const overlay = document.getElementById('kb-suggestions-overlay');
+      if (overlay) overlay.classList.remove('show');
+
+      applyFiltersAndRenderListing();
+
+      const toolbar = document.querySelector('.kb-toolbar-card');
+      if (toolbar) {
+        toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    async function fetchSearchSuggestions(query) {
+      const overlay = document.getElementById('kb-suggestions-overlay');
+      if (!overlay) return;
+
+      if (!query || query.length < 2) {
+        overlay.classList.remove('show');
+        overlay.innerHTML = '';
+        return;
+      }
+
+      // Filter locally from all published articles first for zero-latency suggestions
+      const q = query.toLowerCase();
+      const matches = allPublishedArticles.filter(art => {
+        const title = (art.title || '').toLowerCase();
+        const tags = (art.tags || '').toLowerCase();
+        const content = (art.content || '').toLowerCase();
+        return title.includes(q) || tags.includes(q) || content.includes(q);
+      });
+
+      if (matches.length === 0) {
+        overlay.innerHTML = `
+          <div style="padding: 1rem; text-align: center; color: #64748b; font-size: 0.825rem;">
+            No articles directly matching "<strong>${escapeHtml(query)}</strong>".
+            <div style="margin-top: 0.5rem;">
+              <button onclick="executeSearch()" class="btn btn-sm" style="background: var(--kb-primary); color: #fff; font-size: 0.75rem;">
+                Run full text search
+              </button>
+            </div>
+          </div>
+        `;
+        overlay.classList.add('show');
+        return;
+      }
+
+      let html = `<div class="suggestion-header"><span>Matching Guides</span><span>${matches.length} found</span></div>`;
+      matches.slice(0, 5).forEach(art => {
+        const cat = art.categoryName || 'General Guide';
+        html += `
+          <div class="suggestion-item" onclick="openArticleDetail(${art.id})">
+            <div>
+              <div class="suggestion-item-title">${escapeHtml(art.title)}</div>
+              <div class="suggestion-item-cat"><i class="fa-solid fa-book-bookmark"></i> ${escapeHtml(cat)}</div>
+            </div>
+            <i class="fa-solid fa-angle-right" style="color: #94a3b8; font-size: 0.8rem;"></i>
+          </div>
+        `;
+      });
+
+      if (matches.length > 5) {
+        html += `
+          <div style="padding: 0.5rem 1rem; text-align: center; background: #f8fafc; border-top: 1px solid #e2e8f0;">
+            <a href="javascript:void(0)" onclick="executeSearch()" style="font-size: 0.775rem; font-weight: 700; color: var(--kb-primary); text-decoration: none;">
+              View all ${matches.length} results &rarr;
+            </a>
+          </div>
+        `;
+      }
+
+      overlay.innerHTML = html;
+      overlay.classList.add('show');
+    }
+
+    /* ==========================================================================
+       5. Article Filtering, Sorting & Pagination
+       ========================================================================== */
+    function handleSortChange(sortVal) {
+      currentSort = sortVal;
+      currentPage = 1;
+      applyFiltersAndRenderListing();
+    }
+
+    function applyFiltersAndRenderListing() {
+      const container = document.getElementById('articles-grid-container');
+      const badge = document.getElementById('articles-count-badge');
+      if (!container) return;
+
+      // 1. Filter by category & search query
+      let filtered = allPublishedArticles.filter(art => {
+        const matchesCategory = selectedCategoryId === null || art.categoryId === selectedCategoryId;
+        
+        let matchesSearch = true;
+        if (searchQuery) {
+          const title = (art.title || '').toLowerCase();
+          const content = (art.content || '').toLowerCase();
+          const tags = (art.tags || '').toLowerCase();
+          const cat = (art.categoryName || '').toLowerCase();
+          matchesSearch = title.includes(searchQuery) || content.includes(searchQuery) || tags.includes(searchQuery) || cat.includes(searchQuery);
+        }
+
+        return matchesCategory && matchesSearch;
+      });
+
+      // 2. Sort results
+      filtered.sort((a, b) => {
+        if (currentSort === 'views_desc') {
+          return (b.viewCount || 0) - (a.viewCount || 0);
+        } else if (currentSort === 'newest') {
+          return new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt);
+        } else if (currentSort === 'oldest') {
+          return new Date(a.createdAt) - new Date(b.createdAt);
+        } else if (currentSort === 'alpha_asc') {
+          return (a.title || '').localeCompare(b.title || '');
+        }
+        return 0;
+      });
+
+      // Update badge
+      if (badge) {
+        const label = filtered.length === 1 ? '1 Guide' : `${filtered.length} Guides`;
+        badge.textContent = `Showing ${label}`;
+      }
+
+      // Empty State handling
+      if (filtered.length === 0) {
+        const hasQuery = searchQuery.length > 0;
+        container.innerHTML = `
+          <div class="kb-state-card">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <h3>${hasQuery ? 'No Matching Articles Found' : 'No Articles in this Category Yet'}</h3>
+            <p>
+              ${hasQuery 
+                ? `We couldn't find any published guides matching "${escapeHtml(searchQuery)}". Would you like to raise a support ticket directly with our team?`
+                : 'There are currently no published articles in this category. Our support team is authoring new guides daily.'
+              }
+            </p>
+            <div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+              ${hasQuery ? `
+                <button type="button" class="btn btn-secondary" onclick="clearSearchInput()" style="font-size: 0.825rem; border-radius: 8px;">
+                  Clear Search
+                </button>
+                <button type="button" class="btn-search-submit" onclick="openTicketModalWithTopic('${escapeHtml(searchQuery)}')" style="font-size: 0.825rem; border-radius: 8px;">
+                  <i class="fa-solid fa-circle-plus"></i> Raise a Ticket for "${escapeHtml(searchQuery)}"
+                </button>
+              ` : `
+                <button type="button" class="btn-search-submit" onclick="filterByCategory(null)" style="font-size: 0.825rem; border-radius: 8px;">
+                  View All Guides
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+        document.getElementById('pagination-controls').style.display = 'none';
+        return;
+      }
+
+      // 3. Paginate
+      const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * PAGE_SIZE;
+      const pageItems = filtered.slice(startIndex, startIndex + PAGE_SIZE);
+
+      container.innerHTML = pageItems.map(art => {
+        const cat = art.categoryName || 'General Guide';
+        const views = (art.viewCount || 0).toLocaleString();
+        const dateStr = art.updatedAt ? Utils.formatDate(art.updatedAt) : 'Recent';
+        
+        // Clean excerpt snippet
+        const cleanContent = art.content || 'Click to read full resolution guide.';
+        const excerpt = cleanContent.length > 130 ? cleanContent.substring(0, 130) + '...' : cleanContent;
+
+        // Tags parsing
+        let tagsHtml = '';
+        if (art.tags && art.tags.trim()) {
+          const tagList = art.tags.split(',').map(t => t.trim()).filter(Boolean);
+          tagsHtml = `
+            <div class="art-tags-row">
+              ${tagList.slice(0, 3).map(tag => `<span class="art-tag-chip"><i class="fa-solid fa-tag" style="font-size: 0.6rem;"></i> ${escapeHtml(tag)}</span>`).join('')}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="article-item-card" onclick="openArticleDetail(${art.id})">
+            <div>
+              <span class="art-card-category-badge">
+                <i class="fa-solid fa-book-bookmark"></i> ${escapeHtml(cat)}
+              </span>
+              <h3 class="art-card-title">${escapeHtml(art.title)}</h3>
+              <p class="art-card-excerpt">${escapeHtml(excerpt)}</p>
+              ${tagsHtml}
+            </div>
+            <div class="art-card-footer">
+              <div style="display: flex; gap: 0.65rem;">
+                <span><i class="fa-regular fa-eye"></i> ${views} views</span>
+                <span>• ${dateStr}</span>
+              </div>
+              <span class="art-read-cta">Read Guide &rarr;</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderPaginationControls(totalPages);
+    }
+
+    function renderPaginationControls(totalPages) {
+      const controls = document.getElementById('pagination-controls');
+      const prevBtn = document.getElementById('btn-prev-page');
+      const nextBtn = document.getElementById('btn-next-page');
+      const numbersContainer = document.getElementById('pagination-page-numbers');
+
+      if (!controls || totalPages <= 1) {
+        if (controls) controls.style.display = 'none';
+        return;
+      }
+
+      controls.style.display = 'flex';
+      prevBtn.disabled = (currentPage === 1);
+      nextBtn.disabled = (currentPage === totalPages);
+
+      let numsHtml = '';
+      for (let i = 1; i <= totalPages; i++) {
+        numsHtml += `
+          <button class="btn-page-number ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>
+        `;
+      }
+      numbersContainer.innerHTML = numsHtml;
+    }
+
+    function changePage(delta) {
+      currentPage += delta;
+      applyFiltersAndRenderListing();
+      const toolbar = document.querySelector('.kb-toolbar-card');
+      if (toolbar) toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      applyFiltersAndRenderListing();
+      const toolbar = document.querySelector('.kb-toolbar-card');
+      if (toolbar) toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ==========================================================================
+       6. Article Detail Page View (Deep Article Reader & Safe Content Parser)
+       ========================================================================== */
+    async function openArticleDetail(articleId, updateHistory = true) {
+      try {
+        // Fetch article detail (automatically increments view count on backend)
+        const res = await API.get(`/knowledge-base/${articleId}`);
+        const article = res.data;
+        if (!article) return;
+
+        currentViewingArticle = article;
+
+        // Switch Views
+        document.getElementById('kb-main-listing-view').style.display = 'none';
+        const detailView = document.getElementById('article-detail-view');
+        detailView.style.display = 'block';
+
+        // Update Breadcrumb
+        const breadcrumbEl = document.getElementById('breadcrumb-current-page');
+        if (breadcrumbEl) {
+          breadcrumbEl.innerHTML = `
+            <a href="javascript:void(0)" onclick="closeArticleDetailView()">Knowledge Base</a>
+            <span class="divider">/</span>
+            <span class="current">${escapeHtml(article.title)}</span>
+          `;
+        }
+
+        // Populate Detail Fields
+        document.getElementById('art-detail-category-badge').innerHTML = `
+          <i class="fa-solid fa-book-bookmark"></i> ${escapeHtml(article.categoryName || 'General Guide')}
+        `;
+        document.getElementById('art-detail-title').textContent = article.title;
+        document.getElementById('art-detail-published-date').textContent = article.createdAt ? Utils.formatDate(article.createdAt) : 'Recently';
+        document.getElementById('art-detail-updated-date').textContent = article.updatedAt ? Utils.formatDate(article.updatedAt) : 'Recently';
+        document.getElementById('art-detail-view-count').textContent = (article.viewCount || 0).toLocaleString();
+        document.getElementById('art-detail-author').textContent = article.createdByName || 'SupportHUB Team';
+
+        // Safe Prose Rendering
+        renderSafeArticleBody(article.content || '');
+
+        // Render Tags
+        const tagsWrap = document.getElementById('art-detail-tags-wrap');
+        const tagsChips = document.getElementById('art-detail-tags-chips');
+        if (article.tags && article.tags.trim()) {
+          const tags = article.tags.split(',').map(t => t.trim()).filter(Boolean);
+          tagsChips.innerHTML = tags.map(t => `
+            <span class="art-tag-chip" style="cursor: pointer;" onclick="closeArticleDetailView(); quickFilterQuery('${escapeHtml(t)}');">
+              <i class="fa-solid fa-tag"></i> ${escapeHtml(t)}
+            </span>
+          `).join('');
+          tagsWrap.style.display = 'block';
+        } else {
+          tagsWrap.style.display = 'none';
+        }
+
+        // Initialize Feedback Widget State (Prevents duplicate votes)
+        initFeedbackWidgetState(article.id);
+
+        // Render Related Articles
+        renderRelatedArticles(article);
+
+        // URL Synchronization
+        if (updateHistory) {
+          const url = new URL(window.location);
+          url.searchParams.set('id', article.id);
+          window.history.pushState({ articleId: article.id }, '', url);
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } catch (err) {
+        console.error('Error loading article detail:', err);
+        Utils.showToast('Could not load the requested article.', 'error');
+      }
+    }
+
+    function closeArticleDetailView(updateHistory = true) {
+      document.getElementById('article-detail-view').style.display = 'none';
+      document.getElementById('kb-main-listing-view').style.display = 'block';
+
+      const breadcrumbEl = document.getElementById('breadcrumb-current-page');
+      if (breadcrumbEl) breadcrumbEl.textContent = 'Knowledge Base';
+
+      currentViewingArticle = null;
+
+      if (updateHistory) {
+        const url = new URL(window.location);
+        url.searchParams.delete('id');
+        window.history.pushState({}, '', url);
+      }
+    }
+
+    function renderSafeArticleBody(rawContent) {
+      const container = document.getElementById('art-detail-content-body');
+      if (!container) return;
+
+      if (!rawContent || !rawContent.trim()) {
+        container.innerHTML = '<p style="color: #94a3b8; font-style: italic;">No detailed guide content provided.</p>';
+        return;
+      }
+
+      // XSS-Safe content parser: escapes all HTML, converts line breaks and headings
+      const escaped = escapeHtml(rawContent);
+      const paragraphs = escaped.split(/\n\n+/);
+
+      const html = paragraphs.map(p => {
+        const trimmed = p.trim();
+        if (trimmed.startsWith('### ')) {
+          return `<h3>${trimmed.substring(4)}</h3>`;
+        } else if (trimmed.startsWith('## ')) {
+          return `<h3>${trimmed.substring(3)}</h3>`;
+        } else if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+          const items = trimmed.split(/\n[\*\-]\s+/).map(item => `<li>${item.replace(/^[\*\-]\s+/, '')}</li>`).join('');
+          return `<ul>${items}</ul>`;
+        } else if (trimmed.startsWith('> ')) {
+          return `<div class="article-callout-box"><i class="fa-solid fa-circle-info" style="margin-right: 0.4rem;"></i> ${trimmed.substring(2)}</div>`;
+        } else {
+          return `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
+        }
+      }).join('');
+
+      container.innerHTML = html;
+    }
+
+    function renderRelatedArticles(currentArt) {
+      const container = document.getElementById('related-articles-container');
+      const section = document.getElementById('related-articles-section');
+      if (!container || !section) return;
+
+      // Find other published articles in the same category
+      const related = allPublishedArticles.filter(art => 
+        art.id !== currentArt.id && 
+        ((art.categoryId && art.categoryId === currentArt.categoryId) || (art.categoryName && art.categoryName === currentArt.categoryName))
+      ).slice(0, 3);
+
+      if (related.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+      container.innerHTML = related.map(art => {
+        const views = (art.viewCount || 0).toLocaleString();
+        return `
+          <div class="article-item-card" onclick="openArticleDetail(${art.id})" style="padding: 1.15rem;">
+            <div class="art-card-category-badge" style="font-size: 0.65rem;">
+              ${escapeHtml(art.categoryName || 'Guide')}
+            </div>
+            <h4 style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem 0;">${escapeHtml(art.title)}</h4>
+            <div class="art-card-footer" style="padding-top: 0.65rem;">
+              <span><i class="fa-regular fa-eye"></i> ${views} views</span>
+              <span class="art-read-cta" style="font-size: 0.725rem;">Read &rarr;</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function copyArticleLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        Utils.showToast('Article link copied to clipboard!', 'success');
+      }).catch(() => {
+        Utils.showToast('Could not copy link.', 'error');
+      });
+    }
+
+    /* ==========================================================================
+       7. Article Helpfulness & Feedback Widget
+       ========================================================================== */
+    function getVoteStorageKey(articleId) {
+      const userId = currentUser ? (currentUser.id || currentUser.email) : 'guest';
+      return `sh_kb_vote_user_${userId}_art_${articleId}`;
+    }
+
+    function initFeedbackWidgetState(articleId) {
+      const voteKey = getVoteStorageKey(articleId);
+      const existingVote = localStorage.getItem(voteKey);
+
+      const btnYes = document.getElementById('btn-vote-yes');
+      const btnNo = document.getElementById('btn-vote-no');
+      const posBox = document.getElementById('feedback-positive-box');
+      const negBox = document.getElementById('feedback-negative-box');
+
+      btnYes.classList.remove('voted-yes', 'voted-no');
+      btnNo.classList.remove('voted-yes', 'voted-no');
+      posBox.style.display = 'none';
+      negBox.style.display = 'none';
+
+      if (existingVote === 'YES') {
+        btnYes.classList.add('voted-yes');
+        posBox.style.display = 'block';
+      } else if (existingVote === 'NO') {
+        btnNo.classList.add('voted-no');
+        negBox.style.display = 'block';
+      }
+    }
+
+    function submitArticleHelpfulVote(isHelpful) {
+      if (!currentViewingArticle) return;
+      const articleId = currentViewingArticle.id;
+      const voteKey = getVoteStorageKey(articleId);
+
+      const btnYes = document.getElementById('btn-vote-yes');
+      const btnNo = document.getElementById('btn-vote-no');
+      const posBox = document.getElementById('feedback-positive-box');
+      const negBox = document.getElementById('feedback-negative-box');
+
+      btnYes.classList.remove('voted-yes', 'voted-no');
+      btnNo.classList.remove('voted-yes', 'voted-no');
+
+      if (isHelpful) {
+        localStorage.setItem(voteKey, 'YES');
+        btnYes.classList.add('voted-yes');
+        posBox.style.display = 'block';
+        negBox.style.display = 'none';
+        Utils.showToast('Thank you for confirming this article helped you!', 'success');
+      } else {
+        localStorage.setItem(voteKey, 'NO');
+        btnNo.classList.add('voted-no');
+        posBox.style.display = 'none';
+        negBox.style.display = 'block';
+        Utils.showToast('Feedback noted. You can raise a support ticket below.', 'info');
+      }
+    }
+
+    function raiseTicketFromCurrentArticle() {
+      if (!currentViewingArticle) return;
+      openTicketModal(
+        `Assistance needed: ${currentViewingArticle.title}`,
+        currentViewingArticle.categoryId,
+        currentViewingArticle
+      );
+    }
+
+    /* ==========================================================================
+       8. Ticket Modal Integration (With Source Article Association)
+       ========================================================================== */
+    function populateTicketModalCategories() {
+      const select = document.getElementById('ticket-modal-category');
+      if (!select) return;
+
+      select.innerHTML = '<option value="">Select Category...</option>' + 
+        allActiveCategories.map(c => `
+          <option value="${c.id}">${escapeHtml(c.name)}</option>
+        `).join('');
+    }
+
+    function openTicketModal(prefillSubject = '', prefillCategoryId = null, sourceArticle = null) {
+      const modal = document.getElementById('ticket-modal');
+      const subjectInput = document.getElementById('ticket-modal-subject');
+      const categorySelect = document.getElementById('ticket-modal-category');
+      const descInput = document.getElementById('ticket-modal-description');
+      const refCallout = document.getElementById('modal-article-reference-callout');
+      const refTitle = document.getElementById('modal-ref-article-title');
+
+      if (!modal) return;
+
+      if (sourceArticle) {
+        refCallout.style.display = 'block';
+        refTitle.textContent = `#${sourceArticle.id} - ${sourceArticle.title}`;
+        
+        // Safely pre-populate the description with the source article reference header
+        descInput.value = `[Referenced Knowledge Base Guide: #${sourceArticle.id} - "${sourceArticle.title}"]\n\nI reviewed this guide but still need help with the following:\n`;
+      } else {
+        refCallout.style.display = 'none';
+      }
+
+      if (prefillSubject && subjectInput) {
+        subjectInput.value = prefillSubject;
+      }
+      if (prefillCategoryId && categorySelect) {
+        categorySelect.value = prefillCategoryId;
+      }
+
+      modal.classList.add('show');
+      if (!sourceArticle && subjectInput) {
+        subjectInput.focus();
+      } else if (descInput) {
+        descInput.focus();
+      }
+    }
+
+    function openTicketModalWithTopic(topic) {
+      openTicketModal(`Support request regarding: ${topic}`);
+    }
+
+    function closeTicketModal() {
+      const modal = document.getElementById('ticket-modal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    async function handleTicketFormSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('btn-submit-ticket-form');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Submit Ticket';
+
+      const subject = document.getElementById('ticket-modal-subject').value.trim();
+      const categoryId = document.getElementById('ticket-modal-category').value;
+      const orderNumber = document.getElementById('ticket-modal-order').value.trim();
+      const priority = document.getElementById('ticket-modal-priority').value;
+      const description = document.getElementById('ticket-modal-description').value.trim();
+      const fileInput = document.getElementById('ticket-modal-file');
+
+      if (!subject || subject.length < 5) {
+        Utils.showToast('Please provide a subject line of at least 5 characters.', 'error');
+        return;
+      }
+      if (!categoryId) {
+        Utils.showToast('Please select a support category.', 'error');
+        return;
+      }
+      if (!description || description.length < 10) {
+        Utils.showToast('Please provide a detailed description (min 10 characters).', 'error');
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+        }
+
+        const payload = {
+          subject,
+          categoryId: parseInt(categoryId),
+          orderNumber: orderNumber || null,
+          priority,
+          description
+        };
+
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          const formData = new FormData();
+          const jsonBlob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+          formData.append('data', jsonBlob);
+          formData.append('request', jsonBlob);
+          formData.append('file', fileInput.files[0]);
+          await API.postFormData('/tickets', formData);
+        } else {
+          await API.post('/tickets/create-json', payload);
+        }
+
+        Utils.showToast('Support Ticket created successfully! Our team has been notified.', 'success');
+        document.getElementById('create-ticket-form').reset();
+        closeTicketModal();
+
+      } catch (err) {
+        console.error('Failed to submit ticket:', err);
+        Utils.showToast(err.message || 'Failed to submit ticket. Please try again.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      }
+    }
+
+    /* ==========================================================================
+       9. Deep Linking & URL Parameter Management
+       ========================================================================== */
+    function handleUrlParameters() {
+      const params = new URLSearchParams(window.location.search);
+      const articleId = params.get('id');
+      const query = params.get('q');
+      const catId = params.get('cat');
+
+      if (articleId) {
+        openArticleDetail(parseInt(articleId), false);
+      } else {
+        closeArticleDetailView(false);
+        if (query) {
+          const input = document.getElementById('kb-search-input');
+          if (input) {
+            input.value = query;
+            executeSearch();
+          }
+        } else if (catId) {
+          selectCategoryFromCard(parseInt(catId));
+        }
+      }
+    }
+
+    // Modal click-outside dismissal
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('ticket-modal');
+      if (e.target === modal) {
+        closeTicketModal();
+      }
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+
+</html>

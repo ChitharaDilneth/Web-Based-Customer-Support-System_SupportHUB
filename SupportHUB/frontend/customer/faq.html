@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frequently Asked Questions - SupportHUB</title>
+  <meta name="description" content="SupportHUB Customer FAQs. Find quick, verified answers to common questions about orders, deliveries, payments, and account services.">
+
+  <!-- Typography & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Theme Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+  <link rel="stylesheet" href="../css/responsive.css?v=14.0">
+
+  <style>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 - Customer FAQs Styling
+       Brand: Primary Blue #000985 | Accent Yellow #F5CC00 | Pure White Surface
+       Theme: Subtle Glassmorphism, Rounded Cards (16px), Soft Shadows
+       ========================================================================== */
+
+    :root {
+      --faq-primary: #000985;
+      --faq-primary-dark: #00065c;
+      --faq-primary-light: #eff2ff;
+      --faq-accent: #F5CC00;
+      --faq-accent-hover: #e0bb00;
+      --faq-accent-light: #fffbeb;
+      --faq-bg-page: #f8fafc;
+      --faq-surface-white: #ffffff;
+      --faq-glass-bg: rgba(255, 255, 255, 0.88);
+      --faq-glass-border: rgba(0, 9, 133, 0.08);
+      --faq-glass-blur: blur(14px) saturate(180%);
+      --faq-shadow-soft: 0 10px 30px -5px rgba(0, 9, 133, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --faq-shadow-hover: 0 16px 36px -6px rgba(0, 9, 133, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+      --faq-border-subtle: #e2e8f0;
+      --faq-text-title: #0f172a;
+      --faq-text-body: #475569;
+      --faq-text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--faq-bg-page);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--faq-text-body);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem 3rem 1.75rem !important;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* --------------------------------------------------------------------------
+       Top Header Customization
+       -------------------------------------------------------------------------- */
+    .top-header {
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: var(--faq-glass-blur);
+      -webkit-backdrop-filter: var(--faq-glass-blur);
+      border-bottom: 1px solid var(--faq-glass-border);
+      padding: 0.85rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--faq-text-muted);
+    }
+
+    .header-breadcrumb a {
+      color: var(--faq-primary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .header-breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .header-breadcrumb .divider {
+      color: #cbd5e1;
+      font-size: 0.75rem;
+    }
+
+    .header-breadcrumb .current {
+      color: var(--faq-text-title);
+      font-weight: 700;
+    }
+
+    .header-profile-capsule {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--faq-border-subtle);
+      padding: 0.35rem 0.85rem 0.35rem 0.45rem;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--faq-primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.775rem;
+      font-weight: 700;
+      border: 2px solid var(--faq-accent);
+    }
+
+    /* --------------------------------------------------------------------------
+       Hero Search Banner
+       -------------------------------------------------------------------------- */
+    .faq-hero-banner {
+      background: linear-gradient(135deg, var(--faq-primary) 0%, var(--faq-primary-dark) 100%);
+      border-radius: 20px;
+      padding: 2.25rem 2.25rem;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      box-shadow: 0 14px 34px -8px rgba(0, 9, 133, 0.35);
+      position: relative;
+    }
+
+    .faq-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .faq-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 0.35rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--faq-accent);
+      margin-bottom: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .faq-hero-title {
+      font-size: 2.15rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+    }
+
+    .faq-hero-subtitle {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    /* Prominent Search Container */
+    .faq-search-container {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .faq-search-input-wrap {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 0.45rem 0.65rem 0.45rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .faq-search-input-wrap:focus-within {
+      border-color: var(--faq-accent);
+      box-shadow: 0 12px 30px rgba(245, 204, 0, 0.28);
+    }
+
+    .faq-search-input-wrap i.search-icon {
+      font-size: 1.1rem;
+      color: var(--faq-primary);
+    }
+
+    .faq-search-input-wrap input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--faq-text-title);
+      background: transparent;
+    }
+
+    .faq-search-input-wrap input::placeholder {
+      color: #94a3b8;
+    }
+
+    .faq-search-clear-btn {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: none;
+      padding: 0.25rem;
+      transition: color 0.15s ease;
+    }
+
+    .faq-search-clear-btn:hover {
+      color: var(--faq-text-title);
+    }
+
+    .btn-search-submit {
+      background: var(--faq-accent);
+      color: var(--faq-primary-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      padding: 0.65rem 1.35rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .btn-search-submit:hover {
+      background: var(--faq-accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Quick Keyword Pills */
+    .faq-hero-tags {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.15rem;
+    }
+
+    .faq-tag-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      padding: 0.28rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .faq-tag-pill:hover {
+      background: #ffffff;
+      color: var(--faq-primary);
+      border-color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* Back Navigation Bar */
+    .faq-top-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--faq-primary);
+      text-decoration: none;
+      background: var(--faq-primary-light);
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 9, 133, 0.1);
+      transition: all 0.15s ease;
+    }
+
+    .btn-back-link:hover {
+      background: #e0e7ff;
+      transform: translateX(-2px);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION: Categories Grid
+       -------------------------------------------------------------------------- */
+    .section-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.25rem;
+      gap: 1rem;
+    }
+
+    .section-header-wrap h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--faq-text-title);
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header-wrap p {
+      font-size: 0.825rem;
+      color: var(--faq-text-body);
+      margin: 0;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.15rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .category-card {
+      background: var(--faq-surface-white);
+      border: 1px solid var(--faq-border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: var(--faq-shadow-soft);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--faq-shadow-hover);
+      border-color: var(--faq-primary);
+    }
+
+    .category-card.active {
+      border-color: var(--faq-primary);
+      background: #fbfcfe;
+      box-shadow: 0 0 0 2px var(--faq-primary);
+    }
+
+    .cat-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .cat-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--faq-primary-light);
+      color: var(--faq-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .cat-count-pill {
+      font-size: 0.725rem;
+      font-weight: 700;
+      color: var(--faq-primary);
+      background: #eef2ff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 9, 133, 0.1);
+    }
+
+    .cat-card-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--faq-text-title);
+      margin: 0 0 0.35rem 0;
+      line-height: 1.3;
+    }
+
+    .cat-card-desc {
+      font-size: 0.775rem;
+      color: var(--faq-text-body);
+      line-height: 1.45;
+      margin: 0 0 0.85rem 0;
+    }
+
+    .cat-card-action {
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--faq-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap 0.15s ease;
+    }
+
+    .category-card:hover .cat-card-action {
+      gap: 0.55rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION: FAQ Filter & Controls Toolbar
+       -------------------------------------------------------------------------- */
+    .faq-toolbar-card {
+      background: var(--faq-surface-white);
+      border: 1px solid var(--faq-border-subtle);
+      border-radius: 16px;
+      padding: 1.15rem 1.35rem;
+      box-shadow: var(--faq-shadow-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-toolbar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .faq-filter-pills-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-filter-pill {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--faq-text-body);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-filter-pill:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .btn-filter-pill.active {
+      background: var(--faq-primary);
+      color: #ffffff;
+      border-color: var(--faq-primary);
+    }
+
+    .btn-filter-pill.active i {
+      color: var(--faq-accent) !important;
+    }
+
+    .faq-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .faq-counter-badge {
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .btn-accordion-toggle-all {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--faq-primary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-accordion-toggle-all:hover {
+      background: var(--faq-primary-light);
+      border-color: var(--faq-primary);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION: FAQ Accordion Component
+       -------------------------------------------------------------------------- */
+    .faq-accordion-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .faq-item-card {
+      background: var(--faq-surface-white);
+      border: 1px solid var(--faq-border-subtle);
+      border-radius: 16px;
+      box-shadow: var(--faq-shadow-soft);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .faq-item-card:hover {
+      border-color: rgba(0, 9, 133, 0.2);
+      box-shadow: var(--faq-shadow-hover);
+    }
+
+    .faq-item-card.expanded {
+      border-color: var(--faq-primary);
+      box-shadow: 0 12px 28px -6px rgba(0, 9, 133, 0.12);
+    }
+
+    .faq-question-button {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.25rem 1.45rem;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--faq-text-title);
+      transition: background 0.15s ease;
+    }
+
+    .faq-question-button:hover {
+      background: #fafbfc;
+    }
+
+    .faq-question-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex: 1;
+    }
+
+    .faq-q-indicator {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--faq-primary-light);
+      color: var(--faq-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 9, 133, 0.12);
+    }
+
+    .faq-item-card.expanded .faq-q-indicator {
+      background: var(--faq-primary);
+      color: var(--faq-accent);
+    }
+
+    .faq-title-wrap {
+      flex: 1;
+    }
+
+    .faq-category-chip {
+      font-size: 0.685rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--faq-primary);
+      margin-bottom: 0.2rem;
+      display: block;
+    }
+
+    .faq-question-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--faq-text-title);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .faq-chevron-icon {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      flex-shrink: 0;
+    }
+
+    .faq-item-card.expanded .faq-chevron-icon {
+      transform: rotate(180deg);
+      color: var(--faq-primary);
+    }
+
+    .faq-answer-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #ffffff;
+      border-top: 1px solid transparent;
+    }
+
+    .faq-item-card.expanded .faq-answer-panel {
+      max-height: 800px;
+      border-top-color: #f1f5f9;
+    }
+
+    .faq-answer-inner {
+      padding: 1.25rem 1.45rem 1.45rem 3.95rem;
+    }
+
+    .faq-answer-text {
+      font-size: 0.925rem;
+      line-height: 1.65;
+      color: #334155;
+      margin: 0 0 1.15rem 0;
+      white-space: pre-line;
+    }
+
+    /* FAQ Related KB Link Box */
+    .faq-related-kb-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.15rem;
+      font-size: 0.825rem;
+    }
+
+    .faq-related-kb-link {
+      font-weight: 700;
+      color: var(--faq-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: color 0.15s ease;
+    }
+
+    .faq-related-kb-link:hover {
+      text-decoration: underline;
+    }
+
+    /* FAQ Helpfulness Prompt Box */
+    .faq-answer-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-top: 0.85rem;
+      border-top: 1px dashed #e2e8f0;
+      font-size: 0.775rem;
+      color: #64748b;
+    }
+
+    .faq-feedback-prompt {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-feedback-mini {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--faq-text-title);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-feedback-mini:hover {
+      background: var(--faq-primary-light);
+      border-color: var(--faq-primary);
+      color: var(--faq-primary);
+    }
+
+    .btn-feedback-mini.voted {
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #047857;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION: Still Need Help? Support Banner
+       -------------------------------------------------------------------------- */
+    .faq-help-banner {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 20px;
+      padding: 2.25rem;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .faq-help-banner-left {
+      max-width: 680px;
+    }
+
+    .faq-help-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      color: var(--faq-primary);
+      font-size: 0.725rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.65rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .faq-help-banner h3 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--faq-text-title);
+      margin: 0 0 0.35rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .faq-help-banner p {
+      font-size: 0.875rem;
+      color: #334155;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .faq-help-banner-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-banner-kb {
+      background: #ffffff;
+      color: var(--faq-primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: 1px solid rgba(0, 9, 133, 0.2);
+      border-radius: 10px;
+      padding: 0.65rem 1.35rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .btn-banner-kb:hover {
+      background: #f8fafc;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.08);
+    }
+
+    .btn-banner-ticket {
+      background: var(--faq-primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      padding: 0.65rem 1.35rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.25);
+    }
+
+    .btn-banner-ticket:hover {
+      background: var(--faq-primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* --------------------------------------------------------------------------
+       Empty, Loading & Error States
+       -------------------------------------------------------------------------- */
+    .faq-state-card {
+      text-align: center;
+      padding: 3.5rem 1.5rem;
+      background: #ffffff;
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+    }
+
+    .faq-state-card i {
+      font-size: 2.5rem;
+      color: #94a3b8;
+      margin-bottom: 0.85rem;
+      display: block;
+    }
+
+    .faq-state-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--faq-text-title);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .faq-state-card p {
+      font-size: 0.85rem;
+      color: var(--faq-text-body);
+      max-width: 480px;
+      margin: 0 auto 1.25rem auto;
+      line-height: 1.5;
+    }
+
+    /* --------------------------------------------------------------------------
+       Modal Styles (Ticket Creation Integration)
+       -------------------------------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .modal-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content-card {
+      background: #ffffff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--faq-border-subtle);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+      animation: modalSlideUp 0.25s ease-out;
+    }
+
+    .modal-header-sh {
+      background: linear-gradient(135deg, var(--faq-primary) 0%, var(--faq-primary-dark) 100%);
+      color: #ffffff;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header-sh h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-close-icon {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.35rem;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.15s ease;
+    }
+
+    .modal-close-icon:hover {
+      color: #ffffff;
+    }
+
+    .modal-body-sh {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer-sh {
+      padding: 1rem 1.5rem;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: var(--faq-text-title);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-control-sh {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0.55rem 0.85rem;
+      font-size: 0.85rem;
+      color: var(--faq-text-title);
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s ease;
+      background: #ffffff;
+    }
+
+    .form-control-sh:focus {
+      border-color: var(--faq-primary);
+      box-shadow: 0 0 0 2px rgba(0, 9, 133, 0.15);
+    }
+
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1100px) {
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .categories-grid { grid-template-columns: 1fr; }
+      .page-body { padding: 1rem !important; }
+      .faq-hero-banner { padding: 1.75rem 1.25rem; }
+      .faq-hero-title { font-size: 1.6rem; }
+      .faq-answer-inner { padding: 1rem 1rem 1rem 1rem; }
+      .faq-help-banner { padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- Standard SupportHUB Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo"><span class="logo-support">Support</span><span class="logo-hub">HUB</span></div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+      <!-- Sticky Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <!-- A. Breadcrumb Navigation -->
+          <div class="header-breadcrumb">
+            <a href="customer-dashboard.html">Dashboard</a>
+            <span class="divider">/</span>
+            <a href="../knowledge-base.html">Help Center</a>
+            <span class="divider">/</span>
+            <span class="current" id="breadcrumb-current-page">FAQs</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Notifications Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; color: #0f172a;">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+
+          <!-- Customer Profile Capsule -->
+          <div class="header-profile-capsule" id="header-profile-capsule">
+            <div class="header-avatar" id="header-user-avatar">CU</div>
+            <div style="text-align: left; line-height: 1.2;">
+              <div id="header-user-name" style="font-size: 0.775rem; font-weight: 700; color: #0f172a;">Customer</div>
+              <div id="header-user-role" style="font-size: 0.675rem; color: #64748b;">Customer Account</div>
+            </div>
+          </div>
+
+          <!-- Logout Button -->
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out" style="margin-left: 0.5rem;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Page Body Content -->
+      <div class="page-body">
+
+        <!-- Top Navigation Actions -->
+        <div class="faq-top-actions-bar">
+          <a href="../knowledge-base.html" class="btn-back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Help Center Overview
+          </a>
+          <button onclick="openTicketModal()" class="btn-search-submit" style="padding: 0.45rem 1rem; font-size: 0.775rem;">
+            <i class="fa-solid fa-circle-plus"></i> Raise a Support Ticket
+          </button>
+        </div>
+
+        <!-- ====================================================================
+             A & B. HERO SEARCH BANNER
+             ==================================================================== -->
+        <div class="faq-hero-banner">
+          <div class="faq-hero-content">
+            <div class="faq-hero-badge">
+              <i class="fa-solid fa-circle-question"></i> Instant Verified Answers
+            </div>
+            <h1 class="faq-hero-title">Frequently Asked Questions</h1>
+            <p class="faq-hero-subtitle">
+              Find quick answers to common questions about our services and support.
+            </p>
+
+            <!-- Prominent Search Input -->
+            <div class="faq-search-container">
+              <div class="faq-search-input-wrap">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="faq-search-input" placeholder="Search questions, answers, or keywords (e.g. 'refund', 'tracking', 'password')..." autocomplete="off" />
+                <button type="button" id="faq-search-clear-btn" class="faq-search-clear-btn" onclick="clearFaqSearch()"><i class="fa-solid fa-xmark"></i></button>
+                <button type="button" class="btn-search-submit" onclick="executeFaqSearch()">
+                  Search
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Keyword Pills -->
+            <div class="faq-hero-tags">
+              <span style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Popular topics:</span>
+              <span class="faq-tag-pill" onclick="quickFilterQuery('Order')">Order Tracking</span>
+              <span class="faq-tag-pill" onclick="quickFilterQuery('Delivery')">Delivery Time</span>
+              <span class="faq-tag-pill" onclick="quickFilterQuery('Refund')">Refund Policy</span>
+              <span class="faq-tag-pill" onclick="quickFilterQuery('Cancel')">Order Cancellation</span>
+              <span class="faq-tag-pill" onclick="quickFilterQuery('Account')">Account Password</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             C. BROWSE FAQ CATEGORIES
+             ==================================================================== -->
+        <div class="section-header-wrap">
+          <div>
+            <h2>Browse Questions by Category</h2>
+            <p>Select a category to filter common questions and verified answers.</p>
+          </div>
+        </div>
+
+        <div class="categories-grid" id="categories-grid-container">
+          <div style="grid-column: 1 / -1; text-align: center; color: #94a3b8; padding: 2rem;">
+            <i class="fa-solid fa-spinner fa-spin"></i> Loading support categories...
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             D. FAQ FILTER TOOLBAR & CONTROLS
+             ==================================================================== -->
+        <div class="faq-toolbar-card">
+          <div class="faq-toolbar-row">
+            <div class="faq-filter-pills-wrap" id="category-filter-pills">
+              <button class="btn-filter-pill active" onclick="filterByCategory(null, this)">
+                <i class="fa-solid fa-layer-group"></i> All Questions
+              </button>
+              <!-- Dynamic category pills inserted here -->
+            </div>
+
+            <div class="faq-toolbar-right">
+              <div class="faq-counter-badge" id="faq-count-badge">Loading questions...</div>
+              <button type="button" class="btn-accordion-toggle-all" id="btn-toggle-all-accordions" onclick="toggleAllAccordions()">
+                <i class="fa-solid fa-angles-down"></i> Expand All
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             D. FAQ ACCORDION LIST
+             ==================================================================== -->
+        <div class="faq-accordion-list" id="faq-accordion-container" role="region" aria-label="Frequently Asked Questions List">
+          <!-- Accordion items loaded dynamically from GET /api/faqs/public -->
+        </div>
+
+        <!-- ====================================================================
+             F. STILL NEED HELP? SUPPORT BANNER
+             ==================================================================== -->
+        <div class="faq-help-banner">
+          <div class="faq-help-banner-left">
+            <div class="faq-help-badge">
+              <i class="fa-solid fa-headset"></i> 24/7 Dedicated Support
+            </div>
+            <h3>Still need help?</h3>
+            <p>
+              Couldn't find the answer you were looking for? Browse our comprehensive in-depth Knowledge Base or submit a support ticket directly to our customer service officers.
+            </p>
+          </div>
+          <div class="faq-help-banner-actions">
+            <!-- 1. Browse Knowledge Base -->
+            <a href="knowledge-base.html" class="btn-banner-kb">
+              <i class="fa-solid fa-book-open-reader"></i> Browse Knowledge Base
+            </a>
+            <!-- 2. Raise a Support Ticket -->
+            <button type="button" class="btn-banner-ticket" onclick="openTicketModal()">
+              <i class="fa-solid fa-circle-plus" style="color: var(--faq-accent);"></i> Raise a Support Ticket
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       Raise a Support Ticket Modal
+       ==================================================================== -->
+  <div class="modal-backdrop" id="ticket-modal">
+    <div class="modal-content-card">
+      <div class="modal-header-sh">
+        <h3><i class="fa-solid fa-circle-plus" style="color: var(--faq-accent);"></i> Raise a Support Ticket</h3>
+        <button type="button" class="modal-close-icon" onclick="closeTicketModal()">&times;</button>
+      </div>
+      <form id="create-ticket-form" onsubmit="handleTicketFormSubmit(event)">
+        <div class="modal-body-sh">
+
+          <!-- FAQ Source Reference Callout -->
+          <div id="modal-faq-reference-callout" style="display: none; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 0.65rem 0.85rem; margin-bottom: 1.15rem; font-size: 0.8rem; color: #1e40af;">
+            <i class="fa-solid fa-circle-question" style="margin-right: 0.35rem;"></i>
+            <strong>Referenced FAQ:</strong> <span id="modal-ref-faq-title">--</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Support Category <span style="color: #ef4444;">*</span></label>
+            <select id="ticket-modal-category" class="form-control-sh" required>
+              <option value="">Select Category...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Subject / Issue Summary <span style="color: #ef4444;">*</span></label>
+            <input type="text" id="ticket-modal-subject" class="form-control-sh" placeholder="Brief summary of your question or issue" required minlength="5" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label">Related Order # (Optional)</label>
+              <input type="text" id="ticket-modal-order" class="form-control-sh" placeholder="e.g. ORD-2026-9812" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Priority</label>
+              <select id="ticket-modal-priority" class="form-control-sh">
+                <option value="LOW">Low</option>
+                <option value="MEDIUM" selected>Medium</option>
+                <option value="HIGH">High</option>
+                <option value="URGENT">Urgent</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Detailed Description <span style="color: #ef4444;">*</span></label>
+            <textarea id="ticket-modal-description" class="form-control-sh" rows="4" placeholder="Describe what happened, any error messages, and what assistance you need..." required minlength="10"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">Attachment (Optional screenshot or receipt)</label>
+            <input type="file" id="ticket-modal-file" class="form-control-sh" accept="image/*,.pdf,.doc,.docx" />
+            <div style="font-size: 0.7rem; color: #94a3b8; margin-top: 0.25rem;">Supported formats: PNG, JPG, PDF (Max 10MB)</div>
+          </div>
+
+        </div>
+        <div class="modal-footer-sh">
+          <button type="button" class="btn btn-secondary" onclick="closeTicketModal()" style="font-size: 0.85rem; border-radius: 8px;">Cancel</button>
+          <button type="submit" id="btn-submit-ticket-form" class="btn-search-submit" style="font-size: 0.85rem; border-radius: 8px;">
+            <i class="fa-solid fa-paper-plane"></i> Submit Ticket
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+  <script src="../js/chatbot.js?v=14.0"></script>
+
+  <script>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 — Customer Frequently Asked Questions Controller
+       ========================================================================== */
+
+    // Application State Store
+    let currentUser = null;
+    let allPublishedFaqs = [];
+    let allPublishedKbArticles = [];
+    let allActiveCategories = [];
+    let selectedCategoryId = null;
+    let searchQuery = '';
+    let searchDebounceTimer = null;
+    let areAllAccordionsExpanded = false;
+
+    // Category Styling Map
+    const CATEGORY_MAP = {
+      'Order Issues': { icon: 'fa-box-open', color: '#000985' },
+      'Delivery Issues': { icon: 'fa-truck', color: '#0284c7' },
+      'Payment & Refunds': { icon: 'fa-credit-card', color: '#d97706' },
+      'Account Issues': { icon: 'fa-user-shield', color: '#7c3aed' },
+      'Product Information': { icon: 'fa-circle-info', color: '#059669' },
+      'Technical Support': { icon: 'fa-gear', color: '#475569' }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Enforce Role & Render Header/Sidebar
+      if (!Auth.requireRole(['CUSTOMER', 'CUSTOMER_SERVICE_OFFICER', 'OPERATIONS_SUPERVISOR', 'CUSTOMER_SUPPORT_MANAGER', 'QA_EXECUTIVE'])) {
+        return;
+      }
+
+      currentUser = Auth.getUser();
+      initHeaderProfile();
+      Auth.renderSidebar();
+
+      if (typeof NotificationsEngine !== 'undefined') {
+        NotificationsEngine.init();
+      }
+
+      if (typeof ChatbotAssistant !== 'undefined') {
+        ChatbotAssistant.init();
+      }
+
+      // 2. Fetch Categories, FAQs, and KB Articles in Parallel
+      await Promise.allSettled([
+        loadActiveCategories(),
+        loadPublishedFaqs(),
+        loadPublishedKbArticles()
+      ]);
+
+      // 3. Search input events with debouncing
+      setupSearchInputEvents();
+
+      // 4. Handle URL query parameters (e.g. ?q=refund or ?cat=2 or ?faq=5)
+      handleUrlParameters();
+    });
+
+    /* ==========================================================================
+       1. Header Profile & Capsule
+       ========================================================================== */
+    function initHeaderProfile() {
+      if (!currentUser) return;
+
+      const nameEl = document.getElementById('header-user-name');
+      const roleEl = document.getElementById('header-user-role');
+      const avatarEl = document.getElementById('header-user-avatar');
+
+      const name = currentUser.fullName || currentUser.email || 'Customer';
+      if (nameEl) nameEl.textContent = name;
+      if (roleEl) roleEl.textContent = (currentUser.role || 'CUSTOMER').replace(/_/g, ' ');
+
+      if (avatarEl) {
+        avatarEl.textContent = name.substring(0, 2).toUpperCase();
+      }
+    }
+
+    /* ==========================================================================
+       2. Data Loaders
+       ========================================================================== */
+    async function loadActiveCategories() {
+      try {
+        const res = await API.get('/categories/active');
+        allActiveCategories = res.data || [];
+        renderCategoryCards();
+        renderCategoryFilterPills();
+        populateTicketModalCategories();
+      } catch (err) {
+        console.warn('Could not load categories:', err);
+        allActiveCategories = [];
+      }
+    }
+
+    async function loadPublishedFaqs() {
+      const container = document.getElementById('faq-accordion-container');
+      try {
+        const res = await API.get('/faqs/public');
+        allPublishedFaqs = res.data || [];
+        applyFiltersAndRenderAccordion();
+      } catch (err) {
+        console.error('Failed to load published FAQs:', err);
+        allPublishedFaqs = [];
+        container.innerHTML = `
+          <div class="faq-state-card">
+            <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>
+            <h3>Unable to Load FAQs</h3>
+            <p>We could not fetch the FAQ articles. Please verify your connection or try again.</p>
+            <button class="btn btn-primary" onclick="loadPublishedFaqs()" style="background: var(--faq-primary);">
+              <i class="fa-solid fa-rotate-right"></i> Try Again
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    async function loadPublishedKbArticles() {
+      try {
+        const res = await API.get('/knowledge-base/public');
+        allPublishedKbArticles = res.data || [];
+      } catch (err) {
+        allPublishedKbArticles = [];
+      }
+    }
+
+    /* ==========================================================================
+       3. Category Cards & Filters
+       ========================================================================== */
+    function renderCategoryCards() {
+      const container = document.getElementById('categories-grid-container');
+      if (!container) return;
+
+      if (!allActiveCategories || allActiveCategories.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #94a3b8;">No support categories available.</div>';
+        return;
+      }
+
+      container.innerHTML = allActiveCategories.map(cat => {
+        const config = CATEGORY_MAP[cat.name] || { icon: 'fa-folder', color: '#000985' };
+        
+        // Count published FAQs in this category
+        const faqCount = allPublishedFaqs.filter(f => 
+          f.categoryId === cat.id || f.categoryName === cat.name
+        ).length;
+
+        const countLabel = faqCount === 1 ? '1 Question' : `${faqCount} Questions`;
+        const desc = cat.description || `Quick questions and verified answers regarding ${cat.name}.`;
+
+        return `
+          <div class="category-card ${selectedCategoryId === cat.id ? 'active' : ''}" onclick="selectCategoryFromCard(${cat.id})">
+            <div>
+              <div class="cat-card-top">
+                <div class="cat-icon-badge" style="color: ${config.color};">
+                  <i class="fa-solid ${config.icon}"></i>
+                </div>
+                <span class="cat-count-pill">${countLabel}</span>
+              </div>
+              <h3 class="cat-card-title">${escapeHtml(cat.name)}</h3>
+              <p class="cat-card-desc">${escapeHtml(desc)}</p>
+            </div>
+            <div class="cat-card-action">
+              <span>View Questions</span> &rarr;
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderCategoryFilterPills() {
+      const container = document.getElementById('category-filter-pills');
+      if (!container) return;
+
+      let html = `
+        <button class="btn-filter-pill ${selectedCategoryId === null ? 'active' : ''}" onclick="filterByCategory(null, this)">
+          <i class="fa-solid fa-layer-group"></i> All Questions
+        </button>
+      `;
+
+      allActiveCategories.forEach(cat => {
+        const config = CATEGORY_MAP[cat.name] || { icon: 'fa-folder' };
+        const isActive = selectedCategoryId === cat.id;
+        html += `
+          <button class="btn-filter-pill ${isActive ? 'active' : ''}" onclick="filterByCategory(${cat.id}, this)">
+            <i class="fa-solid ${config.icon}"></i> ${escapeHtml(cat.name)}
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function selectCategoryFromCard(categoryId) {
+      selectedCategoryId = categoryId;
+      renderCategoryFilterPills();
+      renderCategoryCards();
+      applyFiltersAndRenderAccordion();
+
+      const toolbar = document.querySelector('.faq-toolbar-card');
+      if (toolbar) {
+        toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function filterByCategory(categoryId, btnEl) {
+      selectedCategoryId = categoryId;
+
+      document.querySelectorAll('.btn-filter-pill').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      renderCategoryCards();
+      applyFiltersAndRenderAccordion();
+    }
+
+    /* ==========================================================================
+       4. FAQ Search
+       ========================================================================== */
+    function setupSearchInputEvents() {
+      const input = document.getElementById('faq-search-input');
+      const clearBtn = document.getElementById('faq-search-clear-btn');
+
+      if (!input) return;
+
+      input.addEventListener('input', (e) => {
+        const val = e.target.value.trim();
+        if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
+
+        if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(() => {
+          searchQuery = val.toLowerCase();
+          applyFiltersAndRenderAccordion();
+        }, 200);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          executeFaqSearch();
+        }
+      });
+    }
+
+    function clearFaqSearch() {
+      const input = document.getElementById('faq-search-input');
+      const clearBtn = document.getElementById('faq-search-clear-btn');
+
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      if (clearBtn) clearBtn.style.display = 'none';
+
+      searchQuery = '';
+      applyFiltersAndRenderAccordion();
+    }
+
+    function quickFilterQuery(term) {
+      const input = document.getElementById('faq-search-input');
+      const clearBtn = document.getElementById('faq-search-clear-btn');
+      if (input) {
+        input.value = term;
+        if (clearBtn) clearBtn.style.display = 'block';
+        executeFaqSearch();
+      }
+    }
+
+    function executeFaqSearch() {
+      const input = document.getElementById('faq-search-input');
+      searchQuery = input ? input.value.trim().toLowerCase() : '';
+      applyFiltersAndRenderAccordion();
+
+      const toolbar = document.querySelector('.faq-toolbar-card');
+      if (toolbar) {
+        toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    /* ==========================================================================
+       5. Accordion Interface & Filter Logic
+       ========================================================================== */
+    function applyFiltersAndRenderAccordion() {
+      const container = document.getElementById('faq-accordion-container');
+      const countBadge = document.getElementById('faq-count-badge');
+      if (!container) return;
+
+      // 1. Filter by category & search query
+      const filtered = allPublishedFaqs.filter(faq => {
+        const matchCategory = selectedCategoryId === null || faq.categoryId === selectedCategoryId;
+
+        let matchSearch = true;
+        if (searchQuery) {
+          const q = (faq.question || '').toLowerCase();
+          const a = (faq.answer || '').toLowerCase();
+          const kw = (faq.keywords || '').toLowerCase();
+          const cat = (faq.categoryName || '').toLowerCase();
+          matchSearch = q.includes(searchQuery) || a.includes(searchQuery) || kw.includes(searchQuery) || cat.includes(searchQuery);
+        }
+
+        return matchCategory && matchSearch;
+      });
+
+      // Update count badge
+      if (countBadge) {
+        const label = filtered.length === 1 ? '1 Question' : `${filtered.length} Questions`;
+        countBadge.textContent = `Showing ${label}`;
+      }
+
+      // Empty State
+      if (filtered.length === 0) {
+        const hasQuery = searchQuery.length > 0;
+        container.innerHTML = `
+          <div class="faq-state-card">
+            <i class="fa-solid fa-circle-question"></i>
+            <h3>${hasQuery ? 'No Matching FAQs Found' : 'No FAQs in this Category'}</h3>
+            <p>
+              ${hasQuery 
+                ? `We couldn't find any questions matching "${escapeHtml(searchQuery)}". Would you like to raise a support ticket or browse our detailed Knowledge Base?`
+                : 'There are currently no published questions under this category.'
+              }
+            </p>
+            <div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+              ${hasQuery ? `
+                <button type="button" class="btn btn-secondary" onclick="clearFaqSearch()" style="font-size: 0.825rem; border-radius: 8px;">
+                  Clear Search
+                </button>
+                <button type="button" class="btn-search-submit" onclick="openTicketModalWithTopic('${escapeHtml(searchQuery)}')" style="font-size: 0.825rem; border-radius: 8px;">
+                  <i class="fa-solid fa-circle-plus"></i> Raise a Ticket for "${escapeHtml(searchQuery)}"
+                </button>
+              ` : `
+                <button type="button" class="btn-search-submit" onclick="filterByCategory(null)" style="font-size: 0.825rem; border-radius: 8px;">
+                  View All Questions
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // 2. Render Accordion items
+      container.innerHTML = filtered.map(faq => {
+        const catName = faq.categoryName || 'General Support';
+        const views = (faq.viewCount || 0).toLocaleString();
+
+        // 4. FAQ & Knowledge Base Relationship: Link related Knowledge Base guide
+        const relatedKb = findRelatedKnowledgeBaseArticle(faq);
+        let relatedKbHtml = '';
+        if (relatedKb) {
+          relatedKbHtml = `
+            <div class="faq-related-kb-box">
+              <span><i class="fa-solid fa-book-bookmark" style="color: var(--faq-primary); margin-right: 0.35rem;"></i> Need in-depth step-by-step instructions?</span>
+              <a href="knowledge-base.html?id=${relatedKb.id}" class="faq-related-kb-link">
+                Read Guide: ${escapeHtml(relatedKb.title)} &rarr;
+              </a>
+            </div>
+          `;
+        } else if (faq.categoryId) {
+          relatedKbHtml = `
+            <div class="faq-related-kb-box">
+              <span><i class="fa-solid fa-book-bookmark" style="color: var(--faq-primary); margin-right: 0.35rem;"></i> Looking for detailed solutions in ${escapeHtml(catName)}?</span>
+              <a href="knowledge-base.html?cat=${faq.categoryId}" class="faq-related-kb-link">
+                Explore ${escapeHtml(catName)} Knowledge Base &rarr;
+              </a>
+            </div>
+          `;
+        }
+
+        // Keywords badges (if available)
+        let keywordsHtml = '';
+        if (faq.keywords && faq.keywords.trim()) {
+          const kwList = faq.keywords.split(',').map(k => k.trim()).filter(Boolean);
+          if (kwList.length > 0) {
+            keywordsHtml = `
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.85rem;">
+                ${kwList.map(kw => `<span style="background: #f1f5f9; color: #475569; font-size: 0.685rem; font-weight: 600; padding: 0.15rem 0.45rem; border-radius: 4px;">#${escapeHtml(kw)}</span>`).join('')}
+              </div>
+            `;
+          }
+        }
+
+        return `
+          <div class="faq-item-card" id="faq-card-${faq.id}">
+            <button type="button" 
+                    class="faq-question-button" 
+                    id="faq-header-btn-${faq.id}" 
+                    aria-expanded="false" 
+                    aria-controls="faq-answer-panel-${faq.id}"
+                    onclick="toggleFaqItem(${faq.id})">
+              <div class="faq-question-left">
+                <span class="faq-q-indicator">Q</span>
+                <div class="faq-title-wrap">
+                  <span class="faq-category-chip">${escapeHtml(catName)}</span>
+                  <h3 class="faq-question-title" id="faq-q-title-${faq.id}">${escapeHtml(faq.question)}</h3>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-down faq-chevron-icon" id="faq-chevron-${faq.id}"></i>
+            </button>
+
+            <div class="faq-answer-panel" 
+                 id="faq-answer-panel-${faq.id}" 
+                 role="region" 
+                 aria-labelledby="faq-header-btn-${faq.id}">
+              <div class="faq-answer-inner">
+                <div class="faq-answer-text">${escapeHtml(faq.answer)}</div>
+                
+                ${keywordsHtml}
+                ${relatedKbHtml}
+
+                <div class="faq-answer-footer">
+                  <div class="faq-feedback-prompt">
+                    <span>Did this answer help?</span>
+                    <button type="button" class="btn-feedback-mini" id="btn-faq-yes-${faq.id}" onclick="recordFaqHelpfulVote(${faq.id}, true)">
+                      <i class="fa-solid fa-thumbs-up" style="color: #10b981;"></i> Yes
+                    </button>
+                    <button type="button" class="btn-feedback-mini" id="btn-faq-no-${faq.id}" onclick="recordFaqHelpfulVote(${faq.id}, false)">
+                      <i class="fa-solid fa-thumbs-down" style="color: #f43f5e;"></i> No
+                    </button>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.725rem; color: #94a3b8;"><i class="fa-regular fa-eye"></i> ${views} views</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleFaqItem(faqId) {
+      const card = document.getElementById(`faq-card-${faqId}`);
+      const btn = document.getElementById(`faq-header-btn-${faqId}`);
+      if (!card || !btn) return;
+
+      const isExpanded = card.classList.contains('expanded');
+
+      if (isExpanded) {
+        card.classList.remove('expanded');
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        card.classList.add('expanded');
+        btn.setAttribute('aria-expanded', 'true');
+        
+        // Asynchronously notify backend to register view increment (GET /api/faqs/{id})
+        API.get(`/faqs/${faqId}`).catch(() => {});
+      }
+    }
+
+    function toggleAllAccordions() {
+      areAllAccordionsExpanded = !areAllAccordionsExpanded;
+      const toggleBtn = document.getElementById('btn-toggle-all-accordions');
+
+      document.querySelectorAll('.faq-item-card').forEach(card => {
+        const id = card.id.replace('faq-card-', '');
+        const btn = document.getElementById(`faq-header-btn-${id}`);
+        if (areAllAccordionsExpanded) {
+          card.classList.add('expanded');
+          if (btn) btn.setAttribute('aria-expanded', 'true');
+        } else {
+          card.classList.remove('expanded');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      if (toggleBtn) {
+        toggleBtn.innerHTML = areAllAccordionsExpanded 
+          ? '<i class="fa-solid fa-angles-up"></i> Collapse All' 
+          : '<i class="fa-solid fa-angles-down"></i> Expand All';
+      }
+    }
+
+    /* ==========================================================================
+       6. Knowledge Base Linking Helper
+       ========================================================================== */
+    function findRelatedKnowledgeBaseArticle(faq) {
+      if (!allPublishedKbArticles || allPublishedKbArticles.length === 0) return null;
+
+      // 1. Exact or close category match
+      const sameCategoryArticles = allPublishedKbArticles.filter(art => 
+        (faq.categoryId && art.categoryId === faq.categoryId) || (art.categoryName && art.categoryName === faq.categoryName)
+      );
+
+      if (sameCategoryArticles.length === 0) return null;
+
+      // 2. Title keyword similarity
+      const faqWords = (faq.question || '').toLowerCase().split(/\s+/).filter(w => w.length > 3);
+      for (const art of sameCategoryArticles) {
+        const artTitle = (art.title || '').toLowerCase();
+        if (faqWords.some(w => artTitle.includes(w))) {
+          return art;
+        }
+      }
+
+      // Default to highest viewed guide in same category
+      return sameCategoryArticles[0];
+    }
+
+    /* ==========================================================================
+       7. FAQ Feedback Handling (With Client-Side Storage & Ticket Route Fallback)
+       ========================================================================== */
+    function recordFaqHelpfulVote(faqId, isHelpful) {
+      const yesBtn = document.getElementById(`btn-faq-yes-${faqId}`);
+      const noBtn = document.getElementById(`btn-faq-no-${faqId}`);
+      const faq = allPublishedFaqs.find(f => f.id === faqId);
+
+      if (yesBtn) yesBtn.classList.remove('voted');
+      if (noBtn) noBtn.classList.remove('voted');
+
+      if (isHelpful) {
+        if (yesBtn) yesBtn.classList.add('voted');
+        Utils.showToast('Thank you! Glad this answer resolved your question.', 'success');
+      } else {
+        if (noBtn) noBtn.classList.add('voted');
+        Utils.showToast('Answer marked as unhelpful. You can raise a support ticket below.', 'info');
+        
+        // Provide convenient prompt to submit support ticket
+        const topic = faq ? faq.question : '';
+        openTicketModalWithTopic(topic, faq ? faq.categoryId : null, faq);
+      }
+    }
+
+    /* ==========================================================================
+       8. Ticket Creation Modal Integration
+       ========================================================================== */
+    function populateTicketModalCategories() {
+      const select = document.getElementById('ticket-modal-category');
+      if (!select) return;
+
+      select.innerHTML = '<option value="">Select Category...</option>' + 
+        allActiveCategories.map(c => `
+          <option value="${c.id}">${escapeHtml(c.name)}</option>
+        `).join('');
+    }
+
+    function openTicketModal(prefillSubject = '', prefillCategoryId = null, sourceFaq = null) {
+      const modal = document.getElementById('ticket-modal');
+      const subjectInput = document.getElementById('ticket-modal-subject');
+      const categorySelect = document.getElementById('ticket-modal-category');
+      const descInput = document.getElementById('ticket-modal-description');
+      const refCallout = document.getElementById('modal-faq-reference-callout');
+      const refTitle = document.getElementById('modal-ref-faq-title');
+
+      if (!modal) return;
+
+      if (sourceFaq) {
+        refCallout.style.display = 'block';
+        refTitle.textContent = `#${sourceFaq.id} - ${sourceFaq.question}`;
+        descInput.value = `[Referenced FAQ Question #${sourceFaq.id}: "${sourceFaq.question}"]\n\nI reviewed this answer but still require assistance with the following:\n`;
+      } else {
+        refCallout.style.display = 'none';
+      }
+
+      if (prefillSubject && subjectInput) {
+        subjectInput.value = prefillSubject;
+      }
+      if (prefillCategoryId && categorySelect) {
+        categorySelect.value = prefillCategoryId;
+      }
+
+      modal.classList.add('show');
+      if (!sourceFaq && subjectInput) {
+        subjectInput.focus();
+      } else if (descInput) {
+        descInput.focus();
+      }
+    }
+
+    function openTicketModalWithTopic(topic, categoryId = null, sourceFaq = null) {
+      openTicketModal(`Assistance regarding: ${topic}`, categoryId, sourceFaq);
+    }
+
+    function closeTicketModal() {
+      const modal = document.getElementById('ticket-modal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    async function handleTicketFormSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('btn-submit-ticket-form');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Submit Ticket';
+
+      const subject = document.getElementById('ticket-modal-subject').value.trim();
+      const categoryId = document.getElementById('ticket-modal-category').value;
+      const orderNumber = document.getElementById('ticket-modal-order').value.trim();
+      const priority = document.getElementById('ticket-modal-priority').value;
+      const description = document.getElementById('ticket-modal-description').value.trim();
+      const fileInput = document.getElementById('ticket-modal-file');
+
+      if (!subject || subject.length < 5) {
+        Utils.showToast('Please provide a subject line of at least 5 characters.', 'error');
+        return;
+      }
+      if (!categoryId) {
+        Utils.showToast('Please select a support category.', 'error');
+        return;
+      }
+      if (!description || description.length < 10) {
+        Utils.showToast('Please provide a detailed description (min 10 characters).', 'error');
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+        }
+
+        const payload = {
+          subject,
+          categoryId: parseInt(categoryId),
+          orderNumber: orderNumber || null,
+          priority,
+          description
+        };
+
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          const formData = new FormData();
+          const jsonBlob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+          formData.append('data', jsonBlob);
+          formData.append('request', jsonBlob);
+          formData.append('file', fileInput.files[0]);
+          await API.postFormData('/tickets', formData);
+        } else {
+          await API.post('/tickets/create-json', payload);
+        }
+
+        Utils.showToast('Support Ticket created successfully! Our team will assist you.', 'success');
+        document.getElementById('create-ticket-form').reset();
+        closeTicketModal();
+
+      } catch (err) {
+        console.error('Failed to submit ticket:', err);
+        Utils.showToast(err.message || 'Failed to submit ticket. Please try again.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      }
+    }
+
+    /* ==========================================================================
+       9. URL Parameters & Deep Linking
+       ========================================================================== */
+    function handleUrlParameters() {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get('q');
+      const catId = params.get('cat');
+      const faqId = params.get('id');
+
+      if (query) {
+        const input = document.getElementById('faq-search-input');
+        if (input) {
+          input.value = query;
+          executeFaqSearch();
+        }
+      } else if (catId) {
+        selectCategoryFromCard(parseInt(catId));
+      }
+
+      if (faqId) {
+        setTimeout(() => {
+          toggleFaqItem(parseInt(faqId));
+          const card = document.getElementById(`faq-card-${faqId}`);
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 350);
+      }
+    }
+
+    // Modal click-outside dismissal
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('ticket-modal');
+      if (e.target === modal) {
+        closeTicketModal();
+      }
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+
+</html>

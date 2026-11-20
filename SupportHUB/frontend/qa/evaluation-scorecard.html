@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quality Evaluation Scorecard | SupportHUB QA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-soft: rgba(245, 204, 0, 0.16);
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
+      --warning-amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .sc-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sc-title-group h1 {
+      font-size: 1.85rem;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .sc-title-group p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Scorecard Grid */
+    .sc-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .sc-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .sc-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .sc-card-header h2 {
+      font-size: 1.15rem;
+      color: var(--primary-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Criteria Row Item */
+    .criterion-item {
+      padding: 1rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      background: #ffffff;
+      transition: all 0.15s ease;
+    }
+
+    .criterion-item:hover {
+      border-color: #cbd5e1;
+      background: #fafcff;
+    }
+
+    .criterion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .criterion-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .criterion-weight {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      background: #f1f5f9;
+      border-radius: 4px;
+      color: var(--text-muted);
+    }
+
+    .criterion-desc {
+      font-size: 0.785rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .score-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-score {
+      flex: 1;
+      padding: 0.45rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--text-dark);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .btn-score:hover {
+      background: #f1f5f9;
+    }
+
+    .btn-score.active {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border-color: var(--primary-hover);
+    }
+
+    /* Summary Sidebar Panel */
+    .sticky-summary {
+      position: sticky;
+      top: 1.5rem;
+    }
+
+    .grade-meter-box {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      margin-bottom: 1.25rem;
+    }
+
+    .grade-badge-large {
+      font-size: 2.75rem;
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .grade-A { color: var(--success-green); }
+    .grade-B { color: #2563eb; }
+    .grade-C { color: var(--warning-amber); }
+    .grade-F { color: var(--danger-red); }
+
+    .score-percentage-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .btn-submit-scorecard {
+      width: 100%;
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: 1px solid var(--primary-hover);
+      padding: 0.75rem;
+      border-radius: 9px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0, 9, 133, 0.25);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-submit-scorecard:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    @media (max-width: 992px) {
+      .sc-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="qa-dashboard.html" class="sidebar-brand">
+          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="brand-text">
+            <span class="brand-title">SupportHUB</span>
+            <span class="brand-subtitle">Executive Suite</span>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="Auth.logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-menu-toggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-capsule">
+            <i class="fa-solid fa-square-poll-vertical"></i>
+            <span>Quality Assurance Management</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="header-profile-capsule" id="header-profile-capsule"></div>
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <!-- Workspace Content -->
+      <div class="content-container">
+        <!-- Page Header -->
+        <div class="sc-header-row">
+          <div class="sc-title-group">
+            <h1><i class="fa-solid fa-square-poll-vertical"></i> Support Quality Evaluation Scorecard</h1>
+            <p>Score completed customer support interactions across 9 standardized quality criteria.</p>
+          </div>
+          <div>
+            <a href="ticket-reviews.html" class="btn-secondary" style="padding:0.6rem 1rem; text-decoration:none; border:1px solid var(--border-subtle); border-radius:8px; font-size:0.85rem; font-weight:700;">
+              <i class="fa-solid fa-arrow-left"></i> Back to Review Queue
+            </a>
+          </div>
+        </div>
+
+        <form id="evaluation-form" onsubmit="submitEvaluation(event)">
+          <div class="sc-layout">
+            <!-- Left Column: 9 Evaluation Criteria -->
+            <div class="sc-card">
+              <div class="sc-card-header">
+                <h2><i class="fa-solid fa-list-ol"></i> Evaluation Standards (9 Dimensions)</h2>
+                <span class="meta-tag" id="tkt-badge-display">Ticket Selection</span>
+              </div>
+
+              <!-- Ticket Selector / Info Bar -->
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:1rem; margin-bottom:1.5rem;">
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem;">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label for="eval-ticket-id">Select Ticket to Evaluate *</label>
+                    <select id="eval-ticket-id" class="form-control" onchange="loadSelectedTicketDetails()" required>
+                      <option value="">Choose a ticket...</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="font-size:0.8rem; font-weight:700;">Assigned Officer</label>
+                    <div id="eval-officer-name" style="font-size:0.9rem; font-weight:700; color:var(--primary-blue); margin-top:0.35rem;">--</div>
+                  </div>
+                  <div>
+                    <label style="font-size:0.8rem; font-weight:700;">Ticket Category</label>
+                    <div id="eval-category-name" style="font-size:0.9rem; font-weight:600; color:var(--text-muted); margin-top:0.35rem;">--</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 9 Criteria Container -->
+              <div id="criteria-container">
+                <!-- Dynamically generated or standard criteria list -->
+              </div>
+            </div>
+
+            <!-- Right Column: Live Scoring Engine & Observations -->
+            <div>
+              <div class="sc-card sticky-summary">
+                <div class="sc-card-header">
+                  <h2><i class="fa-solid fa-calculator"></i> Quality Score Summary</h2>
+                </div>
+
+                <div class="grade-meter-box">
+                  <div class="grade-badge-large grade-A" id="summary-grade">A</div>
+                  <div class="score-percentage-text" id="summary-percentage">100.0%</div>
+                  <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.35rem;" id="summary-grade-label">EXCELLENT (Exceeds Standards)</div>
+                </div>
+
+                <!-- Observations & Comments -->
+                <div class="form-group">
+                  <label for="eval-positive">Positive Observations *</label>
+                  <textarea id="eval-positive" class="form-control" rows="3" placeholder="Commendable practices, courteous tone, rapid response..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="eval-improvements">Improvement Areas & Specific Findings *</label>
+                  <textarea id="eval-improvements" class="form-control" rows="3" placeholder="Missed documentation details, tone adjustments, follow-up gaps..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="eval-recommendation">Actionable Coaching Recommendations</label>
+                  <textarea id="eval-recommendation" class="form-control" rows="2" placeholder="Recommended training or guidance for supervisor..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit-scorecard" id="btn-submit-eval">
+                  <i class="fa-solid fa-cloud-arrow-up"></i> Submit Final Evaluation
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    const standardCriteria = [
+      { id: 1, name: 'Professional Communication', weight: 10, desc: 'Courteous greeting, polite empathy, professional tone, grammar, and respectful language.' },
+      { id: 2, name: 'Understanding Customer Requirements', weight: 10, desc: 'Active listening, precise comprehension of customer pain points, and acknowledging underlying issues.' },
+      { id: 3, name: 'Accuracy of Information', weight: 15, desc: 'Factual correctness, procedural precision, policy knowledge, and accurate explanation of features/refunds.' },
+      { id: 4, name: 'Problem Investigation', weight: 15, desc: 'Methodical troubleshooting, checking logs/account status, and identifying the true root cause.' },
+      { id: 5, name: 'Solution Quality', weight: 15, desc: 'Providing a durable, practical, and effective resolution rather than a temporary workaround.' },
+      { id: 6, name: 'Resolution Effectiveness', weight: 15, desc: 'First contact resolution capability, solving the problem efficiently without redundant follow-ups.' },
+      { id: 7, name: 'Response Completeness', weight: 10, desc: 'Answering all customer inquiries completely with clear next steps and confirmation.' },
+      { id: 8, name: 'Policy Compliance', weight: 5, desc: 'Adhering to SupportHUB data security protocols, SLA deadlines, and confidentiality rules.' },
+      { id: 9, name: 'Customer Experience', weight: 5, desc: 'Overall customer satisfaction, building positive rapport, and leaving the customer valued.' }
+    ];
+
+    const scores = {}; // criterionId: score (1-5)
+    let eligibleTickets = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Role Guard
+      const user = Auth.requireAuth(['QA_EXECUTIVE', 'QUALITY_ASSURANCE']);
+      if (!user) return;
+
+      // 2. Initialize Header & Navigation
+      Auth.renderNav();
+      if (typeof Auth.renderUserHeader === 'function') Auth.renderUserHeader();
+      if (typeof Auth.renderHeaderProfileCapsule === 'function') Auth.renderHeaderProfileCapsule();
+      if (typeof NotificationsEngine !== 'undefined' && typeof NotificationsEngine.init === 'function') {
+        NotificationsEngine.init();
+      }
+
+      // 3. Render Criteria Items with default score = 5
+      standardCriteria.forEach(c => scores[c.id] = 5);
+      renderCriteria();
+      calculateScore();
+
+      // 4. Fetch Eligible Tickets
+      await fetchEligibleTickets();
+
+      // Check URL query param for preselected ticket
+      const urlParams = new URLSearchParams(window.location.search);
+      const preTicketId = urlParams.get('ticketId');
+      if (preTicketId) {
+        document.getElementById('eval-ticket-id').value = preTicketId;
+        loadSelectedTicketDetails();
+      }
+    });
+
+    async function fetchEligibleTickets() {
+      try {
+        const res = await API.get('/tickets?page=0&size=50');
+        const pageData = res.data || {};
+        eligibleTickets = pageData.content || [];
+
+        const select = document.getElementById('eval-ticket-id');
+        select.innerHTML = '<option value="">Choose a ticket...</option>' +
+          eligibleTickets.map(t => `<option value="${t.id}">${Utils.escapeHtml(t.ticketNumber)} - ${Utils.escapeHtml(t.title)}</option>`).join('');
+      } catch (err) {
+        console.error('Failed to load tickets:', err);
+      }
+    }
+
+    function loadSelectedTicketDetails() {
+      const ticketId = document.getElementById('eval-ticket-id').value;
+      const ticket = eligibleTickets.find(t => t.id == ticketId);
+      if (ticket) {
+        document.getElementById('eval-officer-name').textContent = ticket.assignedAgentName || 'Unassigned';
+        document.getElementById('eval-category-name').textContent = ticket.categoryName || 'Support';
+        document.getElementById('tkt-badge-display').textContent = `Target: #${ticket.ticketNumber}`;
+      } else {
+        document.getElementById('eval-officer-name').textContent = '--';
+        document.getElementById('eval-category-name').textContent = '--';
+        document.getElementById('tkt-badge-display').textContent = 'Ticket Selection';
+      }
+    }
+
+    function renderCriteria() {
+      const container = document.getElementById('criteria-container');
+      container.innerHTML = standardCriteria.map(c => `
+        <div class="criterion-item" id="crit-item-${c.id}">
+          <div class="criterion-header">
+            <span class="criterion-title">
+              <i class="fa-solid fa-check-circle" style="color:var(--primary-blue);"></i>
+              ${c.name}
+            </span>
+            <span class="criterion-weight">Weight: ${c.weight}%</span>
+          </div>
+          <div class="criterion-desc">${c.desc}</div>
+          <div class="score-buttons">
+            <button type="button" class="btn-score ${scores[c.id] === 1 ? 'active' : ''}" onclick="setScore(${c.id}, 1)">1 (Poor)</button>
+            <button type="button" class="btn-score ${scores[c.id] === 2 ? 'active' : ''}" onclick="setScore(${c.id}, 2)">2 (Fair)</button>
+            <button type="button" class="btn-score ${scores[c.id] === 3 ? 'active' : ''}" onclick="setScore(${c.id}, 3)">3 (Average)</button>
+            <button type="button" class="btn-score ${scores[c.id] === 4 ? 'active' : ''}" onclick="setScore(${c.id}, 4)">4 (Good)</button>
+            <button type="button" class="btn-score ${scores[c.id] === 5 ? 'active' : ''}" onclick="setScore(${c.id}, 5)">5 (Excellent)</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setScore(criterionId, scoreVal) {
+      scores[criterionId] = scoreVal;
+      renderCriteria();
+      calculateScore();
+    }
+
+    function calculateScore() {
+      let weightedTotal = 0;
+      let totalWeight = 0;
+
+      standardCriteria.forEach(c => {
+        const s = scores[c.id] || 5;
+        weightedTotal += (s / 5) * c.weight;
+        totalWeight += c.weight;
+      });
+
+      const percentage = (weightedTotal / totalWeight) * 100;
+      document.getElementById('summary-percentage').textContent = `${percentage.toFixed(1)}%`;
+
+      const gradeBadge = document.getElementById('summary-grade');
+      const gradeLabel = document.getElementById('summary-grade-label');
+
+      gradeBadge.className = 'grade-badge-large';
+
+      if (percentage >= 90) {
+        gradeBadge.textContent = 'A';
+        gradeBadge.classList.add('grade-A');
+        gradeLabel.textContent = 'EXCELLENT (Exceeds Standards)';
+      } else if (percentage >= 80) {
+        gradeBadge.textContent = 'B';
+        gradeBadge.classList.add('grade-B');
+        gradeLabel.textContent = 'GOOD (Meets Service Standards)';
+      } else if (percentage >= 70) {
+        gradeBadge.textContent = 'C';
+        gradeBadge.classList.add('grade-C');
+        gradeLabel.textContent = 'SATISFACTORY (Needs Improvement)';
+      } else {
+        gradeBadge.textContent = 'F';
+        gradeBadge.classList.add('grade-F');
+        gradeLabel.textContent = 'FAILED (Quality Alert / Non-Compliant)';
+      }
+    }
+
+    function submitEvaluation(e) {
+      e.preventDefault();
+      const ticketId = document.getElementById('eval-ticket-id').value;
+      if (!ticketId) {
+        Utils.showToast('Please select a ticket to evaluate', 'error');
+        return;
+      }
+
+      const positive = document.getElementById('eval-positive').value.trim();
+      const improvements = document.getElementById('eval-improvements').value.trim();
+      const recommendation = document.getElementById('eval-recommendation').value.trim();
+
+      const percentage = parseFloat(document.getElementById('summary-percentage').textContent);
+      const grade = document.getElementById('summary-grade').textContent;
+
+      const evalData = {
+        id: Date.now(),
+        ticketId,
+        officer: document.getElementById('eval-officer-name').textContent,
+        category: document.getElementById('eval-category-name').textContent,
+        percentage,
+        grade,
+        scores,
+        positive,
+        improvements,
+        recommendation,
+        evaluator: 'QA Specialist',
+        createdAt: new Date().toISOString()
+      };
+
+      // Save to local storage evaluation store
+      try {
+        const existing = JSON.parse(localStorage.getItem('supporthub_qa_evaluations') || '[]');
+        existing.push(evalData);
+        localStorage.setItem('supporthub_qa_evaluations', JSON.stringify(existing));
+      } catch (err) {
+        console.warn('Local storage error:', err);
+      }
+
+      Utils.showToast(`Evaluation for Ticket #${ticketId} submitted successfully with Grade ${grade} (${percentage.toFixed(1)}%)`, 'success');
+
+      setTimeout(() => {
+        window.location.href = 'ticket-reviews.html';
+      }, 1200);
+    }
+  </script>
+</body>
+</html>

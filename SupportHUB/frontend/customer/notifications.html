@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Center — SupportHUB</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Core Theme CSS -->
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+
+  <style>
+    /* -------------------------------------------------------------
+       CUSTOMER NOTIFICATION CENTER — ADVANCED SAAS TOKENS & STYLES
+       ------------------------------------------------------------- */
+    :root {
+      --sh-primary: #000985;
+      --sh-primary-hover: #000766;
+      --sh-accent: #F5CC00;
+      --sh-accent-hover: #dcb700;
+      --sh-bg: #f8fafc;
+      --sh-card-bg: #ffffff;
+      --sh-text-main: #0f172a;
+      --sh-text-muted: #64748b;
+      --sh-border: rgba(0, 9, 133, 0.08);
+      --sh-glass: rgba(255, 255, 255, 0.85);
+      --sh-shadow-sm: 0 2px 6px rgba(0, 9, 133, 0.04);
+      --sh-shadow-md: 0 8px 24px -4px rgba(0, 9, 133, 0.08);
+      --sh-radius: 14px;
+    }
+
+    body {
+      background-color: var(--sh-bg);
+      color: var(--sh-text-main);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Main Content Area */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--sh-bg);
+    }
+
+    /* Top Navigation Header */
+    .dashboard-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--sh-border);
+      padding: 0.85rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      color: var(--sh-text-muted);
+    }
+
+    .header-breadcrumb a {
+      color: var(--sh-text-muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .header-breadcrumb a:hover {
+      color: var(--sh-primary);
+    }
+
+    .header-breadcrumb .current {
+      color: var(--sh-primary);
+      font-weight: 700;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    /* Global Search */
+    .header-search-container {
+      position: relative;
+      width: 320px;
+    }
+
+    .header-search-input {
+      width: 100%;
+      background: #f1f5f9;
+      border: 1px solid transparent;
+      border-radius: 30px;
+      padding: 0.55rem 1rem 0.55rem 2.4rem;
+      font-size: 0.825rem;
+      color: var(--sh-text-main);
+      transition: all 0.2s ease;
+    }
+
+    .header-search-input:focus {
+      background: #ffffff;
+      border-color: var(--sh-primary);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.1);
+      outline: none;
+    }
+
+    .header-search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    /* Profile Capsule */
+    .header-profile-capsule {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.35rem 0.75rem 0.35rem 0.4rem;
+      background: #ffffff;
+      border: 1px solid var(--sh-border);
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: var(--sh-shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .header-profile-capsule:hover {
+      border-color: var(--sh-primary);
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.08);
+    }
+
+    .header-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #000985 0%, #1e3a8a 100%);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Page Content Container */
+    .content-area {
+      padding: 2rem 2.5rem 4rem;
+      max-width: 1240px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Hero Banner */
+    .notifs-hero-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f9fbfd 100%);
+      border: 1px solid var(--sh-border);
+      border-radius: var(--sh-radius);
+      padding: 1.75rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--sh-shadow-md);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .notifs-hero-card::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(245, 204, 0, 0.2) 0%, rgba(245, 204, 0, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .notifs-hero-left {
+      max-width: 680px;
+    }
+
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #000985;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.25);
+    }
+
+    .hero-title {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #000985;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 0.9rem;
+      color: var(--sh-text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .hero-chips-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-top: 0.9rem;
+    }
+
+    .chip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .chip-badge.unread {
+      background: rgba(245, 204, 0, 0.18);
+      color: #92400e;
+      border: 1px solid rgba(245, 204, 0, 0.4);
+    }
+
+    .chip-badge.total {
+      background: rgba(0, 9, 133, 0.06);
+      color: var(--sh-primary);
+      border: 1px solid rgba(0, 9, 133, 0.12);
+    }
+
+    .notifs-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .btn-action-primary {
+      background: var(--sh-primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0, 9, 133, 0.2);
+    }
+
+    .btn-action-primary:hover {
+      background: var(--sh-primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 9, 133, 0.3);
+    }
+
+    .btn-action-secondary {
+      background: #ffffff;
+      color: var(--sh-primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.65rem 1.15rem;
+      border-radius: 8px;
+      border: 1px solid var(--sh-border);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: #f8fafc;
+      border-color: var(--sh-primary);
+    }
+
+    /* Filter & Tabs Card */
+    .controls-card {
+      background: #ffffff;
+      border: 1px solid var(--sh-border);
+      border-radius: var(--sh-radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--sh-shadow-sm);
+    }
+
+    /* Status Metric Tabs */
+    .notif-tabs-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+    }
+
+    .notif-tab {
+      background: none;
+      border: none;
+      padding: 0.6rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--sh-text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .notif-tab:hover {
+      color: var(--sh-primary);
+      background: rgba(0, 9, 133, 0.04);
+    }
+
+    .notif-tab.active {
+      color: var(--sh-primary);
+      background: rgba(0, 9, 133, 0.08);
+      font-weight: 700;
+    }
+
+    .tab-counter-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 12px;
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    .notif-tab.active .tab-counter-pill {
+      background: var(--sh-primary);
+      color: #ffffff;
+    }
+
+    .notif-tab.unread-tab.active .tab-counter-pill {
+      background: #d97706;
+      color: #ffffff;
+    }
+
+    /* Filter Controls Bar */
+    .filters-bar {
+      display: grid;
+      grid-template-columns: 1fr 220px 180px;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .search-field-wrapper {
+      position: relative;
+    }
+
+    .search-field-input {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.65rem 1rem 0.65rem 2.4rem;
+      font-size: 0.85rem;
+      color: var(--sh-text-main);
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .search-field-input:focus {
+      background: #ffffff;
+      border-color: var(--sh-primary);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.1);
+      outline: none;
+    }
+
+    .search-field-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    .select-dropdown {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.65rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--sh-text-main);
+      box-sizing: border-box;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .select-dropdown:focus {
+      background: #ffffff;
+      border-color: var(--sh-primary);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.1);
+    }
+
+    /* Notification Feed Container */
+    .notifs-feed-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Notification Card */
+    .notification-card {
+      background: #ffffff;
+      border: 1px solid var(--sh-border);
+      border-radius: var(--sh-radius);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--sh-shadow-sm);
+      display: flex;
+      align-items: flex-start;
+      gap: 1.15rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .notification-card:hover {
+      box-shadow: var(--sh-shadow-md);
+      transform: translateY(-2px);
+      border-color: rgba(0, 9, 133, 0.18);
+    }
+
+    /* Unread Card Styling */
+    .notification-card.unread {
+      background: linear-gradient(90deg, rgba(245, 204, 0, 0.05) 0%, #ffffff 40%);
+      border-left: 4.5px solid var(--sh-accent);
+    }
+
+    .notif-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .notif-card-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .notif-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.45rem;
+    }
+
+    .notif-type-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .notif-ticket-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(0, 9, 133, 0.07);
+      color: var(--sh-primary);
+      padding: 2px 8px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+
+    .notif-ticket-badge:hover {
+      background: rgba(0, 9, 133, 0.14);
+    }
+
+    .notif-timestamp {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-left: auto;
+    }
+
+    .notif-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 0.35rem;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .unread-indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sh-accent);
+      box-shadow: 0 0 8px rgba(245, 204, 0, 0.9);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .notif-card-message {
+      font-size: 0.875rem;
+      color: #475569;
+      line-height: 1.5;
+      margin: 0 0 0.85rem;
+      word-break: break-word;
+    }
+
+    .notif-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-notif-action {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-notif-action.primary {
+      background: var(--sh-primary);
+      color: #ffffff;
+      border: 1px solid var(--sh-primary);
+    }
+
+    .btn-notif-action.primary:hover {
+      background: var(--sh-primary-hover);
+    }
+
+    .btn-notif-action.secondary {
+      background: #f8fafc;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-notif-action.secondary:hover {
+      background: #ffffff;
+      border-color: var(--sh-primary);
+      color: var(--sh-primary);
+    }
+
+    .badge-status-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: auto;
+    }
+
+    .badge-status-pill.read {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .badge-status-pill.unread {
+      background: rgba(245, 204, 0, 0.2);
+      color: #92400e;
+      border: 1px solid rgba(245, 204, 0, 0.4);
+    }
+
+    /* Empty States */
+    .empty-state-box {
+      background: #ffffff;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--sh-radius);
+      padding: 4rem 2rem;
+      text-align: center;
+      color: var(--sh-text-muted);
+      margin: 1rem 0;
+    }
+
+    .empty-state-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #94a3b8;
+      margin-bottom: 1.25rem;
+    }
+
+    .empty-state-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 0.5rem;
+    }
+
+    .empty-state-desc {
+      font-size: 0.9rem;
+      max-width: 420px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* Pagination */
+    .pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--sh-border);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .pagination-info {
+      font-size: 0.85rem;
+      color: var(--sh-text-muted);
+      font-weight: 500;
+    }
+
+    .pagination-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .page-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #475569;
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      border-color: var(--sh-primary);
+      color: var(--sh-primary);
+    }
+
+    .page-btn.active {
+      background: var(--sh-primary);
+      border-color: var(--sh-primary);
+      color: #ffffff;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Skeleton Loading Placeholder */
+    .skeleton-card {
+      background: #ffffff;
+      border: 1px solid #f1f5f9;
+      border-radius: var(--sh-radius);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1.25rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    .skeleton-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #e2e8f0;
+      flex-shrink: 0;
+    }
+
+    .skeleton-body {
+      flex: 1;
+    }
+
+    .skeleton-line {
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .filters-bar {
+        grid-template-columns: 1fr;
+      }
+      .content-area {
+        padding: 1.5rem 1rem;
+      }
+      .notifs-hero-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Enterprise Sidebar Navigation -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="customer-dashboard.html" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+          <div class="brand-logo-circle" style="width: 38px; height: 38px; border-radius: 10px; background: #000985; color: #F5CC00; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0, 9, 133, 0.3);">
+            SH
+          </div>
+          <div>
+            <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 800; color: #000985; letter-spacing: -0.02em;">SupportHUB</div>
+            <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Customer Portal</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Injected dynamically via auth.js -->
+      </nav>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <main class="main-wrapper">
+
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="header-left">
+          <div class="header-breadcrumb">
+            <a href="customer-dashboard.html">Dashboard</a>
+            <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+            <span class="current">Notification Center</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Global Help Search -->
+          <div class="header-search-container">
+            <i class="fa-solid fa-magnifying-glass header-search-icon"></i>
+            <input type="search" id="global-help-search" class="header-search-input" placeholder="Search articles, guides, FAQs..." onkeydown="if(event.key === 'Enter') window.location.href = '../knowledge-base.html?q=' + encodeURIComponent(this.value)">
+          </div>
+
+          <!-- Notification Bell -->
+          <div class="notif-bell-container" id="notif-bell" role="button" tabindex="0" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; color: #0f172a;">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+
+          <!-- Customer Profile Capsule -->
+          <div class="header-profile-capsule" id="header-profile-capsule" onclick="window.location.href='customer-profile.html'">
+            <div class="header-avatar" id="header-user-avatar">CU</div>
+            <div style="text-align: left; line-height: 1.2;">
+              <div id="header-user-name" style="font-size: 0.775rem; font-weight: 700; color: #0f172a;">Customer</div>
+              <div id="header-user-role" style="font-size: 0.675rem; color: #64748b;">Customer Account</div>
+            </div>
+          </div>
+
+          <!-- Sign Out Button -->
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+
+        <!-- Hero Section -->
+        <div class="notifs-hero-card">
+          <div class="notifs-hero-left">
+            <div class="hero-title-row">
+              <div class="hero-icon-box">
+                <i class="fa-solid fa-bell"></i>
+              </div>
+              <h1 class="hero-title">Notification Center</h1>
+            </div>
+            <p class="hero-subtitle">
+              Stay fully informed with live alerts on your ticket status updates, support officer replies, milestone assignments, and resolution reminders.
+            </p>
+            <div class="hero-chips-row">
+              <span class="chip-badge unread" id="hero-unread-badge">
+                <i class="fa-solid fa-circle" style="color: #F5CC00; font-size: 0.5rem;"></i>
+                <span id="hero-unread-count-text">0 Unread Alerts</span>
+              </span>
+              <span class="chip-badge total" id="hero-total-badge">
+                <i class="fa-solid fa-inbox"></i>
+                <span id="hero-total-count-text">0 Total Notifications</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="notifs-hero-actions">
+            <button class="btn-action-primary" id="btn-page-mark-all-read" onclick="NotificationCenter.markAllAsRead()">
+              <i class="fa-solid fa-check-double"></i> Mark All as Read
+            </button>
+            <button class="btn-action-secondary" id="btn-page-refresh" onclick="NotificationCenter.reload()">
+              <i class="fa-solid fa-rotate-right"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Tabs & Filtering Controls -->
+        <div class="controls-card">
+          <!-- Metric Tabs -->
+          <div class="notif-tabs-row" id="notif-tabs-row">
+            <button class="notif-tab active" id="tab-all-notifs" onclick="NotificationCenter.setTab('ALL')">
+              <i class="fa-solid fa-layer-group"></i> All Notifications
+              <span class="tab-counter-pill" id="count-all">0</span>
+            </button>
+            <button class="notif-tab unread-tab" id="tab-unread-notifs" onclick="NotificationCenter.setTab('UNREAD')">
+              <i class="fa-solid fa-envelope"></i> Unread
+              <span class="tab-counter-pill" id="count-unread">0</span>
+            </button>
+            <button class="notif-tab" id="tab-read-notifs" onclick="NotificationCenter.setTab('READ')">
+              <i class="fa-solid fa-envelope-open"></i> Read
+              <span class="tab-counter-pill" id="count-read">0</span>
+            </button>
+          </div>
+
+          <!-- Filters Row -->
+          <div class="filters-bar">
+            <!-- Search Field -->
+            <div class="search-field-wrapper">
+              <i class="fa-solid fa-magnifying-glass search-field-icon"></i>
+              <input type="search" id="notif-search-input" class="search-field-input" placeholder="Filter by notification title, ticket reference, or message..." oninput="NotificationCenter.handleSearch(this.value)">
+            </div>
+
+            <!-- Type Selector -->
+            <select id="filter-type-select" class="select-dropdown" onchange="NotificationCenter.handleTypeFilter(this.value)">
+              <option value="ALL">All Notification Types</option>
+              <option value="TICKET_CREATED">Ticket Created</option>
+              <option value="TICKET_ASSIGNED">Officer Assigned</option>
+              <option value="TICKET_REPLIED">New Messages / Replies</option>
+              <option value="TICKET_STATUS_CHANGED">Status Updates</option>
+              <option value="TICKET_RESOLVED">Ticket Resolved</option>
+              <option value="TICKET_CLOSED">Ticket Closed</option>
+              <option value="FEEDBACK">Feedback & CSAT</option>
+              <option value="SLA_BREACH">SLA Alerts</option>
+              <option value="SYSTEM">System Notices</option>
+            </select>
+
+            <!-- Sort Selector -->
+            <select id="filter-sort-select" class="select-dropdown" onchange="NotificationCenter.handleSort(this.value)">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Notifications Feed List Container -->
+        <div class="notifs-feed-container" id="notifications-feed">
+          <!-- Loading skeleton initially -->
+          <div class="skeleton-card">
+            <div class="skeleton-avatar"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-line" style="width: 35%;"></div>
+              <div class="skeleton-line" style="width: 80%;"></div>
+              <div class="skeleton-line" style="width: 25%;"></div>
+            </div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-avatar"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-line" style="width: 40%;"></div>
+              <div class="skeleton-line" style="width: 70%;"></div>
+              <div class="skeleton-line" style="width: 20%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div class="empty-state-box" id="notifs-empty-state" style="display: none;">
+          <div class="empty-state-icon">
+            <i class="fa-solid fa-bell-slash"></i>
+          </div>
+          <h3 class="empty-state-title" id="empty-state-title">No notifications yet</h3>
+          <p class="empty-state-desc" id="empty-state-desc">You are completely up to date. You will receive notifications here when your tickets are assigned, updated, or replied to.</p>
+          <div id="empty-state-action-container">
+            <a href="customer-dashboard.html" class="btn-action-primary" style="text-decoration: none;">
+              <i class="fa-solid fa-house"></i> Back to Dashboard
+            </a>
+          </div>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-bar" id="notif-pagination" style="display: none;">
+          <div class="pagination-info" id="pagination-info">
+            Showing 1-10 of 10 notifications
+          </div>
+          <div class="pagination-controls-row">
+            <button class="page-btn" id="btn-prev-page" onclick="NotificationCenter.prevPage()" disabled>
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div id="pagination-number-buttons" style="display: flex; gap: 0.35rem;"></div>
+            <button class="page-btn" id="btn-next-page" onclick="NotificationCenter.nextPage()" disabled>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+
+  <!-- Notification Center Logic -->
+  <script>
+    const NotificationCenter = {
+      allNotifications: [],
+      filteredNotifications: [],
+      currentTab: 'ALL', // 'ALL', 'UNREAD', 'READ'
+      currentTypeFilter: 'ALL',
+      searchQuery: '',
+      sortOrder: 'newest', // 'newest', 'oldest'
+      currentPage: 1,
+      pageSize: 10,
+
+      async init() {
+        // Enforce Customer RBAC
+        if (!Auth.requireRole('CUSTOMER')) return;
+
+        // Render Sidebar and Header Profile
+        Auth.renderSidebar();
+        Auth.renderHeaderProfile();
+
+        // Initialize header notifications bell engine
+        if (typeof NotificationsEngine !== 'undefined') {
+          NotificationsEngine.init();
+        }
+
+        // Listen for global notification synchronization events
+        window.addEventListener('supportHub:notificationsChanged', () => {
+          this.updateCountsOnly();
+        });
+
+        window.addEventListener('supportHub:allNotificationsMarkedRead', () => {
+          this.reload();
+        });
+
+        // Load notifications from backend
+        await this.loadNotifications();
+      },
+
+      async loadNotifications() {
+        const feed = document.getElementById('notifications-feed');
+        const emptyState = document.getElementById('notifs-empty-state');
+        const pagination = document.getElementById('notif-pagination');
+
+        try {
+          // Re-use official GET /api/notifications
+          const res = await API.get('/notifications');
+          const data = (res && res.data) ? res.data : [];
+
+          // Sort default newest-first
+          this.allNotifications = Array.isArray(data) ? data : [];
+          
+          this.updateTabCounters();
+          this.applyFiltersAndRender();
+        } catch (err) {
+          console.error('Failed to load customer notifications:', err);
+          if (feed) {
+            feed.innerHTML = `
+              <div class="empty-state-box" style="display: block;">
+                <div class="empty-state-icon" style="color: #ef4444; background: #fef2f2; border-color: #fca5a5;">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 class="empty-state-title">Unable to Load Notifications</h3>
+                <p class="empty-state-desc">There was an issue communicating with the notification service. Please check your network connection and try again.</p>
+                <button class="btn-action-primary" onclick="NotificationCenter.reload()">
+                  <i class="fa-solid fa-rotate-right"></i> Try Again
+                </button>
+              </div>
+            `;
+          }
+          if (emptyState) emptyState.style.display = 'none';
+          if (pagination) pagination.style.display = 'none';
+        }
+      },
+
+      updateTabCounters() {
+        const total = this.allNotifications.length;
+        const unread = this.allNotifications.filter(n => !n.read).length;
+        const read = total - unread;
+
+        const countAllEl = document.getElementById('count-all');
+        const countUnreadEl = document.getElementById('count-unread');
+        const countReadEl = document.getElementById('count-read');
+        const heroUnreadText = document.getElementById('hero-unread-count-text');
+        const heroTotalText = document.getElementById('hero-total-count-text');
+
+        if (countAllEl) countAllEl.textContent = total;
+        if (countUnreadEl) countUnreadEl.textContent = unread;
+        if (countReadEl) countReadEl.textContent = read;
+
+        if (heroUnreadText) {
+          heroUnreadText.textContent = `${unread} Unread Alert${unread === 1 ? '' : 's'}`;
+        }
+        if (heroTotalText) {
+          heroTotalText.textContent = `${total} Total Notification${total === 1 ? '' : 's'}`;
+        }
+      },
+
+      async updateCountsOnly() {
+        try {
+          const res = await API.get('/notifications/unread-count');
+          const unreadCount = (res && typeof res.data === 'number') ? res.data : 0;
+          const countUnreadEl = document.getElementById('count-unread');
+          const heroUnreadText = document.getElementById('hero-unread-count-text');
+          if (countUnreadEl) countUnreadEl.textContent = unreadCount;
+          if (heroUnreadText) heroUnreadText.textContent = `${unreadCount} Unread Alert${unreadCount === 1 ? '' : 's'}`;
+        } catch (e) {
+          // graceful ignore
+        }
+      },
+
+      setTab(tab) {
+        this.currentTab = tab;
+        this.currentPage = 1;
+
+        // Update active tab styles
+        document.querySelectorAll('.notif-tab').forEach(btn => btn.classList.remove('active'));
+        if (tab === 'ALL') {
+          document.getElementById('tab-all-notifs')?.classList.add('active');
+        } else if (tab === 'UNREAD') {
+          document.getElementById('tab-unread-notifs')?.classList.add('active');
+        } else if (tab === 'READ') {
+          document.getElementById('tab-read-notifs')?.classList.add('active');
+        }
+
+        this.applyFiltersAndRender();
+      },
+
+      handleTypeFilter(type) {
+        this.currentTypeFilter = type;
+        this.currentPage = 1;
+        this.applyFiltersAndRender();
+      },
+
+      handleSearch(query) {
+        this.searchQuery = (query || '').trim().toLowerCase();
+        this.currentPage = 1;
+        this.applyFiltersAndRender();
+      },
+
+      handleSort(sortOrder) {
+        this.sortOrder = sortOrder;
+        this.currentPage = 1;
+        this.applyFiltersAndRender();
+      },
+
+      applyFiltersAndRender() {
+        let list = [...this.allNotifications];
+
+        // 1. Filter by Tab (Read / Unread / All)
+        if (this.currentTab === 'UNREAD') {
+          list = list.filter(n => !n.read);
+        } else if (this.currentTab === 'READ') {
+          list = list.filter(n => n.read);
+        }
+
+        // 2. Filter by Notification Type
+        if (this.currentTypeFilter !== 'ALL') {
+          if (this.currentTypeFilter === 'FEEDBACK') {
+            list = list.filter(n => (n.type || '').includes('FEEDBACK'));
+          } else {
+            list = list.filter(n => (n.type || '').toUpperCase() === this.currentTypeFilter);
+          }
+        }
+
+        // 3. Filter by Search Query
+        if (this.searchQuery) {
+          list = list.filter(n => {
+            const title = (n.title || '').toLowerCase();
+            const msg = (n.message || '').toLowerCase();
+            const ticket = (n.relatedTicketId ? `#${n.relatedTicketId}` : '').toLowerCase();
+            return title.includes(this.searchQuery) || msg.includes(this.searchQuery) || ticket.includes(this.searchQuery);
+          });
+        }
+
+        // 4. Sort
+        list.sort((a, b) => {
+          const dateA = new Date(a.createdAt || 0).getTime();
+          const dateB = new Date(b.createdAt || 0).getTime();
+          return this.sortOrder === 'oldest' ? (dateA - dateB) : (dateB - dateA);
+        });
+
+        this.filteredNotifications = list;
+        this.renderFeed();
+      },
+
+      renderFeed() {
+        const feed = document.getElementById('notifications-feed');
+        const emptyState = document.getElementById('notifs-empty-state');
+        const pagination = document.getElementById('notif-pagination');
+
+        if (!feed) return;
+
+        if (this.filteredNotifications.length === 0) {
+          feed.innerHTML = '';
+          if (emptyState) {
+            emptyState.style.display = 'block';
+            const titleEl = document.getElementById('empty-state-title');
+            const descEl = document.getElementById('empty-state-desc');
+            const actionContainer = document.getElementById('empty-state-action-container');
+
+            if (this.searchQuery) {
+              titleEl.textContent = 'No matching notifications';
+              descEl.textContent = `No notifications matched "${this.searchQuery}". Try modifying your search keywords or clearing filters.`;
+              actionContainer.innerHTML = `
+                <button class="btn-action-primary" onclick="document.getElementById('notif-search-input').value = ''; NotificationCenter.handleSearch('');">
+                  <i class="fa-solid fa-filter-circle-xmark"></i> Clear Filters
+                </button>
+              `;
+            } else if (this.currentTab === 'UNREAD') {
+              titleEl.textContent = 'No unread notifications';
+              descEl.textContent = 'Great news! You have read all your notifications.';
+              actionContainer.innerHTML = `
+                <button class="btn-action-primary" onclick="NotificationCenter.setTab('ALL')">
+                  <i class="fa-solid fa-layer-group"></i> View All Notifications
+                </button>
+              `;
+            } else if (this.currentTab === 'READ') {
+              titleEl.textContent = 'No read notifications';
+              descEl.textContent = 'You have not marked any notifications as read yet.';
+              actionContainer.innerHTML = `
+                <button class="btn-action-primary" onclick="NotificationCenter.setTab('ALL')">
+                  <i class="fa-solid fa-layer-group"></i> View All Notifications
+                </button>
+              `;
+            } else {
+              titleEl.textContent = 'All caught up!';
+              descEl.textContent = 'You have no notifications at this time. Support ticket updates will appear here automatically.';
+              actionContainer.innerHTML = `
+                <a href="customer-dashboard.html" class="btn-action-primary" style="text-decoration: none;">
+                  <i class="fa-solid fa-house"></i> Back to Dashboard
+                </a>
+              `;
+            }
+          }
+          if (pagination) pagination.style.display = 'none';
+          return;
+        }
+
+        if (emptyState) emptyState.style.display = 'none';
+
+        // Calculate pagination slice
+        const totalItems = this.filteredNotifications.length;
+        const totalPages = Math.ceil(totalItems / this.pageSize) || 1;
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+
+        const startIndex = (this.currentPage - 1) * this.pageSize;
+        const pageItems = this.filteredNotifications.slice(startIndex, startIndex + this.pageSize);
+
+        // Render card items
+        feed.innerHTML = pageItems.map(n => {
+          const typeDetails = NotificationsEngine.getTypeDetails(n.type);
+          const isUnread = !n.read;
+          const ticketId = n.relatedTicketId || null;
+          const relativeTime = NotificationsEngine.formatRelativeTime(n.createdAt);
+          const fullDateTime = NotificationsEngine.formatFullDateTime(n.createdAt);
+
+          return `
+            <div class="notification-card ${isUnread ? 'unread' : ''}" id="notif-card-${n.id}">
+              <div class="notif-card-icon" style="background: ${typeDetails.bg}; color: ${typeDetails.color};">
+                <i class="fa-solid ${typeDetails.icon}"></i>
+              </div>
+
+              <div class="notif-card-main">
+                <div class="notif-card-meta">
+                  <span class="notif-type-tag" style="background: ${typeDetails.bg}; color: ${typeDetails.color};">
+                    ${typeDetails.label}
+                  </span>
+
+                  ${ticketId ? `
+                    <a href="ticket-details.html?id=${ticketId}" class="notif-ticket-badge" title="Open ticket details">
+                      <i class="fa-solid fa-ticket"></i> #${ticketId}
+                    </a>
+                  ` : ''}
+
+                  <span class="badge-status-pill ${isUnread ? 'unread' : 'read'}">
+                    ${isUnread ? '<span class="unread-indicator-dot" style="margin-right: 4px;"></span> Unread' : 'Read'}
+                  </span>
+
+                  <span class="notif-timestamp" title="${fullDateTime}">
+                    <i class="fa-regular fa-clock" style="margin-right: 3px;"></i> ${relativeTime}
+                  </span>
+                </div>
+
+                <h3 class="notif-card-title">
+                  ${isUnread ? '<span class="unread-indicator-dot"></span>' : ''}
+                  ${Utils.escapeHtml(n.title || 'Notification')}
+                </h3>
+
+                <p class="notif-card-message">
+                  ${Utils.escapeHtml(n.message || '')}
+                </p>
+
+                <div class="notif-card-actions">
+                  ${ticketId ? `
+                    <a href="ticket-details.html?id=${ticketId}" class="btn-notif-action primary" onclick="NotificationCenter.onCardTicketClick(event, ${n.id}, ${ticketId})">
+                      <i class="fa-solid fa-arrow-up-right-from-square"></i> View Ticket
+                    </a>
+                  ` : ''}
+
+                  ${isUnread ? `
+                    <button class="btn-notif-action secondary" onclick="NotificationCenter.markOneAsRead(event, ${n.id})">
+                      <i class="fa-solid fa-check"></i> Mark as Read
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Render pagination
+        this.renderPagination(totalItems, totalPages);
+      },
+
+      renderPagination(totalItems, totalPages) {
+        const pagination = document.getElementById('notif-pagination');
+        if (!pagination) return;
+
+        if (totalItems <= this.pageSize) {
+          pagination.style.display = 'none';
+          return;
+        }
+
+        pagination.style.display = 'flex';
+        const start = (this.currentPage - 1) * this.pageSize + 1;
+        const end = Math.min(start + this.pageSize - 1, totalItems);
+
+        const infoEl = document.getElementById('pagination-info');
+        if (infoEl) {
+          infoEl.textContent = `Showing ${start}-${end} of ${totalItems} notifications`;
+        }
+
+        const prevBtn = document.getElementById('btn-prev-page');
+        const nextBtn = document.getElementById('btn-next-page');
+        if (prevBtn) prevBtn.disabled = this.currentPage <= 1;
+        if (nextBtn) nextBtn.disabled = this.currentPage >= totalPages;
+
+        const numbersContainer = document.getElementById('pagination-number-buttons');
+        if (numbersContainer) {
+          let buttonsHtml = '';
+          for (let p = 1; p <= totalPages; p++) {
+            if (p === 1 || p === totalPages || (p >= this.currentPage - 1 && p <= this.currentPage + 1)) {
+              buttonsHtml += `
+                <button class="page-btn ${p === this.currentPage ? 'active' : ''}" onclick="NotificationCenter.goToPage(${p})">
+                  ${p}
+                </button>
+              `;
+            } else if (p === this.currentPage - 2 || p === this.currentPage + 2) {
+              buttonsHtml += `<span style="padding: 0 4px; color: #94a3b8; display: inline-flex; align-items: center;">...</span>`;
+            }
+          }
+          numbersContainer.innerHTML = buttonsHtml;
+        }
+      },
+
+      goToPage(p) {
+        this.currentPage = p;
+        this.renderFeed();
+        window.scrollTo({ top: 200, behavior: 'smooth' });
+      },
+
+      prevPage() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+          this.renderFeed();
+          window.scrollTo({ top: 200, behavior: 'smooth' });
+        }
+      },
+
+      nextPage() {
+        const totalPages = Math.ceil(this.filteredNotifications.length / this.pageSize);
+        if (this.currentPage < totalPages) {
+          this.currentPage++;
+          this.renderFeed();
+          window.scrollTo({ top: 200, behavior: 'smooth' });
+        }
+      },
+
+      async markOneAsRead(e, id) {
+        if (e) e.stopPropagation();
+        try {
+          // Re-use official PUT /api/notifications/{id}/read
+          await API.put(`/notifications/${id}/read`).catch(() => API.patch(`/notifications/${id}/read`));
+
+          // Local state update
+          const item = this.allNotifications.find(n => n.id === id);
+          if (item) item.read = true;
+
+          this.updateTabCounters();
+          this.applyFiltersAndRender();
+
+          // Refresh header bell count
+          if (typeof NotificationsEngine !== 'undefined') {
+            NotificationsEngine.fetchUnreadCount(false);
+          }
+
+          if (typeof Utils !== 'undefined' && typeof Utils.showToast === 'function') {
+            Utils.showToast('Notification marked as read', 'success');
+          }
+        } catch (err) {
+          console.error('Failed to mark notification as read:', err);
+          if (typeof Utils !== 'undefined' && typeof Utils.showToast === 'function') {
+            Utils.showToast('Could not mark notification as read', 'error');
+          }
+        }
+      },
+
+      async onCardTicketClick(e, notifId, ticketId) {
+        // Mark as read in background if unread
+        const item = this.allNotifications.find(n => n.id === notifId);
+        if (item && !item.read) {
+          API.put(`/notifications/${notifId}/read`).catch(() => API.patch(`/notifications/${notifId}/read`));
+          if (typeof NotificationsEngine !== 'undefined') {
+            NotificationsEngine.fetchUnreadCount(false);
+          }
+        }
+      },
+
+      async markAllAsRead() {
+        const unreadItems = this.allNotifications.filter(n => !n.read);
+        if (unreadItems.length === 0) {
+          if (typeof Utils !== 'undefined' && typeof Utils.showToast === 'function') {
+            Utils.showToast('No unread notifications to mark', 'info');
+          }
+          return;
+        }
+
+        try {
+          const btn = document.getElementById('btn-page-mark-all-read');
+          if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Marking...`;
+          }
+
+          // Re-use official PUT /api/notifications/read-all
+          await API.put('/notifications/read-all').catch(() => API.patch('/notifications/read-all'));
+
+          // Update local state
+          this.allNotifications.forEach(n => { n.read = true; });
+
+          this.updateTabCounters();
+          this.applyFiltersAndRender();
+
+          // Update header bell
+          if (typeof NotificationsEngine !== 'undefined') {
+            NotificationsEngine.fetchUnreadCount(false);
+          }
+
+          if (typeof Utils !== 'undefined' && typeof Utils.showToast === 'function') {
+            Utils.showToast('All notifications marked as read', 'success');
+          }
+        } catch (err) {
+          console.error('Failed to mark all notifications as read:', err);
+          if (typeof Utils !== 'undefined' && typeof Utils.showToast === 'function') {
+            Utils.showToast('Could not mark all notifications as read', 'error');
+          }
+        } finally {
+          const btn = document.getElementById('btn-page-mark-all-read');
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-check-double"></i> Mark All as Read`;
+          }
+        }
+      },
+
+      async reload() {
+        const refreshBtn = document.getElementById('btn-page-refresh');
+        if (refreshBtn) {
+          refreshBtn.disabled = true;
+          refreshBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Refreshing...`;
+        }
+
+        await this.loadNotifications();
+
+        if (refreshBtn) {
+          refreshBtn.disabled = false;
+          refreshBtn.innerHTML = `<i class="fa-solid fa-rotate-right"></i> Refresh`;
+        }
+      }
+    };
+
+    // Auto-initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      NotificationCenter.init();
+    });
+  </script>
+</body>
+</html>

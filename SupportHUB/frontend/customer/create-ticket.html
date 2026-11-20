@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raise a Support Ticket - SupportHUB</title>
+  <meta name="description" content="Submit a new support ticket or general inquiry to SupportHUB customer service.">
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Theme Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+  <link rel="stylesheet" href="../css/responsive.css?v=14.0">
+
+  <style>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 - Customer Ticket Creation Page
+       Brand: Primary Blue #000985 | Accent Yellow #F5CC00 | Pure White Surface
+       Theme: Subtle Glassmorphism, Rounded Cards (16px), Soft Shadows
+       ========================================================================== */
+
+    :root {
+      --tc-primary: #000985;
+      --tc-primary-dark: #00065c;
+      --tc-primary-light: #eff2ff;
+      --tc-accent: #F5CC00;
+      --tc-accent-hover: #e0bb00;
+      --tc-accent-light: #fffbeb;
+      --tc-bg-page: #f8fafc;
+      --tc-surface-white: #ffffff;
+      --tc-glass-bg: rgba(255, 255, 255, 0.88);
+      --tc-glass-border: rgba(0, 9, 133, 0.08);
+      --tc-glass-blur: blur(14px) saturate(180%);
+      --tc-shadow-soft: 0 10px 30px -5px rgba(0, 9, 133, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --tc-shadow-hover: 0 16px 36px -6px rgba(0, 9, 133, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+      --tc-border-subtle: #e2e8f0;
+      --tc-text-title: #0f172a;
+      --tc-text-body: #475569;
+      --tc-text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--tc-bg-page);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--tc-text-body);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem 3.5rem 1.75rem !important;
+      max-width: 1040px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* --------------------------------------------------------------------------
+       Top Sticky Header
+       -------------------------------------------------------------------------- */
+    .top-header {
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: var(--tc-glass-blur);
+      -webkit-backdrop-filter: var(--tc-glass-blur);
+      border-bottom: 1px solid var(--tc-glass-border);
+      padding: 0.85rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--tc-text-muted);
+    }
+
+    .header-breadcrumb a {
+      color: var(--tc-primary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .header-breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .header-breadcrumb .divider {
+      color: #cbd5e1;
+      font-size: 0.75rem;
+    }
+
+    .header-breadcrumb .current {
+      color: var(--tc-text-title);
+      font-weight: 700;
+    }
+
+    .header-profile-capsule {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--tc-border-subtle);
+      padding: 0.35rem 0.85rem 0.35rem 0.45rem;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--tc-primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.775rem;
+      font-weight: 700;
+      border: 2px solid var(--tc-accent);
+    }
+
+    /* --------------------------------------------------------------------------
+       Page Header Section
+       -------------------------------------------------------------------------- */
+    .tc-header-row {
+      margin-bottom: 1.75rem;
+    }
+
+    .tc-title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--tc-primary-light);
+      border: 1px solid rgba(0, 9, 133, 0.12);
+      color: var(--tc-primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      margin-bottom: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .tc-page-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--tc-text-title);
+      margin: 0 0 0.35rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .tc-page-subtitle {
+      font-size: 0.925rem;
+      color: var(--tc-text-body);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* --------------------------------------------------------------------------
+       Source Article Callout
+       -------------------------------------------------------------------------- */
+    .source-article-callout {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .source-article-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--tc-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .source-article-text h4 {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #1e40af;
+      margin: 0 0 0.2rem 0;
+    }
+
+    .source-article-text p {
+      font-size: 0.8rem;
+      color: #3b82f6;
+      margin: 0;
+    }
+
+    /* --------------------------------------------------------------------------
+       Main Form Card
+       -------------------------------------------------------------------------- */
+    .tc-form-card {
+      background: var(--tc-surface-white);
+      border: 1px solid var(--tc-border-subtle);
+      border-radius: 20px;
+      padding: 2.25rem;
+      box-shadow: var(--tc-shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .form-section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--tc-text-title);
+      margin: 0 0 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-section-subtitle {
+      font-size: 0.825rem;
+      color: var(--tc-text-muted);
+      margin: 0 0 1.5rem 0;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.45rem;
+    }
+
+    .form-label {
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--tc-text-title);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-label .required {
+      color: #ef4444;
+      margin-left: 0.2rem;
+    }
+
+    .char-counter {
+      font-size: 0.725rem;
+      color: var(--tc-text-muted);
+      font-weight: 600;
+    }
+
+    .form-control-sh {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      font-size: 0.925rem;
+      color: var(--tc-text-title);
+      font-family: inherit;
+      outline: none;
+      transition: all 0.15s ease;
+      background: #ffffff;
+    }
+
+    .form-control-sh:focus {
+      border-color: var(--tc-primary);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.12);
+    }
+
+    .category-helper-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      margin-top: 0.45rem;
+      font-size: 0.775rem;
+      color: #64748b;
+      display: none;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    /* Priority Indicator Card */
+    .priority-indicator-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.15rem 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .priority-badge-pill {
+      font-size: 0.775rem;
+      font-weight: 800;
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .priority-badge-pill.priority-LOW {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+
+    .priority-badge-pill.priority-MEDIUM {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+
+    .priority-badge-pill.priority-HIGH {
+      background: #fffbeb;
+      color: #d97706;
+      border: 1px solid #fde68a;
+    }
+
+    .priority-badge-pill.priority-URGENT {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    .sla-window-text {
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--tc-text-title);
+    }
+
+    /* Attachments Dropzone */
+    .dropzone-container {
+      border: 2px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      background: #fbfcfe;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .dropzone-container:hover, .dropzone-container.dragover {
+      border-color: var(--tc-primary);
+      background: var(--tc-primary-light);
+    }
+
+    .dropzone-icon {
+      font-size: 2rem;
+      color: var(--tc-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .file-input-hidden {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .selected-files-list {
+      margin-top: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .selected-file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.825rem;
+    }
+
+    .btn-remove-file {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      font-size: 0.85rem;
+      transition: opacity 0.15s ease;
+    }
+
+    .btn-remove-file:hover {
+      opacity: 0.75;
+    }
+
+    /* Optional Business Reference Accordion */
+    .optional-accordion-toggle {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.85rem 1.15rem;
+      text-align: left;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--tc-text-title);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+      font-family: inherit;
+    }
+
+    .optional-accordion-body {
+      display: none;
+      padding: 0.5rem 0 0.5rem 0;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .optional-accordion-body.show {
+      display: block;
+    }
+
+    /* Submit Button */
+    .tc-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .btn-submit-ticket {
+      background: var(--tc-primary);
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 12px;
+      padding: 0.85rem 2rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      box-shadow: 0 4px 14px rgba(0, 9, 133, 0.28);
+      transition: all 0.15s ease;
+    }
+
+    .btn-submit-ticket:hover:not(:disabled) {
+      background: var(--tc-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 9, 133, 0.35);
+    }
+
+    .btn-submit-ticket:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION 5: Success Confirmation Screen
+       -------------------------------------------------------------------------- */
+    #ticket-success-screen {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .success-hero-card {
+      background: var(--tc-surface-white);
+      border: 1px solid var(--tc-border-subtle);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      box-shadow: var(--tc-shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .success-icon-badge {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #ecfdf5;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.25rem;
+      margin: 0 auto 1.25rem auto;
+      border: 3px solid #a7f3d0;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.2);
+    }
+
+    .success-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--tc-text-title);
+      margin: 0 0 0.4rem 0;
+    }
+
+    .success-subtitle {
+      font-size: 0.95rem;
+      color: var(--tc-text-body);
+      max-width: 540px;
+      margin: 0 auto 2rem auto;
+      line-height: 1.5;
+    }
+
+    .ticket-reference-capsule {
+      background: var(--tc-primary-light);
+      border: 1px dashed var(--tc-primary);
+      border-radius: 14px;
+      padding: 1.15rem 1.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .ref-number-text {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--tc-primary);
+      font-family: monospace;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-copy-ticket-number {
+      background: #ffffff;
+      border: 1px solid rgba(0, 9, 133, 0.2);
+      border-radius: 8px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--tc-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-copy-ticket-number:hover {
+      background: #eef2ff;
+    }
+
+    .success-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.15rem;
+      max-width: 780px;
+      margin: 0 auto 2.5rem auto;
+      text-align: left;
+    }
+
+    .summary-item-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+    }
+
+    .summary-item-label {
+      font-size: 0.725rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    .summary-item-value {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--tc-text-title);
+    }
+
+    .success-actions-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-success-primary {
+      background: var(--tc-primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.875rem;
+      border-radius: 10px;
+      padding: 0.75rem 1.45rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-success-primary:hover {
+      background: var(--tc-primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-success-secondary {
+      background: #ffffff;
+      color: var(--tc-text-title);
+      border: 1px solid #cbd5e1;
+      font-weight: 700;
+      font-size: 0.875rem;
+      border-radius: 10px;
+      padding: 0.75rem 1.45rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-success-secondary:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .page-body { padding: 1rem !important; }
+      .tc-form-card { padding: 1.5rem 1.25rem; }
+      .success-summary-grid { grid-template-columns: 1fr; }
+      .ticket-reference-capsule { flex-direction: column; gap: 0.5rem; }
+      .tc-form-actions { flex-direction: column-reverse; align-items: stretch; }
+      .btn-submit-ticket { justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- Standard SupportHUB Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo"><span class="logo-support">Support</span><span class="logo-hub">HUB</span></div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+      <!-- Sticky Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <!-- A. Breadcrumb Navigation -->
+          <div class="header-breadcrumb">
+            <a href="customer-dashboard.html">Dashboard</a>
+            <span class="divider">/</span>
+            <a href="my-tickets.html">My Tickets</a>
+            <span class="divider">/</span>
+            <span class="current" id="breadcrumb-current-page">Raise a Support Ticket</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Live Notifications Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; color: #0f172a;">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+
+          <!-- Customer Profile Capsule -->
+          <div class="header-profile-capsule" id="header-profile-capsule">
+            <div class="header-avatar" id="header-user-avatar">CU</div>
+            <div style="text-align: left; line-height: 1.2;">
+              <div id="header-user-name" style="font-size: 0.775rem; font-weight: 700; color: #0f172a;">Customer</div>
+              <div id="header-user-role" style="font-size: 0.675rem; color: #64748b;">Customer Account</div>
+            </div>
+          </div>
+
+          <!-- Sign Out Button -->
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out" style="margin-left: 0.5rem;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Page Body -->
+      <div class="page-body">
+
+        <!-- ====================================================================
+             3. TICKET CREATION FORM VIEW
+             ==================================================================== -->
+        <div id="ticket-creation-view">
+
+          <!-- Page Header -->
+          <div class="tc-header-row">
+            <div class="tc-title-badge">
+              <i class="fa-solid fa-headset"></i> Customer Self-Service Portal
+            </div>
+            <h1 class="tc-page-title">Raise a Support Ticket</h1>
+            <p class="tc-page-subtitle">
+              Have a question, inquiry, or issue that requires assistance? Fill out the details below and our customer service team will assist you.
+            </p>
+          </div>
+
+          <!-- G. Source Article Callout (Optional) -->
+          <div class="source-article-callout" id="source-article-callout" style="display: none;">
+            <div class="source-article-icon">
+              <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <div class="source-article-text" style="flex: 1;">
+              <h4 id="source-article-title-text">Referenced Guide / FAQ</h4>
+              <p id="source-article-desc-text">This ticket will link to the guide you reviewed to give our support officers immediate context.</p>
+            </div>
+            <button type="button" onclick="clearSourceArticle()" class="btn btn-sm btn-outline-secondary" style="font-size: 0.75rem; border-radius: 6px;">
+              <i class="fa-solid fa-xmark"></i> Remove Link
+            </button>
+          </div>
+
+          <!-- Ticket Form Card -->
+          <div class="tc-form-card">
+            <form id="create-ticket-main-form" onsubmit="handleTicketSubmit(event)" novalidate>
+
+              <h2 class="form-section-title">
+                <i class="fa-solid fa-pen-to-square" style="color: var(--tc-primary);"></i> Ticket Information
+              </h2>
+              <p class="form-section-subtitle">Please provide accurate details to help us route your request to the right department.</p>
+
+              <!-- B. Category Selection -->
+              <div class="form-group">
+                <div class="form-label-row">
+                  <label for="ticket-category-select" class="form-label">
+                    Support Category <span class="required">*</span>
+                  </label>
+                </div>
+                <select id="ticket-category-select" class="form-control-sh" onchange="handleCategoryChange(this.value)" required>
+                  <option value="">Select a Category...</option>
+                </select>
+                <div class="category-helper-card" id="category-helper-card">
+                  <i class="fa-solid fa-circle-info" style="color: var(--tc-primary); margin-right: 0.35rem;"></i>
+                  <span id="category-helper-text"></span>
+                </div>
+              </div>
+
+              <!-- C. Subject -->
+              <div class="form-group">
+                <div class="form-label-row">
+                  <label for="ticket-subject-input" class="form-label">
+                    Subject / Summary <span class="required">*</span>
+                  </label>
+                  <span class="char-counter" id="subject-char-counter">0 / 200</span>
+                </div>
+                <input type="text" 
+                       id="ticket-subject-input" 
+                       class="form-control-sh" 
+                       placeholder="Brief summary of your question or issue (e.g. Inquiring about service activation or delivery delay)" 
+                       maxlength="200" 
+                       required 
+                       oninput="handleSubjectInput(this.value)" />
+                <div style="font-size: 0.75rem; color: #ef4444; margin-top: 0.35rem; display: none;" id="subject-error-msg"></div>
+              </div>
+
+              <!-- D. Problem Description -->
+              <div class="form-group">
+                <div class="form-label-row">
+                  <label for="ticket-description-input" class="form-label">
+                    Detailed Problem Description <span class="required">*</span>
+                  </label>
+                  <span class="char-counter" id="desc-char-counter">0 / 3000</span>
+                </div>
+                <textarea id="ticket-description-input" 
+                          class="form-control-sh" 
+                          rows="6" 
+                          placeholder="Please describe the issue in detail, including what happened, error messages, and what outcome you expect..." 
+                          maxlength="3000" 
+                          required 
+                          oninput="handleDescriptionInput(this.value)"></textarea>
+                <div style="font-size: 0.75rem; color: #ef4444; margin-top: 0.35rem; display: none;" id="desc-error-msg"></div>
+              </div>
+
+              <!-- E. System-Calculated Priority & SLA Indicator -->
+              <div class="priority-indicator-card" id="priority-indicator-card">
+                <div>
+                  <div style="font-size: 0.725rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.25rem;">
+                    System-Calculated Priority
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <span class="priority-badge-pill priority-MEDIUM" id="calculated-priority-badge">
+                      <i class="fa-solid fa-flag"></i> MEDIUM
+                    </span>
+                    <span class="sla-window-text" id="calculated-sla-window">Target resolution within 24 hours</span>
+                  </div>
+                </div>
+                <div style="font-size: 0.775rem; color: #64748b; max-width: 380px; text-align: right;">
+                  Priority is calculated based on urgency keywords to ensure equitable SLA response times.
+                </div>
+              </div>
+
+              <!-- F. Attachments Dropzone -->
+              <div class="form-group">
+                <div class="form-label-row">
+                  <label class="form-label">Supporting Attachments (Optional)</label>
+                  <span class="char-counter">PNG, JPG, PDF, DOC, DOCX (Max 10MB)</span>
+                </div>
+
+                <div class="dropzone-container" id="attachment-dropzone">
+                  <input type="file" id="ticket-file-input" class="file-input-hidden" accept="image/*,.pdf,.doc,.docx" onchange="handleFileSelection(this.files)" />
+                  <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                  <div style="font-weight: 700; color: var(--tc-text-title); font-size: 0.9rem; margin-bottom: 0.2rem;">
+                    Click or drag files here to attach
+                  </div>
+                  <div style="font-size: 0.775rem; color: #64748b;">
+                    Upload screenshots, invoices, or error logs to help officers diagnose faster.
+                  </div>
+                </div>
+
+                <!-- Selected Files List -->
+                <div class="selected-files-list" id="selected-files-list"></div>
+              </div>
+
+              <!-- 6. General-Purpose Optional Extensions (Orders/Tracking) -->
+              <div class="form-group" style="margin-bottom: 0;">
+                <button type="button" class="optional-accordion-toggle" onclick="toggleOptionalFields()">
+                  <span>
+                    <i class="fa-solid fa-box-archive" style="color: var(--tc-primary); margin-right: 0.4rem;"></i>
+                    Related Order or Tracking Reference (Optional)
+                  </span>
+                  <i class="fa-solid fa-chevron-down" id="optional-chevron"></i>
+                </button>
+
+                <div class="optional-accordion-body" id="optional-accordion-body">
+                  <div style="background: #fbfcfe; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem;">
+                    <p style="font-size: 0.8rem; color: #64748b; margin: 0 0 1rem 0;">
+                      These fields are optional and only needed if your inquiry pertains to a specific purchase or shipment. General business inquiries do not require them.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                      <div>
+                        <label class="form-label" style="font-size: 0.75rem;">Order Number (Optional)</label>
+                        <input type="text" id="optional-order-number" class="form-control-sh" placeholder="e.g. ORD-2026-9812" style="padding: 0.55rem 0.85rem;" />
+                      </div>
+                      <div>
+                        <label class="form-label" style="font-size: 0.75rem;">Tracking Number (Optional)</label>
+                        <input type="text" id="optional-tracking-number" class="form-control-sh" placeholder="e.g. TRK-8812736" style="padding: 0.55rem 0.85rem;" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form Actions (H. Submit) -->
+              <div class="tc-form-actions">
+                <a href="my-tickets.html" class="btn btn-secondary" style="border-radius: 10px; padding: 0.75rem 1.45rem; font-weight: 700; font-size: 0.875rem;">
+                  Cancel
+                </a>
+                <button type="submit" id="btn-submit-ticket" class="btn-submit-ticket">
+                  <i class="fa-solid fa-paper-plane" style="color: var(--tc-accent);"></i> Submit Support Ticket
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+
+        <!-- ====================================================================
+             5. SUCCESS CONFIRMATION SCREEN
+             ==================================================================== -->
+        <div id="ticket-success-screen">
+          <div class="success-hero-card">
+            
+            <div class="success-icon-badge">
+              <i class="fa-solid fa-check"></i>
+            </div>
+
+            <h2 class="success-title">Support Ticket Submitted Successfully!</h2>
+            <p class="success-subtitle">
+              Your inquiry has been logged in our system. A notification has been sent and your request is now queued for immediate officer review.
+            </p>
+
+            <!-- Ticket Reference Capsule -->
+            <div class="ticket-reference-capsule">
+              <div>
+                <div style="font-size: 0.725rem; font-weight: 700; color: #64748b; text-transform: uppercase;">Ticket Reference Number</div>
+                <div class="ref-number-text" id="success-ticket-number">TICK-XXXX</div>
+              </div>
+              <button type="button" class="btn-copy-ticket-number" onclick="copyTicketNumber()">
+                <i class="fa-regular fa-copy"></i> Copy Number
+              </button>
+            </div>
+
+            <!-- Summary Details Grid -->
+            <div class="success-summary-grid">
+              <div class="summary-item-card">
+                <div class="summary-item-label">Ticket Subject</div>
+                <div class="summary-item-value" id="success-subject">--</div>
+              </div>
+
+              <div class="summary-item-card">
+                <div class="summary-item-label">Status & Priority</div>
+                <div class="summary-item-value" id="success-status-priority">--</div>
+              </div>
+
+              <div class="summary-item-card">
+                <div class="summary-item-label">Target SLA Resolution</div>
+                <div class="summary-item-value" id="success-sla-target">--</div>
+              </div>
+
+              <div class="summary-item-card">
+                <div class="summary-item-label">Support Category</div>
+                <div class="summary-item-value" id="success-category">--</div>
+              </div>
+
+              <div class="summary-item-card">
+                <div class="summary-item-label">Assigned Officer</div>
+                <div class="summary-item-value" id="success-agent">Auto-Assigned Officer</div>
+              </div>
+
+              <div class="summary-item-card">
+                <div class="summary-item-label">Submission Date</div>
+                <div class="summary-item-value" id="success-date">Just now</div>
+              </div>
+            </div>
+
+            <!-- Actions Row -->
+            <div class="success-actions-row">
+              <a href="javascript:void(0)" id="btn-view-ticket-details" class="btn-success-primary">
+                <i class="fa-solid fa-eye"></i> View Ticket Details
+              </a>
+              <a href="my-tickets.html" class="btn-success-secondary">
+                <i class="fa-solid fa-ticket-simple"></i> View My Tickets
+              </a>
+              <a href="customer-dashboard.html" class="btn-success-secondary">
+                <i class="fa-solid fa-gauge-high"></i> Return to Dashboard
+              </a>
+              <button type="button" class="btn-success-secondary" onclick="resetFormForNewTicket()">
+                <i class="fa-solid fa-plus"></i> Submit Another Ticket
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 — Customer Ticket Creation Controller
+       ========================================================================== */
+
+    let currentUser = null;
+    let allActiveCategories = [];
+    let currentSelectedFile = null;
+    let calculatedPriority = 'MEDIUM';
+    let sourceArticleInfo = null;
+    let createdTicketResult = null;
+
+    // SLA hours mapping according to TicketServiceImpl
+    const SLA_HOURS_MAP = {
+      'URGENT': 4,
+      'HIGH': 12,
+      'MEDIUM': 24,
+      'LOW': 48
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Enforce RBAC
+      if (!Auth.requireRole(['CUSTOMER', 'CUSTOMER_SERVICE_OFFICER', 'OPERATIONS_SUPERVISOR', 'CUSTOMER_SUPPORT_MANAGER', 'QA_EXECUTIVE'])) {
+        return;
+      }
+
+      currentUser = Auth.getUser();
+      initHeaderProfile();
+      Auth.renderSidebar();
+
+      if (typeof NotificationsEngine !== 'undefined') {
+        NotificationsEngine.init();
+      }
+
+      // 2. Load active support categories
+      await loadCategories();
+
+      // 3. Handle query parameters (source article, prefilled subject, category)
+      handleUrlParameters();
+
+      // 4. Setup drag and drop events for attachments
+      setupDropzoneEvents();
+    });
+
+    /* ==========================================================================
+       1. Header Profile & Capsule
+       ========================================================================== */
+    function initHeaderProfile() {
+      if (!currentUser) return;
+
+      const nameEl = document.getElementById('header-user-name');
+      const roleEl = document.getElementById('header-user-role');
+      const avatarEl = document.getElementById('header-user-avatar');
+
+      const name = currentUser.fullName || currentUser.email || 'Customer';
+      if (nameEl) nameEl.textContent = name;
+      if (roleEl) roleEl.textContent = (currentUser.role || 'CUSTOMER').replace(/_/g, ' ');
+
+      if (avatarEl) {
+        avatarEl.textContent = name.substring(0, 2).toUpperCase();
+      }
+    }
+
+    /* ==========================================================================
+       2. Categories Loader
+       ========================================================================== */
+    async function loadCategories() {
+      const select = document.getElementById('ticket-category-select');
+      try {
+        const res = await API.get('/categories/active');
+        allActiveCategories = res.data || [];
+
+        if (allActiveCategories.length === 0) {
+          select.innerHTML = '<option value="">No active categories found</option>';
+          return;
+        }
+
+        select.innerHTML = '<option value="">Select a Category...</option>' + 
+          allActiveCategories.map(c => `
+            <option value="${c.id}">${escapeHtml(c.name)}</option>
+          `).join('');
+
+      } catch (err) {
+        console.error('Failed to load categories:', err);
+        select.innerHTML = '<option value="">Error loading categories</option>';
+      }
+    }
+
+    function handleCategoryChange(categoryId) {
+      const card = document.getElementById('category-helper-card');
+      const text = document.getElementById('category-helper-text');
+      if (!card || !text) return;
+
+      if (!categoryId) {
+        card.style.display = 'none';
+        return;
+      }
+
+      const cat = allActiveCategories.find(c => c.id === parseInt(categoryId));
+      if (cat && cat.description) {
+        text.textContent = cat.description;
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+
+    /* ==========================================================================
+       3. Dynamic Keyword Priority Evaluation (Matching Backend TicketServiceImpl)
+       ========================================================================== */
+    function evaluatePriorityDynamically() {
+      const subject = (document.getElementById('ticket-subject-input').value || '').toLowerCase();
+      const description = (document.getElementById('ticket-description-input').value || '').toLowerCase();
+      const text = `${subject} ${description}`;
+
+      let priority = 'MEDIUM';
+
+      // URGENT keywords matching TicketServiceImpl lines 513-518
+      if (text.includes('system down') || text.includes('crash') || text.includes('500') ||
+          text.includes('transaction failed') || text.includes('payment failed') ||
+          text.includes('urgent') || text.includes('emergency') || text.includes('outage') ||
+          text.includes('locked out') || text.includes('critical')) {
+        priority = 'URGENT';
+      }
+      // HIGH keywords matching TicketServiceImpl lines 520-524
+      else if (text.includes('bug') || text.includes('error') || text.includes('failed') ||
+               text.includes('cannot login') || text.includes('rate limit') || text.includes('delay') ||
+               text.includes('broken') || text.includes('supervisor') || text.includes('slow')) {
+        priority = 'HIGH';
+      }
+      // LOW keywords matching TicketServiceImpl lines 526-529
+      else if (text.includes('doc') || text.includes('how to') || text.includes('inquiry') ||
+               text.includes('info') || text.includes('guide') || text.includes('feature')) {
+        priority = 'LOW';
+      }
+
+      calculatedPriority = priority;
+      updatePriorityUI(priority);
+    }
+
+    function updatePriorityUI(priority) {
+      const badge = document.getElementById('calculated-priority-badge');
+      const slaText = document.getElementById('calculated-sla-window');
+
+      if (!badge || !slaText) return;
+
+      badge.className = `priority-badge-pill priority-${priority}`;
+      badge.innerHTML = `<i class="fa-solid fa-flag"></i> ${priority}`;
+
+      const hours = SLA_HOURS_MAP[priority] || 24;
+      slaText.textContent = `Target resolution within ${hours} hours`;
+    }
+
+    function handleSubjectInput(val) {
+      const counter = document.getElementById('subject-char-counter');
+      if (counter) counter.textContent = `${val.length} / 200`;
+
+      const errorMsg = document.getElementById('subject-error-msg');
+      if (errorMsg) errorMsg.style.display = 'none';
+
+      evaluatePriorityDynamically();
+    }
+
+    function handleDescriptionInput(val) {
+      const counter = document.getElementById('desc-char-counter');
+      if (counter) counter.textContent = `${val.length} / 3000`;
+
+      const errorMsg = document.getElementById('desc-error-msg');
+      if (errorMsg) errorMsg.style.display = 'none';
+
+      evaluatePriorityDynamically();
+    }
+
+    /* ==========================================================================
+       4. Attachment Dropzone & File Handling
+       ========================================================================== */
+    function setupDropzoneEvents() {
+      const dropzone = document.getElementById('attachment-dropzone');
+      if (!dropzone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropzone.classList.add('dragover');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropzone.classList.remove('dragover');
+        });
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          handleFileSelection(e.dataTransfer.files);
+        }
+      });
+    }
+
+    function handleFileSelection(files) {
+      if (!files || files.length === 0) return;
+
+      const file = files[0];
+      const maxSizeBytes = 10 * 1024 * 1024; // 10MB backend limit
+
+      if (file.size > maxSizeBytes) {
+        Utils.showToast('Selected file exceeds the 10MB limit. Please choose a smaller file.', 'error');
+        return;
+      }
+
+      currentSelectedFile = file;
+      renderSelectedFile();
+    }
+
+    function renderSelectedFile() {
+      const container = document.getElementById('selected-files-list');
+      if (!container) return;
+
+      if (!currentSelectedFile) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const sizeKb = Math.round(currentSelectedFile.size / 1024);
+      const sizeStr = sizeKb > 1024 ? `${(sizeKb / 1024).toFixed(1)} MB` : `${sizeKb} KB`;
+
+      container.innerHTML = `
+        <div class="selected-file-item">
+          <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
+            <i class="fa-solid fa-paperclip" style="color: var(--tc-primary);"></i>
+            <span style="font-weight: 700; color: #0f172a; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+              ${escapeHtml(currentSelectedFile.name)}
+            </span>
+            <span style="color: #94a3b8; font-size: 0.75rem;">(${sizeStr})</span>
+          </div>
+          <button type="button" class="btn-remove-file" onclick="removeSelectedFile()" title="Remove file">
+            <i class="fa-solid fa-trash-can"></i> Remove
+          </button>
+        </div>
+      `;
+    }
+
+    function removeSelectedFile() {
+      currentSelectedFile = null;
+      const input = document.getElementById('ticket-file-input');
+      if (input) input.value = '';
+      renderSelectedFile();
+    }
+
+    function toggleOptionalFields() {
+      const body = document.getElementById('optional-accordion-body');
+      const chevron = document.getElementById('optional-chevron');
+      if (!body) return;
+
+      const isShown = body.classList.contains('show');
+      if (isShown) {
+        body.classList.remove('show');
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+      } else {
+        body.classList.add('show');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    /* ==========================================================================
+       5. Source Article Parameter Handling
+       ========================================================================== */
+    function handleUrlParameters() {
+      const params = new URLSearchParams(window.location.search);
+      const subjectParam = params.get('subject') || params.get('topic');
+      const catParam = params.get('category') || params.get('cat');
+      const articleId = params.get('articleId') || params.get('article');
+      const faqId = params.get('faqId') || params.get('faq');
+
+      if (catParam) {
+        setTimeout(() => {
+          const select = document.getElementById('ticket-category-select');
+          if (select) {
+            select.value = catParam;
+            handleCategoryChange(catParam);
+          }
+        }, 300);
+      }
+
+      if (subjectParam) {
+        const input = document.getElementById('ticket-subject-input');
+        if (input) {
+          input.value = subjectParam;
+          handleSubjectInput(subjectParam);
+        }
+      }
+
+      if (articleId) {
+        sourceArticleInfo = { type: 'KB', id: articleId, title: params.get('articleTitle') || `Knowledge Base Guide #${articleId}` };
+        displaySourceArticleCallout();
+      } else if (faqId) {
+        sourceArticleInfo = { type: 'FAQ', id: faqId, title: params.get('faqQuestion') || `FAQ Question #${faqId}` };
+        displaySourceArticleCallout();
+      }
+    }
+
+    function displaySourceArticleCallout() {
+      const callout = document.getElementById('source-article-callout');
+      const titleEl = document.getElementById('source-article-title-text');
+      const descEl = document.getElementById('source-article-desc-text');
+      const descTextarea = document.getElementById('ticket-description-input');
+
+      if (!callout || !sourceArticleInfo) return;
+
+      callout.style.display = 'flex';
+      titleEl.textContent = `Referenced ${sourceArticleInfo.type === 'KB' ? 'Knowledge Base Guide' : 'FAQ Solution'}: ${sourceArticleInfo.title}`;
+      descEl.textContent = 'This ticket is linked to the solution you reviewed. Support officers will see which article was checked.';
+
+      // Pre-fill description with source guide header if empty
+      if (descTextarea && !descTextarea.value.trim()) {
+        descTextarea.value = `[Referenced Solution: #${sourceArticleInfo.id} - "${sourceArticleInfo.title}"]\n\nI reviewed this guide but need further assistance with the following:\n`;
+        handleDescriptionInput(descTextarea.value);
+      }
+    }
+
+    function clearSourceArticle() {
+      sourceArticleInfo = null;
+      const callout = document.getElementById('source-article-callout');
+      if (callout) callout.style.display = 'none';
+    }
+
+    /* ==========================================================================
+       6. Ticket Submission Handler (Dual JSON & Multipart via Verified Backend)
+       ========================================================================== */
+    async function handleTicketSubmit(e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('btn-submit-ticket');
+      const origHtml = submitBtn ? submitBtn.innerHTML : 'Submit Ticket';
+
+      const categorySelect = document.getElementById('ticket-category-select');
+      const subjectInput = document.getElementById('ticket-subject-input');
+      const descInput = document.getElementById('ticket-description-input');
+      const orderInput = document.getElementById('optional-order-number');
+      const trackingInput = document.getElementById('optional-tracking-number');
+
+      const subjectErr = document.getElementById('subject-error-msg');
+      const descErr = document.getElementById('desc-error-msg');
+
+      // Validation
+      const categoryId = categorySelect.value;
+      const subject = subjectInput.value.trim();
+      const description = descInput.value.trim();
+      const orderNumber = orderInput ? orderInput.value.trim() : null;
+      const trackingNumber = trackingInput ? trackingInput.value.trim() : null;
+
+      let hasError = false;
+
+      if (!categoryId) {
+        Utils.showToast('Please select a support category.', 'error');
+        categorySelect.focus();
+        return;
+      }
+
+      if (!subject || subject.length < 5) {
+        subjectErr.textContent = 'Subject must be at least 5 characters long.';
+        subjectErr.style.display = 'block';
+        subjectInput.focus();
+        hasError = true;
+      }
+
+      if (!description || description.length < 10) {
+        descErr.textContent = 'Description must be at least 10 characters long.';
+        descErr.style.display = 'block';
+        if (!hasError) descInput.focus();
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      try {
+        // Prevent duplicate submissions and show loading state
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting Ticket...';
+        }
+
+        const payload = {
+          categoryId: parseInt(categoryId),
+          subject,
+          description,
+          priority: calculatedPriority,
+          orderNumber: orderNumber || null,
+          trackingNumber: trackingNumber || null,
+          refundStatus: 'NONE'
+        };
+
+        let response;
+
+        if (currentSelectedFile) {
+          // Multipart form data upload
+          const formData = new FormData();
+          const jsonBlob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+          formData.append('data', jsonBlob);
+          formData.append('request', jsonBlob);
+          formData.append('file', currentSelectedFile);
+          response = await API.postFormData('/tickets', formData);
+        } else {
+          // Pure JSON ticket creation
+          response = await API.post('/tickets/create-json', payload);
+        }
+
+        createdTicketResult = response.data;
+        Utils.showToast('Support ticket created successfully!', 'success');
+
+        // Transition smoothly to Success Confirmation Screen
+        renderSuccessConfirmation(createdTicketResult);
+
+      } catch (err) {
+        console.error('Failed to submit ticket:', err);
+        Utils.showToast(err.message || 'Failed to submit ticket. Please check your inputs.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origHtml;
+        }
+      }
+    }
+
+    /* ==========================================================================
+       7. Success Confirmation Screen Renderer
+       ========================================================================== */
+    function renderSuccessConfirmation(ticket) {
+      if (!ticket) return;
+
+      // Switch views
+      document.getElementById('ticket-creation-view').style.display = 'none';
+      const successScreen = document.getElementById('ticket-success-screen');
+      successScreen.style.display = 'block';
+
+      // Populate Ticket Details
+      document.getElementById('success-ticket-number').textContent = ticket.ticketNumber || `#${ticket.id}`;
+      document.getElementById('success-subject').textContent = ticket.subject;
+      
+      const priorityStr = ticket.priority || calculatedPriority;
+      const statusStr = (ticket.status || 'OPEN').replace(/_/g, ' ');
+      document.getElementById('success-status-priority').textContent = `${statusStr} • ${priorityStr}`;
+
+      const hours = SLA_HOURS_MAP[priorityStr] || 24;
+      document.getElementById('success-sla-target').textContent = `${hours} Hours`;
+
+      document.getElementById('success-category').textContent = ticket.categoryName || 'General Support';
+
+      const agentName = ticket.assignedAgentName || 'Queued for Available Officer';
+      document.getElementById('success-agent').textContent = agentName;
+
+      document.getElementById('success-date').textContent = ticket.createdAt ? Utils.formatDate(ticket.createdAt) : 'Just now';
+
+      // Update link to view details
+      const viewDetailsBtn = document.getElementById('btn-view-ticket-details');
+      if (viewDetailsBtn) {
+        viewDetailsBtn.href = `ticket-details.html?id=${ticket.id}`;
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function copyTicketNumber() {
+      const numEl = document.getElementById('success-ticket-number');
+      if (!numEl) return;
+
+      navigator.clipboard.writeText(numEl.textContent.trim()).then(() => {
+        Utils.showToast('Ticket reference copied to clipboard!', 'success');
+      }).catch(() => {
+        Utils.showToast('Could not copy ticket number.', 'error');
+      });
+    }
+
+    function resetFormForNewTicket() {
+      document.getElementById('create-ticket-main-form').reset();
+      removeSelectedFile();
+      clearSourceArticle();
+      calculatedPriority = 'MEDIUM';
+      updatePriorityUI('MEDIUM');
+
+      document.getElementById('ticket-success-screen').style.display = 'none';
+      document.getElementById('ticket-creation-view').style.display = 'block';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Coaching & Feedback Management | SupportHUB QA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-soft: rgba(245, 204, 0, 0.16);
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
+      --warning-amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .fm-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .fm-title-group h1 {
+      font-size: 1.85rem;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .fm-title-group p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .btn-create-feedback {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: 1px solid var(--primary-hover);
+      padding: 0.65rem 1.25rem;
+      border-radius: 9px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 9, 133, 0.25);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-create-feedback:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Filters Bar */
+    .filter-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .filter-group label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .filter-select {
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      color: var(--text-dark);
+      min-width: 160px;
+      font-family: inherit;
+    }
+
+    .filter-input {
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      color: var(--text-dark);
+      min-width: 220px;
+      font-family: inherit;
+    }
+
+    /* Table Section */
+    .fm-table-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .fm-table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .fm-table-header h2 {
+      font-size: 1.15rem;
+      color: var(--primary-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .fm-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .fm-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .fm-table td {
+      padding: 0.95rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+
+    .fm-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .fm-table tr:hover td {
+      background: #fafcff;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--primary-blue);
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.25rem;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="qa-dashboard.html" class="sidebar-brand">
+          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="brand-text">
+            <span class="brand-title">SupportHUB</span>
+            <span class="brand-subtitle">Executive Suite</span>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="Auth.logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-menu-toggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-capsule">
+            <i class="fa-solid fa-comments"></i>
+            <span>Quality Assurance Management</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="header-profile-capsule" id="header-profile-capsule"></div>
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <!-- Workspace Content -->
+      <div class="content-container">
+        <!-- Page Header -->
+        <div class="fm-header-row">
+          <div class="fm-title-group">
+            <h1><i class="fa-solid fa-comment-dots"></i> Officer QA Feedback & Coaching Management</h1>
+            <p>Provide constructive coaching feedback, commendations, and recommended actions to support officers.</p>
+          </div>
+          <div>
+            <button class="btn-create-feedback" id="btn-open-feedback-modal" onclick="openFeedbackModal()">
+              <i class="fa-solid fa-plus"></i> Submit Officer Coaching Feedback
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-card">
+          <div class="filter-group">
+            <label for="filter-status">Feedback Status</label>
+            <select id="filter-status" class="filter-select" onchange="renderFeedback()">
+              <option value="ALL">All Statuses</option>
+              <option value="SUBMITTED" selected>Submitted / Pending Review</option>
+              <option value="ACKNOWLEDGED">Acknowledged by Officer</option>
+              <option value="RESOLVED">Coaching Completed</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-officer">Officer Filter</label>
+            <select id="filter-officer" class="filter-select" onchange="renderFeedback()">
+              <option value="ALL">All Officers</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-search">Search Feedback</label>
+            <input type="text" id="filter-search" class="filter-input" placeholder="Search ticket or observations..." oninput="renderFeedback()">
+          </div>
+
+          <div style="margin-left:auto; display:flex; align-items:flex-end;">
+            <button onclick="renderFeedback()" class="btn-secondary" style="padding:0.5rem 1rem; border-radius:8px; border:1px solid var(--border-subtle); background:#ffffff; cursor:pointer;">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="fm-table-card">
+          <div class="fm-table-header">
+            <h2><i class="fa-solid fa-comments"></i> Coaching Feedback Log</h2>
+            <span class="meta-tag" id="feedback-count-tag">Loading records...</span>
+          </div>
+
+          <table class="fm-table" id="feedback-records-table">
+            <thead>
+              <tr>
+                <th>Ticket Ref</th>
+                <th>Support Officer</th>
+                <th>Positive Commendations</th>
+                <th>Improvement Areas</th>
+                <th>Recommended Actions</th>
+                <th>Submitted Date</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="feedback-records-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal: Submit Coaching Feedback -->
+  <div class="modal-overlay" id="feedback-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-comment-dots"></i> Submit Officer Coaching Feedback</h3>
+        <button class="modal-close-btn" onclick="closeFeedbackModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="coaching-form" onsubmit="saveFeedback(event)">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="modal-fb-ticket">Ticket Reference *</label>
+              <input type="text" id="modal-fb-ticket" class="form-control" placeholder="e.g. TCK-10482" required>
+            </div>
+            <div class="form-group">
+              <label for="modal-fb-officer">Officer Name *</label>
+              <input type="text" id="modal-fb-officer" class="form-control" placeholder="e.g. Sarah Jenkins" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="modal-fb-positive">Positive Observations & Commendations *</label>
+            <textarea id="modal-fb-positive" class="form-control" rows="2" placeholder="Commend prompt greeting, professional clarity, and thorough investigation..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="modal-fb-improvements">Improvement Areas *</label>
+            <textarea id="modal-fb-improvements" class="form-control" rows="2" placeholder="Point out areas where policy details or empathy could be enhanced..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="modal-fb-actions">Recommended Next Actions *</label>
+            <textarea id="modal-fb-actions" class="form-control" rows="2" placeholder="Suggested Knowledge Base reviews or simulation exercises..." required></textarea>
+          </div>
+        </div>
+        <div style="padding:1rem 1.5rem; border-top:1px solid var(--border-subtle); display:flex; justify-content:flex-end; gap:0.75rem; background:#f8fafc;">
+          <button type="button" class="btn-secondary" onclick="closeFeedbackModal()" style="padding:0.6rem 1.1rem; border-radius:8px; border:1px solid #cbd5e1; background:#ffffff; cursor:pointer;">Cancel</button>
+          <button type="submit" class="btn-create-feedback" style="padding:0.6rem 1.25rem;">Submit Feedback</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    let feedbackEntries = [
+      {
+        id: 1,
+        ticketRef: 'TCK-10482',
+        officer: 'Sarah Jenkins',
+        positive: 'Handled customer frustration with immense composure and polite phrasing.',
+        improvements: 'Verify customer refund transaction ID before marking ticket resolved.',
+        actions: 'Complete refresher on Stripe transaction verification protocol.',
+        date: '2026-11-18',
+        status: 'SUBMITTED'
+      },
+      {
+        id: 2,
+        ticketRef: 'TCK-10395',
+        officer: 'Michael Chang',
+        positive: 'Rapid first response time within 14 minutes of ticket creation.',
+        improvements: 'Clarify shipping carrier SLA windows instead of quoting generic estimates.',
+        actions: 'Utilize carrier integration tool in console for tracking links.',
+        date: '2026-11-17',
+        status: 'ACKNOWLEDGED'
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Role Guard
+      const user = Auth.requireAuth(['QA_EXECUTIVE', 'QUALITY_ASSURANCE']);
+      if (!user) return;
+
+      // 2. Initialize Header & Navigation
+      Auth.renderNav();
+      if (typeof Auth.renderUserHeader === 'function') Auth.renderUserHeader();
+      if (typeof Auth.renderHeaderProfileCapsule === 'function') Auth.renderHeaderProfileCapsule();
+      if (typeof NotificationsEngine !== 'undefined' && typeof NotificationsEngine.init === 'function') {
+        NotificationsEngine.init();
+      }
+
+      // Check URL for preselected officer
+      const urlParams = new URLSearchParams(window.location.search);
+      const preOfficer = urlParams.get('officer');
+      if (preOfficer) {
+        document.getElementById('modal-fb-officer').value = preOfficer;
+      }
+
+      loadSavedFeedback();
+      renderFeedback();
+    });
+
+    function loadSavedFeedback() {
+      try {
+        const saved = localStorage.getItem('supporthub_qa_coaching_feedback');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            feedbackEntries = parsed;
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load feedback:', e);
+      }
+    }
+
+    function saveFeedbackToStorage() {
+      try {
+        localStorage.setItem('supporthub_qa_coaching_feedback', JSON.stringify(feedbackEntries));
+      } catch (e) {
+        console.warn('Could not save feedback:', e);
+      }
+    }
+
+    function renderFeedback() {
+      const statFilter = document.getElementById('filter-status').value;
+      const query = document.getElementById('filter-search').value.toLowerCase().trim();
+
+      const filtered = feedbackEntries.filter(f => {
+        if (statFilter !== 'ALL' && f.status !== statFilter) return false;
+        if (query) {
+          const matchStr = `${f.ticketRef} ${f.officer} ${f.positive} ${f.improvements}`.toLowerCase();
+          if (!matchStr.includes(query)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById('feedback-count-tag').textContent = `${filtered.length} Feedback Records`;
+
+      const tbody = document.getElementById('feedback-records-tbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:1.5rem; color:var(--text-muted);">No feedback records found matching criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(f => `
+        <tr>
+          <td><strong style="color:var(--primary-blue);">${Utils.escapeHtml(f.ticketRef)}</strong></td>
+          <td style="font-weight:700;">${Utils.escapeHtml(f.officer)}</td>
+          <td style="max-width:200px; font-size:0.8rem; color:#166534;">${Utils.escapeHtml(f.positive)}</td>
+          <td style="max-width:200px; font-size:0.8rem; color:#9a3412;">${Utils.escapeHtml(f.improvements)}</td>
+          <td style="max-width:180px; font-size:0.8rem; color:var(--text-muted);">${Utils.escapeHtml(f.actions)}</td>
+          <td style="font-size:0.8rem; color:var(--text-muted);">${Utils.formatDate(f.date)}</td>
+          <td>
+            <span style="font-size:0.75rem; font-weight:700; color:${f.status === 'RESOLVED' ? 'var(--success-green)' : f.status === 'ACKNOWLEDGED' ? '#2563eb' : 'var(--warning-amber)'};">
+              ${f.status}
+            </span>
+          </td>
+          <td>
+            <button onclick="advanceStatus(${f.id})" class="btn-secondary" style="padding:0.3rem 0.6rem; font-size:0.75rem; border-radius:6px; cursor:pointer;" title="Advance Status">
+              <i class="fa-solid fa-check-double"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openFeedbackModal() {
+      document.getElementById('coaching-form').reset();
+      document.getElementById('feedback-modal').classList.add('show');
+    }
+
+    function closeFeedbackModal() {
+      document.getElementById('feedback-modal').classList.remove('show');
+    }
+
+    function saveFeedback(e) {
+      e.preventDefault();
+      const ticketRef = document.getElementById('modal-fb-ticket').value.trim();
+      const officer = document.getElementById('modal-fb-officer').value.trim();
+      const positive = document.getElementById('modal-fb-positive').value.trim();
+      const improvements = document.getElementById('modal-fb-improvements').value.trim();
+      const actions = document.getElementById('modal-fb-actions').value.trim();
+
+      const newEntry = {
+        id: Date.now(),
+        ticketRef,
+        officer,
+        positive,
+        improvements,
+        actions,
+        date: new Date().toISOString().split('T')[0],
+        status: 'SUBMITTED'
+      };
+
+      feedbackEntries.unshift(newEntry);
+      saveFeedbackToStorage();
+      renderFeedback();
+      closeFeedbackModal();
+      Utils.showToast(`Coaching feedback recorded for Officer ${officer}`, 'success');
+    }
+
+    function advanceStatus(id) {
+      const item = feedbackEntries.find(f => f.id === id);
+      if (item) {
+        if (item.status === 'SUBMITTED') item.status = 'ACKNOWLEDGED';
+        else if (item.status === 'ACKNOWLEDGED') item.status = 'RESOLVED';
+        else item.status = 'SUBMITTED';
+
+        saveFeedbackToStorage();
+        renderFeedback();
+        Utils.showToast(`Feedback status updated to ${item.status}`, 'info');
+      }
+    }
+  </script>
+</body>
+</html>

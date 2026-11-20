@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Feedback Review Log - SupportHUB QA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --accent-yellow: #F5CC00;
+      --primary-hover: #000766;
+      --bg-canvas: #f8fafc;
+      --surface-white: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border-subtle: #e2e8f0;
+      --border-focus: #000985;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --font-heading: 'Plus Jakarta Sans', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-logo, .nav-label {
+      font-family: var(--font-heading);
+    }
+
+    .page-body {
+      padding: 1.5rem 2rem;
+    }
+
+    /* Page Header */
+    .view-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .view-header-title h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .view-header-title p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* Compliance Banner */
+    .immutability-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--primary-blue);
+      border-radius: 8px;
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: #1e3a8a;
+    }
+
+    .immutability-banner i {
+      font-size: 1.25rem;
+      color: var(--primary-blue);
+      flex-shrink: 0;
+    }
+
+    /* 4 KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .kpi-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,9,133,0.06);
+      border-color: #cbd5e1;
+    }
+
+    .kpi-info p {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 0 0 0.35rem 0;
+    }
+
+    .kpi-info h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .kpi-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .kpi-icon-wrap.blue { background: #e0e7ff; color: var(--primary-blue); }
+    .kpi-icon-wrap.yellow { background: #fef9c3; color: #a16207; }
+    .kpi-icon-wrap.green { background: #dcfce7; color: var(--success); }
+    .kpi-icon-wrap.red { background: #fee2e2; color: var(--danger); }
+
+    /* Filter & Search Toolbar */
+    .filter-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .search-input-wrap i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      padding: 0.6rem 1rem 0.6rem 2.4rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.15s ease;
+    }
+
+    .search-input-wrap input:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(0,9,133,0.1);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 0.55rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      border-color: var(--primary-blue);
+    }
+
+    .btn-export-csv {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-export-csv:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    /* Table */
+    .table-container {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .qa-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .qa-table th {
+      background: #f8fafc;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .qa-table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    .qa-table tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    .tkt-pill {
+      font-family: monospace;
+      font-weight: 700;
+      color: var(--primary-blue);
+      background: #eef2ff;
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.8rem;
+    }
+
+    .star-rating {
+      color: #f59e0b;
+      letter-spacing: 1px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .status-badge.positive {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-badge.neutral {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .status-badge.negative {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .btn-action-pill {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--primary-blue);
+      padding: 0.35rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-pill:hover {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border-color: var(--primary-blue);
+    }
+
+    /* Pagination */
+    .table-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+      background: #f8fafc;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .pagination-btns {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .page-btn {
+      padding: 0.35rem 0.7rem;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .page-btn.active {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border-color: var(--primary-blue);
+    }
+
+    /* Modal Backdrop & Card */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .feedback-modal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 650px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .feedback-modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+    }
+
+    .feedback-modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .feedback-modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo"><span class="logo-support">Support</span><span class="logo-hub">HUB</span></div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-header">
+        <div class="header-left"></div>
+        <div class="header-right">
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; font-family: var(--font-heading);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <div id="header-profile-capsule"></div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <div class="page-body">
+        <div class="view-header">
+          <div class="view-header-title">
+            <h1>Customer Feedback Review Log</h1>
+            <p>Audit and inspect customer-submitted satisfaction ratings, verbatim comments, and service feedback.</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <button class="btn-export-csv" onclick="exportFeedbackToCsv()">
+              <i class="fa-solid fa-file-csv"></i> Export CSV
+            </button>
+            <a href="ticket-reviews.html" class="btn-action-pill" style="padding: 0.55rem 1rem; font-size: 0.85rem; background: var(--primary-blue); color: #ffffff;">
+              <i class="fa-solid fa-clipboard-check"></i> Quality Review Queue &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="immutability-banner">
+          <i class="fa-solid fa-shield-halved"></i>
+          <div>
+            <strong>Legal & Compliance Record Notice:</strong> Customer satisfaction survey responses and CSAT ratings are permanently immutable audit records in SupportHUB. QA specialists can inspect ratings, link to evaluation scorecards, and initiate targeted officer coaching.
+          </div>
+        </div>
+
+        <!-- 4 Top KPI Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card" onclick="filterByQuickStatus('ALL')">
+            <div class="kpi-info">
+              <p>Total Feedback</p>
+              <h3 id="kpi-total-feedback">0</h3>
+            </div>
+            <div class="kpi-icon-wrap blue"><i class="fa-solid fa-comments"></i></div>
+          </div>
+          <div class="kpi-card" onclick="filterByQuickStatus('ALL')">
+            <div class="kpi-info">
+              <p>Average CSAT</p>
+              <h3 id="kpi-avg-rating">0.0 / 5</h3>
+            </div>
+            <div class="kpi-icon-wrap yellow"><i class="fa-solid fa-star"></i></div>
+          </div>
+          <div class="kpi-card" onclick="filterByQuickStatus('POSITIVE')">
+            <div class="kpi-info">
+              <p>Positive CSAT (4-5★)</p>
+              <h3 id="kpi-positive-feedback">0</h3>
+            </div>
+            <div class="kpi-icon-wrap green"><i class="fa-solid fa-face-smile"></i></div>
+          </div>
+          <div class="kpi-card" onclick="filterByQuickStatus('NEEDS_ATTENTION')">
+            <div class="kpi-info">
+              <p>Needs Attention (1-2★)</p>
+              <h3 id="kpi-needs-attention">0</h3>
+            </div>
+            <div class="kpi-icon-wrap red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          </div>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <div class="filter-card">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-feedback" placeholder="Search ticket #, customer name, officer, or comment..." oninput="handleSearch()">
+          </div>
+          <div class="filter-group">
+            <select id="select-rating" class="filter-select" onchange="applyFilters()">
+              <option value="">All Ratings</option>
+              <option value="5">5 Stars (Excellent)</option>
+              <option value="4">4 Stars (Good)</option>
+              <option value="3">3 Stars (Average)</option>
+              <option value="2">2 Stars (Poor)</option>
+              <option value="1">1 Star (Very Poor)</option>
+              <option value="LOW">Low Ratings (1-2★)</option>
+            </select>
+            <select id="select-sort" class="filter-select" onchange="applyFilters()">
+              <option value="NEWEST">Newest First</option>
+              <option value="OLDEST">Oldest First</option>
+              <option value="RATING_DESC">Rating: High to Low</option>
+              <option value="RATING_ASC">Rating: Low to High</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Feedback Log Table -->
+        <div class="table-container">
+          <table class="qa-table">
+            <thead>
+              <tr>
+                <th style="width: 12%;">Ticket #</th>
+                <th style="width: 18%;">Customer</th>
+                <th style="width: 16%;">Support Officer</th>
+                <th style="width: 14%;">Rating</th>
+                <th style="width: 24%;">Customer Comment</th>
+                <th style="width: 8%;">Date</th>
+                <th style="width: 8%; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="feedback-log-body">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                  <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--primary-blue);"></i>
+                  <p>Loading feedback records from database...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="table-footer">
+            <span id="feedback-pagination-info">Showing 0 entries</span>
+            <div class="pagination-btns" id="feedback-pagination-controls"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: View Feedback Context Details (Read-Only) -->
+  <div class="modal-backdrop" id="modal-feedback-detail">
+    <div class="feedback-modal-card">
+      <div class="feedback-modal-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: #eef2ff; color: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+            <i class="fa-solid fa-message"></i>
+          </div>
+          <div>
+            <h3 id="modal-ticket-id" style="margin: 0; font-size: 1.15rem; font-weight: 800; color: var(--primary-blue);">TCK-1045</h3>
+            <span id="modal-status-badge" class="status-badge positive"><span class="badge-dot"></span> Positive Feedback</span>
+          </div>
+        </div>
+        <button onclick="closeFeedbackModal()" class="close-btn">&times;</button>
+      </div>
+
+      <div class="feedback-modal-body">
+        <div id="modal-attention-banner" style="display: none; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 0.75rem 1rem; color: #991b1b; font-size: 0.85rem;">
+          <i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i>
+          <strong>Low Satisfaction Alert:</strong> Customer reported service dissatisfaction. Review ticket interaction details and conduct quality coaching.
+        </div>
+
+        <!-- Meta Grid -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; background: #f8fafc; padding: 1rem; border-radius: 10px; border: 1px solid var(--border-subtle); font-size: 0.85rem;">
+          <div>
+            <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Customer</span>
+            <div id="modal-customer-name" style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">Customer Name</div>
+            <div id="modal-customer-email" style="font-size: 0.75rem; color: var(--text-secondary); word-break: break-all;">customer@example.com</div>
+          </div>
+          <div>
+            <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Handled Officer</span>
+            <div id="modal-officer-name" style="font-weight: 700; color: var(--text-primary); margin-top: 2px;">Support Officer</div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary);">Customer Care Specialist</div>
+          </div>
+          <div style="border-top: 1px dashed var(--border-subtle); padding-top: 0.5rem;">
+            <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Category</span>
+            <div id="modal-category" style="font-weight: 600; color: var(--text-primary); margin-top: 2px;">Support Category</div>
+          </div>
+          <div style="border-top: 1px dashed var(--border-subtle); padding-top: 0.5rem;">
+            <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Submitted At</span>
+            <div id="modal-submitted-date" style="font-weight: 600; color: var(--text-primary); margin-top: 2px;">-</div>
+          </div>
+        </div>
+
+        <!-- Star Rating -->
+        <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 10px; padding: 0.85rem 1rem; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <span style="font-size: 0.7rem; font-weight: 700; color: #92400e; text-transform: uppercase;">Customer Rating</span>
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 2px;">
+              <span id="modal-stars" style="color: #f59e0b; font-size: 1.25rem;">★★★★★</span>
+              <strong id="modal-rating-text" style="font-size: 0.95rem; color: #78350f;">5.0 / 5</strong>
+            </div>
+          </div>
+          <span id="modal-rating-pill" class="status-badge positive">Excellent</span>
+        </div>
+
+        <!-- Verbatim Customer Comment -->
+        <div>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.35rem; display: block;">
+            Customer Comment
+          </span>
+          <div id="modal-comment" style="background: #f8fafc; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.85rem 1rem; font-style: italic; color: var(--text-primary); font-size: 0.9rem; line-height: 1.5;">
+            "Feedback comment text..."
+          </div>
+        </div>
+
+        <!-- Suggestions Section -->
+        <div id="modal-suggestions-wrap" style="display: none;">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.35rem; display: block;">
+            Suggestions for Improvement
+          </span>
+          <div id="modal-suggestions" style="background: #fffdf5; border: 1px solid #fef08a; border-radius: 8px; padding: 0.75rem 1rem; color: #854d0e; font-size: 0.85rem;">
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-modal-footer">
+        <button type="button" class="btn-action-pill" onclick="closeFeedbackModal()">Close</button>
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="button" class="btn-action-pill" id="modal-btn-scorecard" style="background: var(--primary-blue); color: #ffffff; border-color: var(--primary-blue);">
+            <i class="fa-solid fa-clipboard-check"></i> Evaluate Scorecard
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    let allFeedbackEntries = [];
+    let filteredFeedback = [];
+    let currentPage = 1;
+    const pageSize = 8;
+    let selectedFeedbackItem = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      Auth.requireAuth(['QA_EXECUTIVE', 'QUALITY_ASSURANCE']);
+      Auth.renderNav();
+      Auth.renderHeaderProfileCapsule();
+      if (window.NotificationsEngine) {
+        NotificationsEngine.init();
+      }
+      await loadFeedbackLog();
+    });
+
+    async function loadFeedbackLog() {
+      try {
+        let feedbackList = [];
+        try {
+          const res = await API.get('/feedback?page=0&size=200');
+          if (res && res.data && res.data.content) {
+            feedbackList = res.data.content;
+          } else if (Array.isArray(res)) {
+            feedbackList = res;
+          } else if (res && Array.isArray(res.data)) {
+            feedbackList = res.data;
+          }
+        } catch (e) {
+          console.warn('Direct feedback endpoint error, trying report fallback:', e);
+          const repRes = await API.get('/reports/feedback');
+          if (repRes && repRes.data && repRes.data.content) {
+            feedbackList = repRes.data.content;
+          }
+        }
+
+        allFeedbackEntries = feedbackList;
+        updateKpis(allFeedbackEntries);
+        applyFilters();
+      } catch (err) {
+        console.error('Failed to load feedback log:', err);
+        document.getElementById('feedback-log-body').innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--danger); padding: 2.5rem;">
+              <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+              <p>Failed to retrieve customer feedback records from database.</p>
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    function updateKpis(items) {
+      const total = items.length;
+      document.getElementById('kpi-total-feedback').textContent = total;
+
+      if (total === 0) {
+        document.getElementById('kpi-avg-rating').textContent = '0.0 / 5';
+        document.getElementById('kpi-positive-feedback').textContent = '0';
+        document.getElementById('kpi-needs-attention').textContent = '0';
+        return;
+      }
+
+      let sumRating = 0;
+      let positiveCount = 0;
+      let lowCount = 0;
+
+      items.forEach(f => {
+        const r = Number(f.rating || 0);
+        sumRating += r;
+        if (r >= 4) positiveCount++;
+        if (r <= 2) lowCount++;
+      });
+
+      const avg = (sumRating / total).toFixed(1);
+      document.getElementById('kpi-avg-rating').textContent = `${avg} / 5`;
+      document.getElementById('kpi-positive-feedback').textContent = positiveCount;
+      document.getElementById('kpi-needs-attention').textContent = lowCount;
+    }
+
+    function applyFilters() {
+      const query = (document.getElementById('search-feedback').value || '').toLowerCase().trim();
+      const ratingFilter = document.getElementById('select-rating').value;
+      const sortVal = document.getElementById('select-sort').value;
+
+      filteredFeedback = allFeedbackEntries.filter(f => {
+        const ticketNum = (f.ticketNumber || ('TCK-' + (f.ticketId || f.id))).toLowerCase();
+        const custName = (f.customerName || 'Customer').toLowerCase();
+        const officerName = (f.agentName || 'Officer').toLowerCase();
+        const comment = (f.comment || '').toLowerCase();
+
+        const matchesQuery = !query ||
+          ticketNum.includes(query) ||
+          custName.includes(query) ||
+          officerName.includes(query) ||
+          comment.includes(query);
+
+        let matchesRating = true;
+        if (ratingFilter === 'LOW') {
+          matchesRating = (f.rating <= 2);
+        } else if (ratingFilter) {
+          matchesRating = (String(f.rating) === ratingFilter);
+        }
+
+        return matchesQuery && matchesRating;
+      });
+
+      // Sorting
+      if (sortVal === 'NEWEST') {
+        filteredFeedback.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+      } else if (sortVal === 'OLDEST') {
+        filteredFeedback.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+      } else if (sortVal === 'RATING_DESC') {
+        filteredFeedback.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      } else if (sortVal === 'RATING_ASC') {
+        filteredFeedback.sort((a, b) => (a.rating || 0) - (b.rating || 0));
+      }
+
+      currentPage = 1;
+      renderTable();
+    }
+
+    function filterByQuickStatus(status) {
+      const ratingSelect = document.getElementById('select-rating');
+      if (status === 'POSITIVE') {
+        ratingSelect.value = '5';
+      } else if (status === 'NEEDS_ATTENTION') {
+        ratingSelect.value = 'LOW';
+      } else {
+        ratingSelect.value = '';
+      }
+      applyFilters();
+    }
+
+    function handleSearch() {
+      applyFilters();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('feedback-log-body');
+      const total = filteredFeedback.length;
+
+      if (total === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 3rem;">
+              <i class="fa-regular fa-comment-dots" style="font-size: 2rem; margin-bottom: 0.5rem; color: #cbd5e1;"></i>
+              <p>No customer feedback matching the selected criteria.</p>
+            </td>
+          </tr>
+        `;
+        document.getElementById('feedback-pagination-info').textContent = 'Showing 0 entries';
+        document.getElementById('feedback-pagination-controls').innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(total / pageSize);
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const start = (currentPage - 1) * pageSize;
+      const pageItems = filteredFeedback.slice(start, start + pageSize);
+
+      tbody.innerHTML = pageItems.map(f => {
+        const ticketNum = f.ticketNumber || ('TCK-' + (f.ticketId || f.id));
+        const rating = Number(f.rating || 5);
+        const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+        const comment = f.comment ? escapeHtml(f.comment) : '<span style="color: var(--text-muted); font-style: italic;">No comment provided</span>';
+        const formattedDate = f.createdAt ? Utils.formatDate(f.createdAt) : '-';
+        const officerName = f.agentName || 'Unassigned';
+
+        return `
+          <tr>
+            <td>
+              <span class="tkt-pill">${escapeHtml(ticketNum)}</span>
+            </td>
+            <td>
+              <div style="font-weight: 600; color: var(--text-primary);">${escapeHtml(f.customerName || 'Customer')}</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">${escapeHtml(f.customerEmail || '')}</div>
+            </td>
+            <td>
+              <span style="font-weight: 500;">${escapeHtml(officerName)}</span>
+            </td>
+            <td>
+              <div class="star-rating">${stars} <strong style="color: #78350f; font-size: 0.8rem;">${rating}.0</strong></div>
+            </td>
+            <td>
+              <div style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(f.comment || '')}">
+                ${comment}
+              </div>
+            </td>
+            <td style="color: var(--text-secondary); font-size: 0.8rem;">
+              ${formattedDate}
+            </td>
+            <td style="text-align: right;">
+              <button class="btn-action-pill" onclick="openDetailModal(${f.id})">
+                <i class="fa-regular fa-eye"></i> Inspect
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('feedback-pagination-info').textContent = `Showing ${start + 1} to ${Math.min(start + pageSize, total)} of ${total} feedback records`;
+
+      // Render pagination
+      let pagHtml = '';
+      for (let p = 1; p <= totalPages; p++) {
+        pagHtml += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
+      }
+      document.getElementById('feedback-pagination-controls').innerHTML = pagHtml;
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderTable();
+    }
+
+    function openDetailModal(id) {
+      const f = allFeedbackEntries.find(x => x.id === id);
+      if (!f) return;
+
+      selectedFeedbackItem = f;
+      const ticketNum = f.ticketNumber || ('TCK-' + (f.ticketId || f.id));
+      const rating = Number(f.rating || 5);
+
+      document.getElementById('modal-ticket-id').textContent = ticketNum;
+      document.getElementById('modal-customer-name').textContent = f.customerName || 'Customer';
+      document.getElementById('modal-customer-email').textContent = f.customerEmail || 'No email provided';
+      document.getElementById('modal-officer-name').textContent = f.agentName || 'Unassigned';
+      document.getElementById('modal-category').textContent = f.categoryName || 'Support';
+      document.getElementById('modal-submitted-date').textContent = f.createdAt ? Utils.formatDate(f.createdAt) : '-';
+
+      const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+      document.getElementById('modal-stars').textContent = stars;
+      document.getElementById('modal-rating-text').textContent = `${rating}.0 / 5`;
+
+      const pill = document.getElementById('modal-rating-pill');
+      const badge = document.getElementById('modal-status-badge');
+      const attention = document.getElementById('modal-attention-banner');
+
+      if (rating >= 4) {
+        pill.className = 'status-badge positive';
+        pill.textContent = 'High Satisfaction';
+        badge.className = 'status-badge positive';
+        badge.textContent = 'Positive Feedback';
+        attention.style.display = 'none';
+      } else if (rating === 3) {
+        pill.className = 'status-badge neutral';
+        pill.textContent = 'Neutral';
+        badge.className = 'status-badge neutral';
+        badge.textContent = 'Average Experience';
+        attention.style.display = 'none';
+      } else {
+        pill.className = 'status-badge negative';
+        pill.textContent = 'Needs Attention';
+        badge.className = 'status-badge negative';
+        badge.textContent = 'Low Satisfaction';
+        attention.style.display = 'block';
+      }
+
+      document.getElementById('modal-comment').textContent = f.comment ? `"${f.comment}"` : 'No verbatim comment was provided.';
+
+      const suggWrap = document.getElementById('modal-suggestions-wrap');
+      if (f.suggestions) {
+        suggWrap.style.display = 'block';
+        document.getElementById('modal-suggestions').textContent = f.suggestions;
+      } else {
+        suggWrap.style.display = 'none';
+      }
+
+      const scoreBtn = document.getElementById('modal-btn-scorecard');
+      scoreBtn.onclick = () => {
+        window.location.href = `evaluation-scorecard.html?ticketId=${f.ticketId || f.id}`;
+      };
+
+      document.getElementById('modal-feedback-detail').classList.add('show');
+    }
+
+    function closeFeedbackModal() {
+      document.getElementById('modal-feedback-detail').classList.remove('show');
+      selectedFeedbackItem = null;
+    }
+
+    function exportFeedbackToCsv() {
+      if (allFeedbackEntries.length === 0) {
+        alert('No feedback records available to export.');
+        return;
+      }
+
+      let csv = 'Ticket Number,Customer Name,Customer Email,Support Officer,Rating,Comment,Suggestions,Date\n';
+      allFeedbackEntries.forEach(f => {
+        const tkt = (f.ticketNumber || ('TCK-' + (f.ticketId || f.id))).replace(/"/g, '""');
+        const cust = (f.customerName || '').replace(/"/g, '""');
+        const email = (f.customerEmail || '').replace(/"/g, '""');
+        const off = (f.agentName || '').replace(/"/g, '""');
+        const rating = f.rating || 0;
+        const comment = (f.comment || '').replace(/"/g, '""');
+        const sugg = (f.suggestions || '').replace(/"/g, '""');
+        const dt = f.createdAt || '';
+        csv += `"${tkt}","${cust}","${email}","${off}",${rating},"${comment}","${sugg}","${dt}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `customer_feedback_audit_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+
+</html>

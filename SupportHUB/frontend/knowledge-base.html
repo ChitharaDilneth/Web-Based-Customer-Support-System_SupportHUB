@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Help Center - SupportHUB</title>
+  <meta name="description" content="SupportHUB Help Center: Instant answers, step-by-step knowledge base guides, FAQs, and self-service support resources.">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Theme Stylesheets -->
+  <link rel="stylesheet" href="css/main.css?v=14.0">
+  <link rel="stylesheet" href="css/components.css?v=14.0">
+  <link rel="stylesheet" href="css/dashboard.css?v=14.0">
+  <link rel="stylesheet" href="css/responsive.css?v=14.0">
+
+  <style>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 - Customer Help Center Custom Styling
+       Brand: Primary Blue #000985 | Accent Yellow #F5CC00 | Pure White Surface
+       Theme: Subtle Glassmorphism, Rounded Cards, Soft Shadows
+       ========================================================================== */
+
+    :root {
+      --hc-primary: #000985;
+      --hc-primary-dark: #00065c;
+      --hc-primary-light: #eff2ff;
+      --hc-accent: #F5CC00;
+      --hc-accent-hover: #e0bb00;
+      --hc-accent-light: #fffbeb;
+      --hc-bg-page: #f8fafc;
+      --hc-surface-white: #ffffff;
+      --hc-glass-bg: rgba(255, 255, 255, 0.88);
+      --hc-glass-border: rgba(255, 255, 255, 0.80);
+      --hc-glass-shadow: 0 10px 30px -5px rgba(0, 9, 133, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --hc-glass-shadow-hover: 0 16px 36px -6px rgba(0, 9, 133, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+      --hc-border: #e2e8f0;
+      --hc-text-title: #0f172a;
+      --hc-text-body: #475569;
+      --hc-text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--hc-bg-page);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--hc-text-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* --------------------------------------------------------------------------
+       Top Navigation Bar
+       -------------------------------------------------------------------------- */
+    .hc-top-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .hc-header-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      height: 68px;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hc-nav-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      font-size: 1.45rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hc-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .hc-nav-link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--hc-text-body);
+      text-decoration: none;
+      transition: color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hc-nav-link:hover, .hc-nav-link.active {
+      color: var(--hc-primary);
+    }
+
+    .hc-nav-link.active {
+      font-weight: 700;
+    }
+
+    .hc-header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .header-user-capsule {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+
+    .header-user-capsule:hover {
+      background: #f1f5f9;
+    }
+
+    .user-avatar-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #000985 0%, #1c27be 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--hc-accent);
+      box-shadow: 0 2px 6px rgba(0, 9, 133, 0.2);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION B: Hero Section
+       -------------------------------------------------------------------------- */
+    .hc-hero {
+      background: linear-gradient(135deg, #000985 0%, #0d148f 60%, #151db5 100%);
+      color: #ffffff;
+      padding: 4rem 1.5rem 3.75rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: visible;
+    }
+
+    .hc-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: 5%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(245, 204, 0, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hc-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: 8%;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hc-hero-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hc-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245, 204, 0, 0.15);
+      border: 1px solid rgba(245, 204, 0, 0.35);
+      color: var(--hc-accent);
+      padding: 0.35rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.775rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hc-hero h1 {
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    .hc-hero p {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 2.25rem;
+      font-weight: 400;
+    }
+
+    /* Hero Prominent Search Input Box */
+    .hc-search-box-wrap {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hc-search-bar {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 0.45rem 0.55rem 0.45rem 1.35rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .hc-search-bar:focus-within {
+      border-color: var(--hc-accent);
+      box-shadow: 0 20px 42px rgba(0, 9, 133, 0.3);
+    }
+
+    .hc-search-bar i.main-search-icon {
+      color: var(--hc-primary);
+      font-size: 1.15rem;
+      margin-right: 0.85rem;
+    }
+
+    .hc-search-bar input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--hc-text-title);
+      background: transparent;
+      padding: 0.5rem 0;
+    }
+
+    .hc-search-bar input::placeholder {
+      color: #94a3b8;
+    }
+
+    .btn-search-hero {
+      background: var(--hc-accent);
+      color: var(--hc-primary);
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 0.7rem 1.6rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 8px rgba(245, 204, 0, 0.35);
+      white-space: nowrap;
+    }
+
+    .btn-search-hero:hover {
+      background: var(--hc-accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(245, 204, 0, 0.45);
+    }
+
+    .search-clear-btn {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0 0.5rem;
+      display: none;
+    }
+
+    .search-clear-btn:hover {
+      color: #0f172a;
+    }
+
+    /* Live Search Suggestions Dropdown Overlay */
+    .hc-suggestions-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      box-shadow: 0 20px 45px rgba(0, 9, 133, 0.18);
+      z-index: 1100;
+      max-height: 440px;
+      overflow-y: auto;
+      text-align: left;
+      display: none;
+    }
+
+    .hc-suggestions-dropdown.show {
+      display: block;
+      animation: fadeInDown 0.15s ease;
+    }
+
+    .suggestion-group-title {
+      padding: 0.65rem 1rem 0.35rem 1rem;
+      font-size: 0.725rem;
+      font-weight: 800;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: #f8fafc;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .suggestion-row {
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      cursor: pointer;
+      border-bottom: 1px solid #f8fafc;
+      transition: background 0.12s ease;
+      text-decoration: none;
+    }
+
+    .suggestion-row:hover, .suggestion-row.selected {
+      background: #eff2ff;
+    }
+
+    .suggestion-row-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .suggestion-badge-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .suggestion-badge-icon.kb { background: #eff2ff; color: var(--hc-primary); }
+    .suggestion-badge-icon.faq { background: #fffbeb; color: #b45309; }
+
+    .suggestion-row-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--hc-text-title);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .suggestion-row-meta {
+      font-size: 0.725rem;
+      color: #64748b;
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.15rem;
+    }
+
+    /* Trending Quick-Pills */
+    .hc-trending-pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.15rem;
+    }
+
+    .hc-trending-label {
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-right: 0.25rem;
+    }
+
+    .hc-topic-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.775rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .hc-topic-pill:hover {
+      background: #ffffff;
+      color: var(--hc-primary);
+      border-color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* --------------------------------------------------------------------------
+       Main Content Container
+       -------------------------------------------------------------------------- */
+    .hc-main-body {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .section-title-wrap {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title-wrap h2 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--hc-text-title);
+      margin: 0 0 0.35rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .section-title-wrap p {
+      font-size: 0.875rem;
+      color: var(--hc-text-body);
+      margin: 0;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION C: Browse Categories Grid
+       -------------------------------------------------------------------------- */
+    .categories-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.15rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .category-box-card {
+      background: var(--hc-surface-white);
+      border: 1px solid var(--hc-border);
+      border-radius: 16px;
+      padding: 1.35rem;
+      box-shadow: var(--hc-glass-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .category-box-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--hc-glass-shadow-hover);
+      border-color: var(--hc-primary);
+    }
+
+    .cat-box-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+    }
+
+    .cat-box-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--hc-primary-light);
+      color: var(--hc-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .cat-box-count {
+      font-size: 0.725rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    .category-box-card h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--hc-text-title);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .category-box-card p {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin: 0 0 1rem 0;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .cat-box-browse-link {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--hc-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 0.75rem;
+      transition: gap 0.15s ease;
+    }
+
+    .category-box-card:hover .cat-box-browse-link {
+      gap: 0.55rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION D: Popular Articles Grid
+       -------------------------------------------------------------------------- */
+    .articles-library-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .kb-article-card {
+      background: var(--hc-surface-white);
+      border: 1px solid var(--hc-border);
+      border-radius: 16px;
+      padding: 1.35rem;
+      box-shadow: var(--hc-glass-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .kb-article-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--hc-glass-shadow-hover);
+      border-color: var(--hc-primary);
+    }
+
+    .kb-card-top-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--hc-primary-light);
+      color: var(--hc-primary);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+    }
+
+    .kb-article-card h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--hc-text-title);
+      margin: 0 0 0.5rem 0;
+      line-height: 1.35;
+    }
+
+    .kb-article-card p {
+      font-size: 0.825rem;
+      color: var(--hc-text-body);
+      line-height: 1.5;
+      margin: 0 0 1rem 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .kb-card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 0.75rem;
+    }
+
+    .kb-read-action {
+      color: var(--hc-primary);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION E: Frequently Asked Questions (Accordion)
+       -------------------------------------------------------------------------- */
+    .faq-accordion-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .faq-accordion-item {
+      background: var(--hc-surface-white);
+      border: 1px solid var(--hc-border);
+      border-radius: 14px;
+      box-shadow: var(--hc-glass-shadow);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .faq-accordion-item.active {
+      border-color: var(--hc-primary);
+      box-shadow: var(--hc-glass-shadow-hover);
+    }
+
+    .faq-accordion-header {
+      padding: 1.15rem 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      gap: 1rem;
+      transition: background 0.15s ease;
+    }
+
+    .faq-accordion-header:hover {
+      background: #fafbfc;
+    }
+
+    .faq-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex: 1;
+    }
+
+    .faq-q-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--hc-primary-light);
+      color: var(--hc-primary);
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .faq-question-text {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--hc-text-title);
+      margin: 0;
+    }
+
+    .faq-chevron {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .faq-accordion-item.active .faq-chevron {
+      transform: rotate(180deg);
+      color: var(--hc-primary);
+    }
+
+    .faq-accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+      background: #fafbfc;
+      border-top: 1px solid transparent;
+    }
+
+    .faq-accordion-item.active .faq-accordion-body {
+      max-height: 1000px;
+      transition: max-height 0.3s ease-in-out;
+      border-top-color: #f1f5f9;
+    }
+
+    .faq-answer-inner {
+      padding: 1.25rem 1.35rem;
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: #334155;
+    }
+
+    .faq-footer-meta {
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.775rem;
+      color: #64748b;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION F: Still Need Help? Section
+       -------------------------------------------------------------------------- */
+    .still-need-help-banner {
+      background: linear-gradient(135deg, rgba(0, 9, 133, 0.05) 0%, rgba(245, 204, 0, 0.08) 100%), #ffffff;
+      border: 1px solid rgba(0, 9, 133, 0.15);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--hc-glass-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .still-help-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .still-help-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: var(--hc-primary);
+      color: var(--hc-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      box-shadow: 0 8px 20px rgba(0, 9, 133, 0.25);
+      flex-shrink: 0;
+    }
+
+    .still-help-text h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--hc-text-title);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .still-help-text p {
+      font-size: 0.925rem;
+      color: var(--hc-text-body);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .btn-raise-ticket-gold {
+      background: var(--hc-accent);
+      color: var(--hc-primary);
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 12px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(245, 204, 0, 0.35);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-raise-ticket-gold:hover {
+      background: var(--hc-accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(245, 204, 0, 0.45);
+    }
+
+    /* --------------------------------------------------------------------------
+       SEARCH RESULTS VIEW (Dynamic Panel)
+       -------------------------------------------------------------------------- */
+    #search-results-panel {
+      display: none;
+      margin-bottom: 3rem;
+    }
+
+    .search-results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--hc-border);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .search-filter-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-filter-btn {
+      background: #ffffff;
+      border: 1px solid var(--hc-border);
+      border-radius: 8px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.775rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .search-filter-btn.active {
+      background: var(--hc-primary);
+      color: #ffffff;
+      border-color: var(--hc-primary);
+    }
+
+    .result-item-card {
+      background: var(--hc-surface-white);
+      border: 1px solid var(--hc-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      box-shadow: var(--hc-glass-shadow);
+      margin-bottom: 1rem;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .result-item-card:hover {
+      border-color: var(--hc-primary);
+      box-shadow: var(--hc-glass-shadow-hover);
+      transform: translateY(-1px);
+    }
+
+    .badge-result-type {
+      font-size: 0.675rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+    }
+
+    .badge-result-type.kb { background: #eff2ff; color: var(--hc-primary); }
+    .badge-result-type.faq { background: #fffbeb; color: #b45309; }
+
+    /* --------------------------------------------------------------------------
+       MODAL STYLING
+       -------------------------------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 18px;
+      width: 100%;
+      max-width: 680px;
+      box-shadow: 0 20px 50px rgba(0, 9, 133, 0.2);
+      overflow: hidden;
+      animation: modalPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.96) translateY(8px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* --------------------------------------------------------------------------
+       Responsive Breakpoints
+       -------------------------------------------------------------------------- */
+    @media (max-width: 1100px) {
+      .categories-cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .articles-library-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hc-hero { padding: 2.75rem 1rem; }
+      .hc-hero h1 { font-size: 1.75rem; }
+      .hc-hero p { font-size: 0.9rem; }
+      .hc-search-bar { flex-direction: column; padding: 0.75rem; gap: 0.5rem; }
+      .btn-search-hero { width: 100%; justify-content: center; }
+      .categories-cards-grid { grid-template-columns: 1fr; }
+      .articles-library-grid { grid-template-columns: 1fr; }
+      .still-need-help-banner { flex-direction: column; align-items: flex-start; padding: 1.75rem; }
+      .hc-nav-links { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==========================================================================
+       A. HEADER: SupportHUB Logo, Nav Links, Notifications, Profile
+       ========================================================================== -->
+  <header class="hc-top-header">
+    <div class="hc-header-inner">
+      <div style="display: flex; align-items: center; gap: 2rem;">
+        <a href="index.html" class="hc-nav-logo" title="SupportHUB Home">
+          <img src="images/supporthub-logo.png" alt="SupportHUB" class="brand-logo-img">
+        </a>
+
+        <!-- Main Navigation Links -->
+        <ul class="hc-nav-links">
+          <li><a href="customer/customer-dashboard.html" class="hc-nav-link" id="nav-link-dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+          <li><a href="knowledge-base.html" class="hc-nav-link active"><i class="fa-solid fa-compass"></i> Help Center</a></li>
+          <li><a href="customer/my-tickets.html" class="hc-nav-link" id="nav-link-tickets"><i class="fa-solid fa-ticket-simple"></i> My Tickets</a></li>
+        </ul>
+      </div>
+
+      <!-- Right Header: Notifications & Customer Profile -->
+      <div class="hc-header-right">
+        <!-- In-App Notifications Bell Dropdown -->
+        <div class="notif-bell-container" id="notif-bell" style="display: none;">
+          <div class="bell-icon" title="Notifications" style="width: 38px; height: 38px; border-radius: 10px; background: #eff2ff; display: flex; align-items: center; justify-content: center; color: #000985; cursor: pointer;">
+            <i class="fa-solid fa-bell"></i>
+          </div>
+          <span class="notif-counter" id="notif-counter" style="display: none; background: #F5CC00; color: #000985; font-weight: 800; font-size: 0.7rem; border-radius: 999px; padding: 0.1rem 0.4rem; position: absolute; top: -4px; right: -4px;">0</span>
+          <div class="notif-dropdown" id="notif-dropdown">
+            <div style="padding: 0.85rem 1.15rem; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #0f172a;">Notifications</div>
+            <div id="notif-dropdown-list"></div>
+          </div>
+        </div>
+
+        <!-- Customer Profile Capsule & Sign Out (Authenticated) -->
+        <div id="header-authenticated-capsule" style="display: none; align-items: center; gap: 0.65rem;">
+          <a href="customer/customer-profile.html" class="header-user-capsule" title="Customer Profile">
+            <div class="user-avatar-badge" id="header-user-avatar">CU</div>
+            <div style="display: flex; flex-direction: column; line-height: 1.2;">
+              <span id="header-user-name" style="font-size: 0.825rem; font-weight: 700; color: #0f172a;">Customer</span>
+              <span style="font-size: 0.7rem; font-weight: 600; color: #000985;" id="header-user-role">Customer</span>
+            </div>
+          </a>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out" style="margin-left: 0.25rem;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+
+        <!-- Guest Visitor Buttons (Unauthenticated) -->
+        <div id="header-guest-buttons" style="display: flex; align-items: center; gap: 0.65rem;">
+          <a href="login.html" class="btn btn-secondary" style="font-size: 0.825rem; padding: 0.45rem 1rem; border-radius: 8px;">Sign In</a>
+          <a href="register.html" class="btn" style="background: #000985; color: #ffffff; font-size: 0.825rem; font-weight: 700; padding: 0.45rem 1rem; border-radius: 8px;">Register</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main style="flex: 1;">
+    <!-- ==========================================================================
+         B. HERO SECTION: Title, Subtitle, Prominent Help Search Box
+         ========================================================================== -->
+    <section class="hc-hero">
+      <div class="hc-hero-inner">
+        <div class="hc-hero-badge">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> OFFICIAL KNOWLEDGE BASE & SELF-SERVICE
+        </div>
+        <h1>How can we help you today?</h1>
+        <p>Find answers, explore helpful articles, or get assistance from our support team.</p>
+
+        <!-- Prominent Search Field -->
+        <div class="hc-search-box-wrap">
+          <div class="hc-search-bar">
+            <i class="fa-solid fa-magnifying-glass main-search-icon"></i>
+            <input type="text" id="hc-search-input" placeholder="Search FAQ questions, guides, policies, keywords..." autocomplete="off" />
+            <button type="button" id="hc-search-clear" class="search-clear-btn" onclick="clearHelpSearch()">&times;</button>
+            <button type="button" id="btn-execute-search" class="btn-search-hero" onclick="triggerSearch()">
+              <i class="fa-solid fa-magnifying-glass"></i> <span>Search Help</span>
+            </button>
+          </div>
+
+          <!-- Live Search Suggestions Dropdown Overlay -->
+          <div class="hc-suggestions-dropdown" id="hc-suggestions-overlay"></div>
+        </div>
+
+        <!-- Trending Topics Pills -->
+        <div class="hc-trending-pills">
+          <span class="hc-trending-label">Trending Topics:</span>
+          <button type="button" class="hc-topic-pill" onclick="quickSearchTopic('Order Tracking')"><i class="fa-solid fa-box"></i> Order Tracking</button>
+          <button type="button" class="hc-topic-pill" onclick="quickSearchTopic('Refund Policy')"><i class="fa-solid fa-credit-card"></i> Refund Policy</button>
+          <button type="button" class="hc-topic-pill" onclick="quickSearchTopic('Delivery Issues')"><i class="fa-solid fa-truck"></i> Delivery Issues</button>
+          <button type="button" class="hc-topic-pill" onclick="quickSearchTopic('Reset Password')"><i class="fa-solid fa-lock"></i> Account Security</button>
+          <button type="button" class="hc-topic-pill" onclick="quickSearchTopic('Payment Error')"><i class="fa-solid fa-receipt"></i> Payment & Billing</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MAIN CONTENT AREA
+         ========================================================================== -->
+    <div class="hc-main-body">
+
+      <!-- DYNAMIC SEARCH RESULTS PANEL (Displayed when search is active) -->
+      <section id="search-results-panel">
+        <div class="search-results-header">
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem 0;" id="search-results-title">Search Results</h2>
+            <p style="font-size: 0.85rem; color: #64748b; margin: 0;" id="search-results-subtitle">Showing matching solutions</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.85rem;">
+            <!-- Content-Type Filter Tabs -->
+            <div class="search-filter-pills">
+              <button class="search-filter-btn active" id="filter-all" onclick="filterSearchResults('all')">All Results (<span id="count-all">0</span>)</button>
+              <button class="search-filter-btn" id="filter-kb" onclick="filterSearchResults('kb')">Knowledge Base (<span id="count-kb">0</span>)</button>
+              <button class="search-filter-btn" id="filter-faq" onclick="filterSearchResults('faq')">FAQs (<span id="count-faq">0</span>)</button>
+            </div>
+            <button onclick="resetSearchToBrowse()" class="btn btn-sm btn-secondary" style="border-radius: 8px;">
+              <i class="fa-solid fa-xmark"></i> Clear Search
+            </button>
+          </div>
+        </div>
+
+        <!-- Result Items Container -->
+        <div id="search-results-list" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+      </section>
+
+      <!-- STANDARD BROWSE SECTIONS (Visible when no search is active) -->
+      <div id="browse-sections-container">
+
+        <!-- SECTION C: Browse Categories -->
+        <section style="margin-bottom: 3.5rem;">
+          <div class="section-title-wrap">
+            <h2>Explore by Support Category</h2>
+            <p>Browse step-by-step guides and answers organized by service department.</p>
+          </div>
+
+          <div class="categories-cards-grid" id="categories-grid-container">
+            <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #94a3b8;">
+              <i class="fa-solid fa-spinner fa-spin" style="margin-right: 6px;"></i> Loading support categories...
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION D: Popular Articles -->
+        <section style="margin-bottom: 3.5rem;">
+          <div class="section-title-wrap" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2>Popular Solutions & Guides</h2>
+              <p>Top articles frequently referenced by customers to resolve inquiries.</p>
+            </div>
+            <a href="customer/knowledge-base.html" class="panel-link-action" style="font-size: 0.825rem; font-weight: 700; color: #000985; text-decoration: none;">
+              Browse Complete Library &rarr;
+            </a>
+          </div>
+
+          <div class="articles-library-grid" id="popular-articles-grid">
+            <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #94a3b8;">
+              <i class="fa-solid fa-spinner fa-spin" style="margin-right: 6px;"></i> Loading verified articles...
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION E: Frequently Asked Questions -->
+        <section style="margin-bottom: 3.5rem;">
+          <div class="section-title-wrap">
+            <h2>Frequently Asked Questions</h2>
+            <p>Instant answers to the most common customer questions.</p>
+          </div>
+
+          <div class="faq-accordion-container" id="faqs-accordion-container">
+            <div style="text-align: center; padding: 2rem; color: #94a3b8;">
+              <i class="fa-solid fa-spinner fa-spin" style="margin-right: 6px;"></i> Loading FAQs...
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION F: Still Need Help? Section -->
+        <section>
+          <div class="still-need-help-banner">
+            <div class="still-help-left">
+              <div class="still-help-icon">
+                <i class="fa-solid fa-headset"></i>
+              </div>
+              <div class="still-help-text">
+                <h3>Couldn't find the answer?</h3>
+                <p>Submit a support request and our team will help you promptly.</p>
+              </div>
+            </div>
+            <button type="button" onclick="handleRaiseTicketClick()" class="btn-raise-ticket-gold">
+              <i class="fa-solid fa-circle-plus"></i> <span>Raise a Ticket</span>
+            </button>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       MODALS:
+       1. Article & FAQ Reader Preview Modal with "Was this helpful?" feedback
+       2. Raise Support Ticket Modal
+       ========================================================================== -->
+
+  <!-- 1. Detailed Reader Preview Modal -->
+  <div class="modal-backdrop" id="reader-preview-modal">
+    <div class="modal-content" style="max-width: 680px; border-radius: 18px; border: 1px solid #cbd5e1;">
+      <div class="modal-header" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: flex-start;">
+        <div style="flex: 1; padding-right: 1rem;">
+          <div style="display: flex; gap: 0.45rem; align-items: center; margin-bottom: 0.35rem;">
+            <span class="badge-result-type kb" id="modal-art-badge">GUIDE</span>
+            <span style="font-size: 0.75rem; font-weight: 700; color: #000985;" id="modal-art-category">General</span>
+            <span style="font-size: 0.725rem; color: #94a3b8;" id="modal-art-meta">0 views</span>
+          </div>
+          <h3 id="modal-art-title" style="margin: 0; font-size: 1.2rem; color: #0f172a; font-weight: 800; line-height: 1.3;">Article Title</h3>
+        </div>
+        <button onclick="closeReaderModal()" style="background: none; border: none; color: #64748b; font-size: 1.5rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.5rem; max-height: calc(85vh - 180px); overflow-y: auto;">
+        <div id="modal-art-content" style="font-size: 0.925rem; line-height: 1.65; color: #334155; white-space: pre-line;"></div>
+
+        <!-- Was this article helpful? -->
+        <div style="margin-top: 1.75rem; padding: 1.25rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; text-align: center;">
+          <p style="margin: 0 0 0.65rem 0; font-size: 0.875rem; font-weight: 700; color: #0f172a;">Was this solution helpful?</p>
+          <div style="display: flex; justify-content: center; gap: 0.75rem;">
+            <button type="button" onclick="recordArticleFeedback(true)" class="btn btn-sm" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; font-weight: 700; border-radius: 8px;">
+              <i class="fa-solid fa-thumbs-up"></i> Yes, it helped!
+            </button>
+            <button type="button" onclick="recordArticleFeedback(false)" class="btn btn-sm" style="background: #fffbeb; border: 1px solid #fde68a; color: #b45309; font-weight: 700; border-radius: 8px;">
+              <i class="fa-solid fa-thumbs-down"></i> Still need help
+            </button>
+          </div>
+          <div id="modal-vote-feedback" style="margin-top: 0.75rem; font-size: 0.8rem; display: none;"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="padding: 0.85rem 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.775rem; color: #64748b;">SupportHUB Verified Resource</span>
+        <button type="button" onclick="closeReaderModal()" class="btn btn-secondary" style="border-radius: 8px; font-size: 0.8rem;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Raise Support Ticket Modal -->
+  <div class="modal-backdrop" id="ticket-modal">
+    <div class="modal-content" style="max-width: 600px; border-radius: 18px; border: 1px solid #cbd5e1;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #000985 0%, #151db5 100%); color: #ffffff; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(245, 204, 0, 0.2); display: flex; align-items: center; justify-content: center; color: #F5CC00;">
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.15rem; color: #ffffff; font-weight: 800;">Submit Support Request</h3>
+            <p style="margin: 0; font-size: 0.75rem; color: #cbd5e1;">Our support team will respond to your ticket promptly.</p>
+          </div>
+        </div>
+        <button onclick="closeTicketModal()" style="background: none; border: none; color: #ffffff; font-size: 1.5rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <form id="create-ticket-form" onsubmit="handleTicketFormSubmit(event)">
+        <div class="modal-body" style="padding: 1.35rem 1.5rem; max-height: calc(85vh - 140px); overflow-y: auto;">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 700; font-size: 0.825rem; color: #0f172a;">Ticket Subject <span style="color: #dc2626;">*</span></label>
+            <input type="text" id="ticket-modal-subject" class="form-control" placeholder="e.g. Inquiry regarding order delivery or payment..." required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" style="font-weight: 700; font-size: 0.825rem; color: #0f172a;">Support Category <span style="color: #dc2626;">*</span></label>
+              <select id="ticket-modal-category" class="form-control" required>
+                <option value="">Loading categories...</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" style="font-weight: 700; font-size: 0.825rem; color: #0f172a;">Related Order # (Optional)</label>
+              <input type="text" id="ticket-modal-order" class="form-control" placeholder="e.g. ORD-2026-9041" />
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 700; font-size: 0.825rem; color: #0f172a;">Priority Level <span style="color: #dc2626;">*</span></label>
+            <select id="ticket-modal-priority" class="form-control" required>
+              <option value="LOW">Low - General Question / Non-critical</option>
+              <option value="MEDIUM" selected>Medium - Normal Issue / Needs Investigation</option>
+              <option value="HIGH">High - Delivery Delay / Urgent Billing Issue</option>
+              <option value="URGENT">Urgent - Complete Outage / Critical Escalation</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 700; font-size: 0.825rem; color: #0f172a;">Detailed Description <span style="color: #dc2626;">*</span></label>
+            <textarea id="ticket-modal-description" class="form-control" rows="4" placeholder="Please describe what happened in detail..." required style="resize: vertical;"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-weight: 700; font-size: 0.825rem; color: #0f172a;">Attachment (Optional, Max 10MB)</label>
+            <input type="file" id="ticket-modal-file" class="form-control" accept="image/*,.pdf,.doc,.docx" />
+          </div>
+        </div>
+
+        <div class="modal-footer" style="padding: 1rem 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" onclick="closeTicketModal()" class="btn btn-secondary" style="border-radius: 8px;">Cancel</button>
+          <button type="submit" id="btn-submit-ticket-form" class="btn" style="background: #000985; color: #ffffff; font-weight: 700; border-radius: 8px; padding: 0.55rem 1.35rem; display: inline-flex; align-items: center; gap: 0.45rem;">
+            <i class="fa-solid fa-paper-plane"></i> <span>Submit Ticket</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-main" style="background: #0f172a; color: #cbd5e1; padding: 3rem 1.5rem 1.5rem 1.5rem; margin-top: auto;">
+    <div style="max-width: 1320px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2rem;">
+      <div>
+        <a href="index.html" class="hc-nav-logo">
+          <img src="images/supporthub-logo.png" alt="SupportHUB" class="brand-logo-img">
+        </a>
+        <p style="font-size: 0.85rem; color: #94a3b8; margin: 0.5rem 0 0 0; max-width: 380px;">
+          Enterprise Omnichannel Customer Support & Self-Service Knowledge Base.
+        </p>
+      </div>
+      <div style="display: flex; gap: 2rem; font-size: 0.85rem;">
+        <a href="customer/customer-dashboard.html" style="color: #cbd5e1; text-decoration: none;">Dashboard</a>
+        <a href="knowledge-base.html" style="color: #F5CC00; text-decoration: none; font-weight: 700;">Help Center</a>
+        <a href="customer/my-tickets.html" style="color: #cbd5e1; text-decoration: none;">My Tickets</a>
+        <a href="customer/faq.html" style="color: #cbd5e1; text-decoration: none;">FAQ</a>
+      </div>
+    </div>
+    <div style="max-width: 1320px; margin: 1.5rem auto 0 auto; display: flex; justify-content: space-between; font-size: 0.775rem; color: #64748b;">
+      <div>&copy; 2026 SupportHUB Customer Support System. All rights reserved.</div>
+      <div>Enterprise Self-Service Portal</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js?v=14.0"></script>
+  <script src="js/auth.js?v=14.0"></script>
+  <script src="js/utils.js?v=14.0"></script>
+  <script src="js/notifications.js?v=14.0"></script>
+
+  <script>
+    // State Store
+    let currentUser = null;
+    let allPublishedArticles = [];
+    let allPublishedFaqs = [];
+    let allActiveCategories = [];
+    let searchDebounce = null;
+    let currentSearchResults = { all: [], kb: [], faq: [] };
+    let currentFilterType = 'all';
+    let currentViewingItem = null;
+
+    const CATEGORY_ICON_MAP = {
+      'Order Issues': 'fa-box',
+      'Delivery Issues': 'fa-truck',
+      'Payment & Refunds': 'fa-credit-card',
+      'Account Issues': 'fa-user-shield',
+      'Product Information': 'fa-circle-info',
+      'Technical Support': 'fa-gear'
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Check Authentication State
+      initHeaderAuthStatus();
+
+      // 2. Fetch Initial Data in Parallel
+      await Promise.allSettled([
+        loadPublishedArticles(),
+        loadPublishedFaqs(),
+        loadCategories()
+      ]);
+
+      // 3. Setup Search Input Event Listeners
+      setupSearchInputEvents();
+
+      // 4. Check URL Parameter for pre-filled query or category
+      checkUrlQuery();
+    });
+
+    /* ==========================================================================
+       1. Header Authentication & Profile Capsule
+       ========================================================================== */
+    function initHeaderAuthStatus() {
+      const isAuth = Auth.isLoggedIn();
+      currentUser = isAuth ? Auth.getUser() : null;
+
+      const authCapsule = document.getElementById('header-authenticated-capsule');
+      const guestButtons = document.getElementById('header-guest-buttons');
+      const notifBell = document.getElementById('notif-bell');
+
+      if (isAuth && currentUser) {
+        if (authCapsule) authCapsule.style.display = 'flex';
+        if (guestButtons) guestButtons.style.display = 'none';
+        if (notifBell) notifBell.style.display = 'block';
+
+        const nameEl = document.getElementById('header-user-name');
+        const roleEl = document.getElementById('header-user-role');
+        const avatarEl = document.getElementById('header-user-avatar');
+
+        if (nameEl) nameEl.textContent = currentUser.fullName || currentUser.email;
+        if (roleEl) roleEl.textContent = (currentUser.role || 'Customer').replaceAll('_', ' ');
+        if (avatarEl) {
+          const initials = (currentUser.fullName || currentUser.email).substring(0, 2).toUpperCase();
+          avatarEl.textContent = initials;
+        }
+
+        // Initialize notification engine for live bell counter
+        if (typeof NotificationsEngine !== 'undefined') {
+          NotificationsEngine.init();
+        }
+      } else {
+        if (authCapsule) authCapsule.style.display = 'none';
+        if (guestButtons) guestButtons.style.display = 'flex';
+        if (notifBell) notifBell.style.display = 'none';
+      }
+    }
+
+    /* ==========================================================================
+       2. Data Loaders (Articles, FAQs, Categories)
+       ========================================================================== */
+    async function loadPublishedArticles() {
+      try {
+        const res = await API.get('/knowledge-base/public');
+        allPublishedArticles = res.data || [];
+        renderPopularArticles();
+      } catch (err) {
+        console.warn('Could not load KB articles:', err);
+        allPublishedArticles = [];
+        renderPopularArticles();
+      }
+    }
+
+    async function loadPublishedFaqs() {
+      try {
+        const res = await API.get('/faqs/public');
+        allPublishedFaqs = res.data || [];
+        renderFaqsAccordion();
+      } catch (err) {
+        console.warn('Could not load FAQs:', err);
+        allPublishedFaqs = [];
+        renderFaqsAccordion();
+      }
+    }
+
+    async function loadCategories() {
+      try {
+        const res = await API.get('/categories/active');
+        allActiveCategories = res.data || [];
+        renderCategoriesGrid();
+        populateTicketModalCategories();
+      } catch (err) {
+        console.warn('Could not load categories:', err);
+        allActiveCategories = [];
+        renderCategoriesGrid();
+      }
+    }
+
+    /* ==========================================================================
+       3. SECTION C: Render Categories Grid (With Real Computed Article Counts)
+       ========================================================================== */
+    function renderCategoriesGrid() {
+      const container = document.getElementById('categories-grid-container');
+      if (!container) return;
+
+      if (!allActiveCategories || allActiveCategories.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #94a3b8;">No categories currently active.</div>';
+        return;
+      }
+
+      container.innerHTML = allActiveCategories.map(cat => {
+        const icon = cat.icon || CATEGORY_ICON_MAP[cat.name] || 'fa-folder';
+        
+        // Compute real article count for this category
+        const articleCount = allPublishedArticles.filter(a => 
+          (a.categoryId && a.categoryId === cat.id) || (a.categoryName && a.categoryName === cat.name)
+        ).length;
+
+        const countText = articleCount === 1 ? '1 Guide' : `${articleCount} Guides`;
+        const desc = cat.description || `Verified guides, solutions, and policies for ${cat.name}.`;
+
+        return `
+          <div class="category-box-card" onclick="filterByCategory(${cat.id}, '${escapeHtml(cat.name)}')">
+            <div>
+              <div class="cat-box-header">
+                <div class="cat-box-icon">
+                  <i class="fa-solid ${icon}"></i>
+                </div>
+                <span class="cat-box-count">${countText}</span>
+              </div>
+              <h3>${escapeHtml(cat.name)}</h3>
+              <p>${escapeHtml(desc)}</p>
+            </div>
+            <div class="cat-box-browse-link">
+              <span>Browse Guides</span> &rarr;
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterByCategory(categoryId, categoryName) {
+      const input = document.getElementById('hc-search-input');
+      if (input) input.value = '';
+      
+      const filteredKb = allPublishedArticles.filter(a => 
+        (a.categoryId && a.categoryId === categoryId) || (a.categoryName && a.categoryName === categoryName)
+      );
+      const filteredFaq = allPublishedFaqs.filter(f => 
+        (f.categoryId && f.categoryId === categoryId) || (f.categoryName && f.categoryName === categoryName)
+      );
+
+      displaySearchResults(filteredKb, filteredFaq, `Category: ${categoryName}`);
+    }
+
+    /* ==========================================================================
+       4. SECTION D: Render Popular Knowledge Base Articles
+       ========================================================================== */
+    function renderPopularArticles() {
+      const container = document.getElementById('popular-articles-grid');
+      if (!container) return;
+
+      if (!allPublishedArticles || allPublishedArticles.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #64748b;">
+            No published knowledge base articles available at this time.
+          </div>
+        `;
+        return;
+      }
+
+      // Sort by viewCount descending and pick top 6
+      const sorted = [...allPublishedArticles].sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0)).slice(0, 6);
+
+      container.innerHTML = sorted.map(art => {
+        const cat = art.categoryName || 'General Guide';
+        const views = (art.viewCount || 0).toLocaleString();
+        const dateStr = art.updatedAt ? Utils.formatDate(art.updatedAt) : 'Recently updated';
+        const cleanExcerpt = art.content 
+          ? (art.content.length > 115 ? art.content.substring(0, 115) + '...' : art.content) 
+          : 'Read the complete step-by-step solution guide.';
+
+        return `
+          <div class="kb-article-card" onclick="openArticleReader(${art.id})">
+            <div>
+              <span class="kb-card-top-tag"><i class="fa-solid fa-book-bookmark"></i> ${escapeHtml(cat)}</span>
+              <h3>${escapeHtml(art.title)}</h3>
+              <p>${escapeHtml(cleanExcerpt)}</p>
+            </div>
+            <div class="kb-card-bottom">
+              <span><i class="fa-regular fa-eye"></i> ${views} views</span>
+              <span class="kb-read-action">Read Guide &rarr;</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ==========================================================================
+       5. SECTION E: Render Frequently Asked Questions Accordion
+       ========================================================================== */
+    function renderFaqsAccordion() {
+      const container = document.getElementById('faqs-accordion-container');
+      if (!container) return;
+
+      if (!allPublishedFaqs || allPublishedFaqs.length === 0) {
+        container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 2rem;">No FAQs published yet.</div>';
+        return;
+      }
+
+      container.innerHTML = allPublishedFaqs.slice(0, 8).map((faq, index) => {
+        return `
+          <div class="faq-accordion-item" id="faq-item-${faq.id}">
+            <div class="faq-accordion-header" onclick="toggleFaqAccordion(${faq.id})">
+              <div class="faq-header-left">
+                <span class="faq-q-badge">Q</span>
+                <h4 class="faq-question-text">${escapeHtml(faq.question)}</h4>
+              </div>
+              <i class="fa-solid fa-chevron-down faq-chevron"></i>
+            </div>
+            <div class="faq-accordion-body">
+              <div class="faq-answer-inner">
+                <p style="margin: 0 0 0.5rem 0;">${escapeHtml(faq.answer)}</p>
+                <div class="faq-footer-meta">
+                  <span style="font-weight: 700; color: #000985; text-transform: uppercase; font-size: 0.725rem;">
+                    Category: ${escapeHtml(faq.categoryName || 'General Support')}
+                  </span>
+                  <button type="button" onclick="openFaqReader('${escapeHtml(faq.question)}', '${escapeHtml(faq.answer)}', '${escapeHtml(faq.categoryName || 'FAQ')}')" class="btn btn-sm btn-outline-secondary" style="font-size: 0.75rem; border-radius: 6px;">
+                    View Complete Solution &rarr;
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleFaqAccordion(faqId) {
+      const item = document.getElementById(`faq-item-${faqId}`);
+      if (!item) return;
+
+      const wasActive = item.classList.contains('active');
+      
+      // Close any other open accordion
+      document.querySelectorAll('.faq-accordion-item.active').forEach(i => {
+        if (i !== item) i.classList.remove('active');
+      });
+
+      if (!wasActive) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    }
+
+    /* ==========================================================================
+       6. SEARCH BEHAVIOUR: Prominent Search, Live Suggestions & Filter Tabs
+       ========================================================================== */
+    function setupSearchInputEvents() {
+      const input = document.getElementById('hc-search-input');
+      const clearBtn = document.getElementById('hc-search-clear');
+      const overlay = document.getElementById('hc-suggestions-overlay');
+
+      if (!input) return;
+
+      input.addEventListener('input', (e) => {
+        const val = e.target.value.trim();
+        if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
+
+        if (searchDebounce) clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => {
+          fetchSearchSuggestions(val);
+        }, 240);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (overlay) overlay.classList.remove('show');
+          triggerSearch();
+        } else if (e.key === 'Escape') {
+          if (overlay) overlay.classList.remove('show');
+        }
+      });
+
+      // Dismiss overlay on click outside
+      document.addEventListener('click', (e) => {
+        const box = document.querySelector('.hc-search-box-wrap');
+        if (overlay && box && !box.contains(e.target)) {
+          overlay.classList.remove('show');
+        }
+      });
+    }
+
+    function clearHelpSearch() {
+      const input = document.getElementById('hc-search-input');
+      const clearBtn = document.getElementById('hc-search-clear');
+      const overlay = document.getElementById('hc-suggestions-overlay');
+
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      if (clearBtn) clearBtn.style.display = 'none';
+      if (overlay) overlay.classList.remove('show');
+
+      resetSearchToBrowse();
+    }
+
+    function quickSearchTopic(term) {
+      const input = document.getElementById('hc-search-input');
+      const clearBtn = document.getElementById('hc-search-clear');
+      if (input) {
+        input.value = term;
+        if (clearBtn) clearBtn.style.display = 'block';
+        triggerSearch();
+      }
+    }
+
+    async function fetchSearchSuggestions(query) {
+      const overlay = document.getElementById('hc-suggestions-overlay');
+      if (!overlay) return;
+
+      if (!query || query.length < 2) {
+        overlay.classList.remove('show');
+        overlay.innerHTML = '';
+        return;
+      }
+
+      try {
+        const res = await API.get(`/help/search?q=${encodeURIComponent(query)}`);
+        const data = res.data || {};
+        const kbs = data.matchedArticles || [];
+        const faqs = data.matchedFaqs || [];
+
+        if (kbs.length === 0 && faqs.length === 0) {
+          overlay.innerHTML = `
+            <div style="padding: 1.25rem; text-align: center; color: #64748b;">
+              <p style="margin: 0 0 0.4rem 0; font-size: 0.85rem; font-weight: 700; color: #0f172a;">No exact suggestions for "${escapeHtml(query)}"</p>
+              <button onclick="triggerSearch()" class="btn btn-sm btn-primary" style="background: #000985; font-size: 0.775rem; border-radius: 6px;">
+                Press Enter to run full search
+              </button>
+            </div>
+          `;
+          overlay.classList.add('show');
+          return;
+        }
+
+        let html = '';
+
+        if (kbs.length > 0) {
+          html += `<div class="suggestion-group-title"><span>Knowledge Base Guides</span><span>${kbs.length} matches</span></div>`;
+          kbs.slice(0, 3).forEach(art => {
+            html += `
+              <div class="suggestion-row" onclick="openArticleReader(${art.id})">
+                <div class="suggestion-row-left">
+                  <div class="suggestion-badge-icon kb"><i class="fa-solid fa-book-bookmark"></i></div>
+                  <div>
+                    <div class="suggestion-row-title">${escapeHtml(art.title)}</div>
+                    <div class="suggestion-row-meta">
+                      <span style="font-weight: 700; color: #000985;">${escapeHtml(art.categoryName || 'Guide')}</span>
+                      <span>• ${art.viewCount || 0} views</span>
+                    </div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-angle-right" style="color: #94a3b8; font-size: 0.75rem;"></i>
+              </div>
+            `;
+          });
+        }
+
+        if (faqs.length > 0) {
+          html += `<div class="suggestion-group-title"><span>Frequently Asked Questions</span><span>${faqs.length} matches</span></div>`;
+          faqs.slice(0, 3).forEach(faq => {
+            html += `
+              <div class="suggestion-row" onclick="openFaqReader('${escapeHtml(faq.question)}', '${escapeHtml(faq.answer)}', '${escapeHtml(faq.categoryName || 'FAQ')}')">
+                <div class="suggestion-row-left">
+                  <div class="suggestion-badge-icon faq"><i class="fa-solid fa-circle-question"></i></div>
+                  <div>
+                    <div class="suggestion-row-title">${escapeHtml(faq.question)}</div>
+                    <div class="suggestion-row-meta">
+                      <span style="font-weight: 700; color: #b45309;">${escapeHtml(faq.categoryName || 'FAQ')}</span>
+                      <span>• Instant Answer</span>
+                    </div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-angle-right" style="color: #94a3b8; font-size: 0.75rem;"></i>
+              </div>
+            `;
+          });
+        }
+
+        html += `
+          <div style="padding: 0.65rem 1rem; background: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;">
+            <a href="javascript:void(0)" onclick="triggerSearch()" style="font-size: 0.8rem; font-weight: 700; color: #000985; text-decoration: none;">
+              View all results for "${escapeHtml(query)}" &rarr;
+            </a>
+          </div>
+        `;
+
+        overlay.innerHTML = html;
+        overlay.classList.add('show');
+      } catch (err) {
+        console.warn('Suggestion search error:', err);
+      }
+    }
+
+    async function triggerSearch() {
+      const input = document.getElementById('hc-search-input');
+      const query = input ? input.value.trim() : '';
+
+      const overlay = document.getElementById('hc-suggestions-overlay');
+      if (overlay) overlay.classList.remove('show');
+
+      if (!query) {
+        resetSearchToBrowse();
+        return;
+      }
+
+      try {
+        const res = await API.get(`/help/search?q=${encodeURIComponent(query)}`);
+        const data = res.data || {};
+        const kbs = data.matchedArticles || [];
+        const faqs = data.matchedFaqs || [];
+
+        displaySearchResults(kbs, faqs, `Query: "${query}"`);
+
+        // Smooth scroll to results
+        const panel = document.getElementById('search-results-panel');
+        if (panel) {
+          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } catch (err) {
+        console.error('Help search error:', err);
+        Utils.showToast('Could not complete search. Please try again.', 'error');
+      }
+    }
+
+    function displaySearchResults(kbs, faqs, contextLabel) {
+      const browseSection = document.getElementById('browse-sections-container');
+      const resultsPanel = document.getElementById('search-results-panel');
+      const titleEl = document.getElementById('search-results-title');
+      const subtitleEl = document.getElementById('search-results-subtitle');
+
+      if (browseSection) browseSection.style.display = 'none';
+      if (resultsPanel) resultsPanel.style.display = 'block';
+
+      currentSearchResults.kb = kbs;
+      currentSearchResults.faq = faqs;
+      currentSearchResults.all = [
+        ...kbs.map(k => ({ ...k, _type: 'KB' })),
+        ...faqs.map(f => ({ ...f, _type: 'FAQ' }))
+      ];
+
+      const totalCount = currentSearchResults.all.length;
+
+      if (titleEl) titleEl.textContent = `Search Results (${totalCount})`;
+      if (subtitleEl) subtitleEl.textContent = `Showing verified solutions for ${contextLabel}`;
+
+      document.getElementById('count-all').textContent = totalCount;
+      document.getElementById('count-kb').textContent = kbs.length;
+      document.getElementById('count-faq').textContent = faqs.length;
+
+      filterSearchResults('all');
+    }
+
+    function filterSearchResults(type) {
+      currentFilterType = type;
+      ['all', 'kb', 'faq'].forEach(t => {
+        const btn = document.getElementById(`filter-${t}`);
+        if (btn) {
+          if (t === type) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+
+      const listContainer = document.getElementById('search-results-list');
+      if (!listContainer) return;
+
+      let items = [];
+      if (type === 'all') items = currentSearchResults.all;
+      else if (type === 'kb') items = currentSearchResults.kb.map(k => ({ ...k, _type: 'KB' }));
+      else if (type === 'faq') items = currentSearchResults.faq.map(f => ({ ...f, _type: 'FAQ' }));
+
+      if (items.length === 0) {
+        const inputVal = document.getElementById('hc-search-input').value.trim();
+        listContainer.innerHTML = `
+          <div style="background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 16px; padding: 3rem 1.5rem; text-align: center;">
+            <i class="fa-solid fa-magnifying-glass" style="font-size: 2.25rem; color: #94a3b8; margin-bottom: 0.75rem; display: block;"></i>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem 0;">No matching solutions found</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin: 0 0 1.25rem 0; max-width: 480px; margin-left: auto; margin-right: auto;">
+              We couldn't find an exact guide for "${escapeHtml(inputVal)}". Would you like to submit a support request directly to our customer service officers?
+            </p>
+            <button onclick="openTicketModalWithTopic('${escapeHtml(inputVal)}')" class="btn" style="background: #000985; color: #ffffff; font-weight: 700; padding: 0.6rem 1.4rem; border-radius: 10px; display: inline-flex; align-items: center; gap: 0.45rem;">
+              <i class="fa-solid fa-circle-plus" style="color: #F5CC00;"></i> Raise a Ticket for "${escapeHtml(inputVal)}"
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = items.map(item => {
+        const isKb = item._type === 'KB';
+        const typeBadge = isKb 
+          ? `<span class="badge-result-type kb"><i class="fa-solid fa-book-bookmark"></i> Knowledge Base Guide</span>`
+          : `<span class="badge-result-type faq"><i class="fa-solid fa-circle-question"></i> FAQ Solution</span>`;
+        
+        const title = isKb ? item.title : item.question;
+        const excerpt = isKb 
+          ? (item.content ? (item.content.length > 140 ? item.content.substring(0, 140) + '...' : item.content) : 'Click to view full guide.')
+          : item.answer;
+
+        const clickAction = isKb 
+          ? `openArticleReader(${item.id})`
+          : `openFaqReader('${escapeHtml(item.question)}', '${escapeHtml(item.answer)}', '${escapeHtml(item.categoryName || 'FAQ')}')`;
+
+        return `
+          <div class="result-item-card" onclick="${clickAction}">
+            <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.45rem;">
+              ${typeBadge}
+              <span style="font-size: 0.75rem; font-weight: 700; color: #64748b;">${escapeHtml(item.categoryName || 'General')}</span>
+            </div>
+            <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin: 0 0 0.35rem 0;">${escapeHtml(title)}</h3>
+            <p style="font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.5;">${escapeHtml(excerpt)}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function resetSearchToBrowse() {
+      const browseSection = document.getElementById('browse-sections-container');
+      const resultsPanel = document.getElementById('search-results-panel');
+      const input = document.getElementById('hc-search-input');
+      const clearBtn = document.getElementById('hc-search-clear');
+
+      if (browseSection) browseSection.style.display = 'block';
+      if (resultsPanel) resultsPanel.style.display = 'none';
+      if (input) input.value = '';
+      if (clearBtn) clearBtn.style.display = 'none';
+
+      // Clear search query param from URL without reload
+      const url = new URL(window.location);
+      url.searchParams.delete('q');
+      window.history.replaceState({}, '', url);
+    }
+
+    function checkUrlQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get('q');
+      const cat = params.get('category');
+
+      if (q) {
+        const input = document.getElementById('hc-search-input');
+        if (input) {
+          input.value = q;
+          const clearBtn = document.getElementById('hc-search-clear');
+          if (clearBtn) clearBtn.style.display = 'block';
+          triggerSearch();
+        }
+      } else if (cat) {
+        const catNum = parseInt(cat);
+        const match = allActiveCategories.find(c => c.id === catNum);
+        if (match) {
+          filterByCategory(match.id, match.name);
+        }
+      }
+    }
+
+    /* ==========================================================================
+       7. READER MODAL (Detailed KB & FAQ View with Helpful Feedback)
+       ========================================================================== */
+    async function openArticleReader(id) {
+      const modal = document.getElementById('reader-preview-modal');
+      const titleEl = document.getElementById('modal-art-title');
+      const badgeEl = document.getElementById('modal-art-badge');
+      const catEl = document.getElementById('modal-art-category');
+      const metaEl = document.getElementById('modal-art-meta');
+      const contentEl = document.getElementById('modal-art-content');
+      const feedbackEl = document.getElementById('modal-vote-feedback');
+
+      if (!modal) return;
+      if (feedbackEl) feedbackEl.style.display = 'none';
+
+      try {
+        titleEl.textContent = 'Loading guide...';
+        contentEl.textContent = '';
+        modal.classList.add('show');
+
+        const res = await API.get(`/knowledge-base/${id}`);
+        const article = res.data;
+        currentViewingItem = { ...article, _type: 'KB' };
+
+        badgeEl.textContent = 'GUIDE';
+        badgeEl.className = 'badge-result-type kb';
+        titleEl.textContent = article.title;
+        catEl.textContent = article.categoryName || 'General Guide';
+        metaEl.textContent = `• ${(article.viewCount || 0).toLocaleString()} views • Updated ${Utils.formatDate(article.updatedAt || article.createdAt)}`;
+        contentEl.textContent = article.content || 'No detailed content provided.';
+
+      } catch (err) {
+        titleEl.textContent = 'Guide Details';
+        contentEl.textContent = 'Could not load article content. Please browse other topics.';
+      }
+    }
+
+    function openFaqReader(question, answer, categoryName) {
+      const modal = document.getElementById('reader-preview-modal');
+      const titleEl = document.getElementById('modal-art-title');
+      const badgeEl = document.getElementById('modal-art-badge');
+      const catEl = document.getElementById('modal-art-category');
+      const metaEl = document.getElementById('modal-art-meta');
+      const contentEl = document.getElementById('modal-art-content');
+      const feedbackEl = document.getElementById('modal-vote-feedback');
+
+      if (!modal) return;
+      if (feedbackEl) feedbackEl.style.display = 'none';
+
+      currentViewingItem = { title: question, categoryName, _type: 'FAQ' };
+
+      badgeEl.textContent = 'FAQ';
+      badgeEl.className = 'badge-result-type faq';
+      titleEl.textContent = question;
+      catEl.textContent = categoryName || 'FAQ';
+      metaEl.textContent = '• Instant Verified Solution';
+      contentEl.textContent = answer;
+
+      modal.classList.add('show');
+    }
+
+    function closeReaderModal() {
+      const modal = document.getElementById('reader-preview-modal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    function recordArticleFeedback(isHelpful) {
+      const feedbackEl = document.getElementById('modal-vote-feedback');
+      if (!feedbackEl) return;
+
+      if (isHelpful) {
+        feedbackEl.innerHTML = '<span style="color: #16a34a; font-weight: 700;"><i class="fa-solid fa-circle-check"></i> Thank you! We are thrilled this resolved your question.</span>';
+        feedbackEl.style.display = 'block';
+        Utils.showToast('Thank you for your feedback!', 'success');
+      } else {
+        const topic = currentViewingItem ? currentViewingItem.title : '';
+        feedbackEl.innerHTML = `
+          <div style="color: #b45309; font-weight: 600; margin-bottom: 0.4rem;">Still need assistance with this?</div>
+          <button onclick="closeReaderModal(); openTicketModalWithTopic('${escapeHtml(topic)}')" class="btn btn-sm" style="background: #000985; color: #ffffff; font-weight: 700; border-radius: 8px;">
+            <i class="fa-solid fa-ticket"></i> Raise Support Ticket for this issue
+          </button>
+        `;
+        feedbackEl.style.display = 'block';
+      }
+    }
+
+    /* ==========================================================================
+       8. RAISE SUPPORT TICKET INTEGRATION
+       ========================================================================== */
+    function handleRaiseTicketClick() {
+      if (!Auth.isLoggedIn()) {
+        window.location.href = 'login.html?redirect=ticket';
+        return;
+      }
+      openTicketModal();
+    }
+
+    function openTicketModalWithTopic(topic) {
+      if (!Auth.isLoggedIn()) {
+        window.location.href = `login.html?redirect=ticket&topic=${encodeURIComponent(topic)}`;
+        return;
+      }
+      openTicketModal(topic);
+    }
+
+    function openTicketModal(prefillSubject = '') {
+      const modal = document.getElementById('ticket-modal');
+      const subjectInput = document.getElementById('ticket-modal-subject');
+
+      if (modal) {
+        modal.classList.add('show');
+        if (prefillSubject && subjectInput) {
+          subjectInput.value = prefillSubject;
+          document.getElementById('ticket-modal-description').focus();
+        } else if (subjectInput) {
+          subjectInput.focus();
+        }
+      }
+    }
+
+    function closeTicketModal() {
+      const modal = document.getElementById('ticket-modal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    function populateTicketModalCategories() {
+      const select = document.getElementById('ticket-modal-category');
+      if (!select) return;
+
+      if (!allActiveCategories || allActiveCategories.length === 0) {
+        select.innerHTML = '<option value="">Default General Support</option>';
+        return;
+      }
+
+      select.innerHTML = allActiveCategories.map(c => `
+        <option value="${c.id}">${escapeHtml(c.name)}</option>
+      `).join('');
+    }
+
+    async function handleTicketFormSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('btn-submit-ticket-form');
+      const origText = submitBtn ? submitBtn.innerHTML : 'Submit Ticket';
+
+      const subject = document.getElementById('ticket-modal-subject').value.trim();
+      const categoryId = document.getElementById('ticket-modal-category').value;
+      const orderNumber = document.getElementById('ticket-modal-order').value.trim();
+      const priority = document.getElementById('ticket-modal-priority').value;
+      const description = document.getElementById('ticket-modal-description').value.trim();
+      const fileInput = document.getElementById('ticket-modal-file');
+
+      if (!subject || subject.length < 5) {
+        Utils.showToast('Please provide a subject of at least 5 characters', 'error');
+        return;
+      }
+
+      if (!categoryId) {
+        Utils.showToast('Please select a support category', 'error');
+        return;
+      }
+
+      if (!description || description.length < 10) {
+        Utils.showToast('Please provide a description of at least 10 characters', 'error');
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+        }
+
+        const payload = {
+          subject,
+          categoryId: parseInt(categoryId),
+          orderNumber: orderNumber || null,
+          priority,
+          description
+        };
+
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          const formData = new FormData();
+          const jsonBlob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+          formData.append('data', jsonBlob);
+          formData.append('request', jsonBlob);
+          formData.append('file', fileInput.files[0]);
+          await API.postFormData('/tickets', formData);
+        } else {
+          await API.post('/tickets/create-json', payload);
+        }
+
+        Utils.showToast('Support Ticket submitted successfully!', 'success');
+        document.getElementById('create-ticket-form').reset();
+        closeTicketModal();
+
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to submit ticket. Please try again.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origText;
+        }
+      }
+    }
+
+    // Modal click-outside dismissal
+    window.addEventListener('click', (e) => {
+      const readerModal = document.getElementById('reader-preview-modal');
+      const ticketModal = document.getElementById('ticket-modal');
+
+      if (e.target === readerModal) closeReaderModal();
+      if (e.target === ticketModal) closeTicketModal();
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+
+</html>

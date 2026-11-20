@@ -1,0 +1,2508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard - SupportHUB</title>
+  <meta name="description" content="SupportHUB Customer Self-Service Portal. Search knowledge base, view FAQs, manage support tickets, and get real-time assistance.">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Theme Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+  <link rel="stylesheet" href="../css/responsive.css?v=14.0">
+
+  <style>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 - Customer Dashboard Custom Styling
+       Brand: Primary Blue #000985 | Accent Yellow #F5CC00 | Pure White Surface
+       Theme: Subtle Glassmorphism, Rounded Cards, Soft Shadows
+       ========================================================================== */
+
+    :root {
+      --dash-primary: #000985;
+      --dash-primary-dark: #00065c;
+      --dash-primary-light: #eff2ff;
+      --dash-accent: #F5CC00;
+      --dash-accent-hover: #e0bb00;
+      --dash-accent-light: #fffbeb;
+      --dash-bg-page: #f8fafc;
+      --dash-surface-white: #ffffff;
+      --dash-glass-bg: rgba(255, 255, 255, 0.86);
+      --dash-glass-border: rgba(255, 255, 255, 0.75);
+      --dash-glass-blur: blur(14px) saturate(180%);
+      --dash-shadow-soft: 0 10px 30px -5px rgba(0, 9, 133, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --dash-shadow-hover: 0 16px 36px -6px rgba(0, 9, 133, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+      --dash-border-subtle: #e2e8f0;
+      --dash-text-title: #0f172a;
+      --dash-text-body: #475569;
+      --dash-text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--dash-bg-page);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--dash-text-body);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem 2.5rem 1.75rem !important;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* --------------------------------------------------------------------------
+       Top Navigation & Global Header Customization
+       -------------------------------------------------------------------------- */
+    .top-header {
+      background: rgba(255, 255, 255, 0.90) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.85) !important;
+      height: 68px !important;
+      padding: 0 1.75rem !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-search-container {
+      position: relative;
+      width: 440px;
+      max-width: 100%;
+    }
+
+    .header-search-input-wrap {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.45rem 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .header-search-input-wrap:focus-within {
+      background: #ffffff;
+      border-color: var(--dash-primary);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.12);
+    }
+
+    .header-search-input-wrap i {
+      color: var(--dash-primary);
+      font-size: 0.9rem;
+      margin-right: 0.65rem;
+    }
+
+    .header-search-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 0.85rem;
+      color: var(--dash-text-title);
+    }
+
+    .header-search-shortcut {
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #64748b;
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .header-user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      text-decoration: none;
+    }
+
+    .header-user-profile:hover {
+      background: #f1f5f9;
+    }
+
+    .header-avatar-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #000985 0%, #1c27be 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 9, 133, 0.25);
+      border: 2px solid var(--dash-accent);
+    }
+
+    .header-user-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .header-user-info-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--dash-text-title);
+    }
+
+    .header-user-info-role {
+      font-size: 0.725rem;
+      font-weight: 600;
+      color: var(--dash-primary);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION A: Welcome Section
+       -------------------------------------------------------------------------- */
+    .cust-welcome-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 1.35rem;
+      flex-wrap: wrap;
+    }
+
+    .cust-welcome-title-wrap h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--dash-text-title);
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.025em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cust-welcome-title-wrap p {
+      font-size: 0.875rem;
+      color: var(--dash-text-body);
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .cust-welcome-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .date-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: #ffffff;
+      border: 1px solid var(--dash-border-subtle);
+      border-radius: 10px;
+      padding: 0.5rem 0.95rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--dash-text-body);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .date-pill-badge i {
+      color: var(--dash-primary);
+    }
+
+    .btn-create-ticket-sh {
+      background: var(--dash-primary);
+      color: #ffffff !important;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 10px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(0, 9, 133, 0.3);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-create-ticket-sh:hover {
+      background: var(--dash-primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 9, 133, 0.4);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION B: Prominent Help Search (The Hero Centerpiece)
+       -------------------------------------------------------------------------- */
+    .hero-search-glass-card {
+      background: linear-gradient(135deg, rgba(0, 9, 133, 0.03) 0%, rgba(245, 204, 0, 0.05) 100%), #ffffff;
+      border: 1px solid rgba(0, 9, 133, 0.12);
+      border-radius: 20px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--dash-shadow-soft);
+      position: relative;
+      overflow: visible;
+    }
+
+    .hero-search-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-search-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--dash-primary-light);
+      border: 1px solid rgba(0, 9, 133, 0.18);
+      color: var(--dash-primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-search-badge i {
+      color: var(--dash-accent);
+    }
+
+    .hero-search-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--dash-text-title);
+      margin: 0;
+    }
+
+    .hero-search-input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 0.4rem 0.5rem 0.4rem 1.25rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s ease;
+    }
+
+    .hero-search-input-box:focus-within {
+      border-color: var(--dash-primary);
+      box-shadow: 0 6px 24px rgba(0, 9, 133, 0.15);
+    }
+
+    .hero-search-input-box i.search-main-icon {
+      font-size: 1.15rem;
+      color: var(--dash-primary);
+      margin-right: 0.85rem;
+    }
+
+    .hero-search-input-box input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--dash-text-title);
+      background: transparent;
+      padding: 0.45rem 0;
+    }
+
+    .hero-search-clear {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0 0.5rem;
+      display: none;
+    }
+
+    .hero-search-clear:hover {
+      color: #0f172a;
+    }
+
+    .btn-search-gold {
+      background: var(--dash-accent);
+      color: var(--dash-primary);
+      font-weight: 800;
+      font-size: 0.875rem;
+      border: none;
+      border-radius: 10px;
+      padding: 0.65rem 1.35rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(245, 204, 0, 0.35);
+    }
+
+    .btn-search-gold:hover {
+      background: var(--dash-accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(245, 204, 0, 0.45);
+    }
+
+    /* Live Auto-Suggest Overlay Dropdown */
+    .search-suggestions-overlay {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(0, 9, 133, 0.16);
+      z-index: 999;
+      max-height: 420px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .search-suggestions-overlay.show {
+      display: block;
+      animation: fadeInDown 0.15s ease;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .suggestion-category-header {
+      padding: 0.65rem 1rem 0.35rem 1rem;
+      font-size: 0.725rem;
+      font-weight: 800;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: #f8fafc;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .suggestion-item {
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      cursor: pointer;
+      border-bottom: 1px solid #f8fafc;
+      transition: background 0.12s ease;
+      text-decoration: none;
+    }
+
+    .suggestion-item:hover, .suggestion-item.selected {
+      background: #eff2ff;
+    }
+
+    .suggestion-item-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .suggestion-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .suggestion-icon.kb { background: #eff2ff; color: var(--dash-primary); }
+    .suggestion-icon.faq { background: #fffbeb; color: #b45309; }
+
+    .suggestion-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--dash-text-title);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .suggestion-meta {
+      font-size: 0.725rem;
+      color: #64748b;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 0.15rem;
+    }
+
+    .suggestion-badge-cat {
+      font-size: 0.675rem;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #334155;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .hero-search-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.85rem;
+    }
+
+    .hero-search-pills-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #64748b;
+      margin-right: 0.25rem;
+    }
+
+    .search-topic-pill {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .search-topic-pill:hover {
+      border-color: var(--dash-primary);
+      color: var(--dash-primary);
+      background: #eff2ff;
+      transform: translateY(-1px);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION C: Quick Actions Ribbon
+       -------------------------------------------------------------------------- */
+    .quick-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .quick-action-card {
+      background: #ffffff;
+      border: 1px solid var(--dash-border-subtle);
+      border-radius: 14px;
+      padding: 1rem 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .quick-action-card:hover {
+      border-color: var(--dash-primary);
+      box-shadow: var(--dash-shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .qa-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .qa-icon-wrap.blue { background: #eff2ff; color: var(--dash-primary); }
+    .qa-icon-wrap.gold { background: #fffbeb; color: #b45309; }
+    .qa-icon-wrap.emerald { background: #ecfdf5; color: #047857; }
+    .qa-icon-wrap.purple { background: #faf5ff; color: #7e22ce; }
+
+    .qa-meta h4 {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--dash-text-title);
+      margin: 0 0 0.15rem 0;
+      line-height: 1.2;
+    }
+
+    .qa-meta p {
+      font-size: 0.725rem;
+      color: var(--dash-text-body);
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION D: Ticket Statistics (4 Status Cards)
+       -------------------------------------------------------------------------- */
+    .ticket-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-metric-card {
+      background: var(--dash-surface-white);
+      border: 1px solid var(--dash-border-subtle);
+      border-radius: 16px;
+      padding: 1.15rem 1.25rem;
+      box-shadow: var(--dash-shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .stat-metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--dash-shadow-hover);
+      border-color: rgba(0, 9, 133, 0.2);
+    }
+
+    .stat-metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .stat-metric-card.open::before { background: #2563eb; }
+    .stat-metric-card.progress::before { background: var(--dash-accent); }
+    .stat-metric-card.waiting::before { background: #9333ea; }
+    .stat-metric-card.resolved::before { background: #16a34a; }
+
+    .stat-metric-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .stat-icon-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .stat-icon-circle.open { background: #eff6ff; color: #2563eb; }
+    .stat-icon-circle.progress { background: #fffbeb; color: #b45309; }
+    .stat-icon-circle.waiting { background: #faf5ff; color: #9333ea; }
+    .stat-icon-circle.resolved { background: #f0fdf4; color: #16a34a; }
+
+    .stat-metric-info h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #64748b;
+      margin: 0 0 0.25rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .stat-metric-info .stat-number {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--dash-text-title);
+      line-height: 1;
+    }
+
+    .stat-metric-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      text-align: right;
+    }
+
+    .stat-metric-pill.open { background: #eff6ff; color: #2563eb; }
+    .stat-metric-pill.progress { background: #fffbeb; color: #b45309; }
+    .stat-metric-pill.waiting { background: #faf5ff; color: #9333ea; }
+    .stat-metric-pill.resolved { background: #f0fdf4; color: #16a34a; }
+
+    /* --------------------------------------------------------------------------
+       2-Column Main Content Layout (70% Left / 30% Right)
+       -------------------------------------------------------------------------- */
+    .dashboard-content-split {
+      display: grid;
+      grid-template-columns: 2.1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .panel-glass-card {
+      background: var(--dash-surface-white);
+      border: 1px solid var(--dash-border-subtle);
+      border-radius: 16px;
+      padding: 1.35rem;
+      box-shadow: var(--dash-shadow-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    .panel-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .panel-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .panel-title-wrap i {
+      color: var(--dash-primary);
+      font-size: 1rem;
+    }
+
+    .panel-title-wrap h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--dash-text-title);
+      margin: 0;
+    }
+
+    .panel-link-action {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--dash-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap 0.15s ease;
+    }
+
+    .panel-link-action:hover {
+      gap: 0.55rem;
+      color: var(--dash-primary-dark);
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION G: Recent Tickets Table
+       -------------------------------------------------------------------------- */
+    .tickets-table-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+    }
+
+    .tickets-table-sh {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.825rem;
+    }
+
+    .tickets-table-sh th {
+      background: #f8fafc;
+      color: #64748b;
+      font-weight: 700;
+      font-size: 0.725rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+    }
+
+    .tickets-table-sh td {
+      padding: 0.85rem;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--dash-text-body);
+      vertical-align: middle;
+    }
+
+    .tickets-table-sh tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tickets-table-sh tr:hover td {
+      background: #fafbfc;
+    }
+
+    .ticket-ref-pill {
+      font-family: monospace;
+      font-weight: 700;
+      color: var(--dash-primary);
+      background: var(--dash-primary-light);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.775rem;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .ticket-subject-link {
+      font-weight: 700;
+      color: var(--dash-text-title);
+      text-decoration: none;
+      display: block;
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ticket-subject-link:hover {
+      color: var(--dash-primary);
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      font-size: 0.725rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-status.open { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .badge-status.in_progress { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge-status.waiting_for_customer { background: #faf5ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+    .badge-status.resolved { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .badge-status.closed { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .badge-status.escalated { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+    .badge-prio {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-prio.low { background: #f1f5f9; color: #475569; }
+    .badge-prio.medium { background: #eff6ff; color: #2563eb; }
+    .badge-prio.high { background: #fffbeb; color: #d97706; }
+    .badge-prio.urgent { background: #fef2f2; color: #dc2626; }
+
+    .btn-table-action {
+      font-size: 0.775rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-table-action:hover {
+      background: var(--dash-primary);
+      border-color: var(--dash-primary);
+      color: #ffffff;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION E: Popular Help Articles Grid
+       -------------------------------------------------------------------------- */
+    .articles-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .article-mini-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .article-mini-card:hover {
+      background: #ffffff;
+      border-color: var(--dash-primary);
+      box-shadow: 0 4px 14px rgba(0, 9, 133, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .article-mini-top {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .art-cat-tag {
+      font-size: 0.675rem;
+      font-weight: 700;
+      background: var(--dash-primary-light);
+      color: var(--dash-primary);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .article-mini-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dash-text-title);
+      margin: 0 0 0.35rem 0;
+      line-height: 1.35;
+    }
+
+    .article-mini-card p {
+      font-size: 0.775rem;
+      color: #64748b;
+      margin: 0 0 0.75rem 0;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .article-mini-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.725rem;
+      color: #94a3b8;
+      border-top: 1px dashed #e2e8f0;
+      padding-top: 0.5rem;
+    }
+
+    .art-read-arrow {
+      color: var(--dash-primary);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION F: Browse Help Categories Grid
+       -------------------------------------------------------------------------- */
+    .categories-browse-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+    }
+
+    .category-browse-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .category-browse-card:hover {
+      background: #ffffff;
+      border-color: var(--dash-primary);
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .cat-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: var(--dash-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .cat-browse-info h5 {
+      font-size: 0.825rem;
+      font-weight: 800;
+      color: var(--dash-text-title);
+      margin: 0 0 0.15rem 0;
+    }
+
+    .cat-browse-info span {
+      font-size: 0.7rem;
+      color: #64748b;
+      display: block;
+    }
+
+    /* --------------------------------------------------------------------------
+       SECTION H: Recent Activities Stream
+       -------------------------------------------------------------------------- */
+    .activities-stream-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .activity-stream-item {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .activity-stream-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 17px;
+      top: 36px;
+      bottom: -12px;
+      width: 2px;
+      background: #e2e8f0;
+    }
+
+    .activity-icon-bullet {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      z-index: 2;
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+    }
+
+    .activity-icon-bullet.blue { background: #eff2ff; color: var(--dash-primary); border-color: #bfdbfe; }
+    .activity-icon-bullet.green { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+    .activity-icon-bullet.purple { background: #faf5ff; color: #9333ea; border-color: #e9d5ff; }
+    .activity-icon-bullet.gold { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+
+    .activity-stream-body {
+      flex: 1;
+      line-height: 1.35;
+    }
+
+    .activity-stream-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--dash-text-title);
+      margin: 0 0 0.15rem 0;
+    }
+
+    .activity-stream-desc {
+      font-size: 0.725rem;
+      color: #64748b;
+      margin: 0 0 0.2rem 0;
+    }
+
+    .activity-stream-time {
+      font-size: 0.675rem;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    /* --------------------------------------------------------------------------
+       Right Column Support Card
+       -------------------------------------------------------------------------- */
+    .customer-support-callout {
+      background: linear-gradient(135deg, #000985 0%, #151db5 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 9, 133, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .customer-support-callout::after {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(245, 204, 0, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .customer-support-callout h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 0 0 0.4rem 0;
+      color: #ffffff;
+    }
+
+    .customer-support-callout p {
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: #cbd5e1;
+      margin: 0 0 1rem 0;
+    }
+
+    .btn-callout-yellow {
+      background: var(--dash-accent);
+      color: var(--dash-primary);
+      font-weight: 800;
+      font-size: 0.825rem;
+      padding: 0.55rem 1.15rem;
+      border-radius: 8px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-callout-yellow:hover {
+      background: var(--dash-accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* --------------------------------------------------------------------------
+       Responsive Breakpoints
+       -------------------------------------------------------------------------- */
+    @media (max-width: 1200px) {
+      .dashboard-content-split {
+        grid-template-columns: 1fr;
+      }
+      .quick-actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .ticket-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .categories-browse-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-body {
+        padding: 1rem !important;
+      }
+      .header-search-container {
+        display: none;
+      }
+      .cust-welcome-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cust-welcome-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .quick-actions-grid {
+        grid-template-columns: 1fr;
+      }
+      .ticket-stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .articles-preview-grid {
+        grid-template-columns: 1fr;
+      }
+      .categories-browse-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-search-input-box {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.75rem;
+        gap: 0.5rem;
+      }
+      .btn-search-gold {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- Left Enterprise Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo" onclick="Auth.handleLogoClick(event)">
+          <span style="color: #ffffff; font-weight: 800;">Support</span><span style="color: #F5CC00; font-weight: 800;">HUB</span>
+        </div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Viewport Area -->
+    <div class="main-content">
+
+      <!-- Glassmorphic Header -->
+      <header class="top-header">
+        <!-- Global Help Search in Header -->
+        <div class="header-search-container">
+          <div class="header-search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="global-header-search" class="header-search-input" placeholder="Search guides, FAQs, or solutions..." />
+            <span class="header-search-shortcut"><kbd>/</kbd></span>
+          </div>
+        </div>
+
+        <!-- Header Actions: Notifications & Profile -->
+        <div class="header-right" style="display: flex; align-items: center; gap: 1.25rem;">
+          
+          <!-- In-App Notifications Bell Dropdown -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications" style="width: 40px; height: 40px; border-radius: 10px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #000985; cursor: pointer;">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+            <span class="notif-counter" id="notif-counter" style="display: none; background: #F5CC00; color: #000985; font-weight: 800; font-size: 0.7rem; border-radius: 999px; padding: 0.1rem 0.4rem; position: absolute; top: -4px; right: -4px;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.85rem 1.15rem; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #0f172a;">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+
+          <!-- Customer Profile Capsule -->
+          <a href="customer-profile.html" class="header-user-profile" title="View Customer Profile">
+            <div class="header-avatar-circle" id="header-user-avatar">CU</div>
+            <div class="header-user-info">
+              <span class="header-user-info-name" id="header-user-name">Customer</span>
+              <span class="header-user-info-role" id="header-user-role">Customer</span>
+            </div>
+          </a>
+
+          <!-- Logout Icon -->
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out" style="background: none; border: none; color: #64748b; font-size: 1.1rem; cursor: pointer; padding: 0.4rem;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Dashboard Page Body -->
+      <div class="page-body">
+
+        <!-- SECTION A: Welcome Header -->
+        <div class="cust-welcome-row">
+          <div class="cust-welcome-title-wrap">
+            <h1 id="welcome-greeting">Welcome back, <span id="welcome-cust-name" style="color: var(--dash-primary);">Customer</span> 👋</h1>
+            <p>Your central self-service command hub. Search verified solutions, track active requests, or connect with our support officers.</p>
+          </div>
+          <div class="cust-welcome-actions">
+            <div class="date-pill-badge" id="live-date-pill">
+              <i class="fa-regular fa-calendar-days"></i>
+              <span id="current-date-text">Loading date...</span>
+            </div>
+            <button onclick="openCreateTicketModal()" class="btn-create-ticket-sh">
+              <i class="fa-solid fa-plus"></i> Raise a Ticket
+            </button>
+          </div>
+        </div>
+
+        <!-- SECTION B: Prominent Help Search (The Hero Centerpiece) -->
+        <div class="hero-search-glass-card">
+          <div class="hero-search-header">
+            <div class="hero-search-badge">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> <span>SELF-SERVICE RESOLUTION CENTER</span>
+            </div>
+            <span style="font-size: 0.775rem; color: #64748b; font-weight: 500;">94% of customer questions are solved instantly here</span>
+          </div>
+
+          <h2 class="hero-search-title" style="margin-bottom: 0.75rem;">What issue or question can we help you solve?</h2>
+
+          <div class="hero-search-input-box">
+            <i class="fa-solid fa-magnifying-glass search-main-icon"></i>
+            <input type="text" id="hero-help-search" placeholder="Type your issue... (e.g. order tracking, delayed delivery, refund status, return item, login help)" autocomplete="off" />
+            <button type="button" id="hero-search-clear" class="hero-search-clear" onclick="clearHeroSearch()">&times;</button>
+            <button type="button" id="btn-hero-search" class="btn-search-gold" onclick="executeHeroSearch()">
+              <i class="fa-solid fa-magnifying-glass"></i> <span>Search Solutions</span>
+            </button>
+
+            <!-- Live Auto-Suggest Overlay -->
+            <div class="search-suggestions-overlay" id="search-suggestions-dropdown">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Quick Search Topic Pills -->
+          <div class="hero-search-pills">
+            <span class="hero-search-pills-label">Trending Topics:</span>
+            <button type="button" class="search-topic-pill" onclick="quickFillSearch('Order Tracking')"><i class="fa-solid fa-box"></i> Order Tracking</button>
+            <button type="button" class="search-topic-pill" onclick="quickFillSearch('Refund Policy')"><i class="fa-solid fa-credit-card"></i> Refund Policy</button>
+            <button type="button" class="search-topic-pill" onclick="quickFillSearch('Delayed Delivery')"><i class="fa-solid fa-truck"></i> Delivery Issues</button>
+            <button type="button" class="search-topic-pill" onclick="quickFillSearch('Reset Password')"><i class="fa-solid fa-lock"></i> Reset Password</button>
+            <button type="button" class="search-topic-pill" onclick="quickFillSearch('Payment Error')"><i class="fa-solid fa-receipt"></i> Payment & Billing</button>
+          </div>
+        </div>
+
+        <!-- SECTION C: Quick Actions Ribbon -->
+        <div class="quick-actions-grid">
+          <a href="../knowledge-base.html" class="quick-action-card">
+            <div class="qa-icon-wrap blue"><i class="fa-solid fa-compass"></i></div>
+            <div class="qa-meta">
+              <h4>Browse Help Center</h4>
+              <p>Explore step-by-step guides & documentation</p>
+            </div>
+          </a>
+
+          <div class="quick-action-card" onclick="openCreateTicketModal()">
+            <div class="qa-icon-wrap gold"><i class="fa-solid fa-circle-plus"></i></div>
+            <div class="qa-meta">
+              <h4>Raise a Ticket</h4>
+              <p>Directly submit an inquiry to support officers</p>
+            </div>
+          </div>
+
+          <a href="my-tickets.html" class="quick-action-card">
+            <div class="qa-icon-wrap emerald"><i class="fa-solid fa-ticket"></i></div>
+            <div class="qa-meta">
+              <h4>My Active Tickets</h4>
+              <p>Track ongoing inquiries, SLAs & replies</p>
+            </div>
+          </a>
+
+          <a href="chatbot.html" class="quick-action-card">
+            <div class="qa-icon-wrap purple"><i class="fa-solid fa-robot"></i></div>
+            <div class="qa-meta">
+              <h4>AI FAQ Assistant</h4>
+              <p>Ask our smart virtual assistant 24/7</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- SECTION D: Ticket Statistics (4 Status Cards) -->
+        <div class="ticket-stats-grid">
+          <a href="my-tickets.html?status=OPEN" class="stat-metric-card open" title="View Open Tickets">
+            <div class="stat-metric-left">
+              <div class="stat-icon-circle open"><i class="fa-solid fa-ticket-simple"></i></div>
+              <div class="stat-metric-info">
+                <h4>Open Tickets</h4>
+                <div class="stat-number" id="stat-open">0</div>
+              </div>
+            </div>
+            <div class="stat-metric-pill open">Active Queue</div>
+          </a>
+
+          <a href="my-tickets.html?status=IN_PROGRESS" class="stat-metric-card progress" title="View In Progress Tickets">
+            <div class="stat-metric-left">
+              <div class="stat-icon-circle progress"><i class="fa-solid fa-arrows-rotate"></i></div>
+              <div class="stat-metric-info">
+                <h4>In Progress</h4>
+                <div class="stat-number" id="stat-progress">0</div>
+              </div>
+            </div>
+            <div class="stat-metric-pill progress">With Officer</div>
+          </a>
+
+          <a href="my-tickets.html?status=WAITING_FOR_CUSTOMER" class="stat-metric-card waiting" title="View Tickets Awaiting Response">
+            <div class="stat-metric-left">
+              <div class="stat-icon-circle waiting"><i class="fa-solid fa-clock"></i></div>
+              <div class="stat-metric-info">
+                <h4>Waiting Action</h4>
+                <div class="stat-number" id="stat-waiting">0</div>
+              </div>
+            </div>
+            <div class="stat-metric-pill waiting">Action Needed</div>
+          </a>
+
+          <a href="my-tickets.html?status=RESOLVED" class="stat-metric-card resolved" title="View Resolved Tickets">
+            <div class="stat-metric-left">
+              <div class="stat-icon-circle resolved"><i class="fa-solid fa-circle-check"></i></div>
+              <div class="stat-metric-info">
+                <h4>Resolved</h4>
+                <div class="stat-number" id="stat-resolved">0</div>
+              </div>
+            </div>
+            <div class="stat-metric-pill resolved">Solved</div>
+          </a>
+        </div>
+
+        <!-- Split Workspace Grid (Left 68% / Right 32%) -->
+        <div class="dashboard-content-split">
+
+          <!-- Left Column (Tickets & Guides) -->
+          <div>
+
+            <!-- SECTION G: Recent Tickets Table -->
+            <div class="panel-glass-card">
+              <div class="panel-header-row">
+                <div class="panel-title-wrap">
+                  <i class="fa-solid fa-ticket"></i>
+                  <h3>My Recent Support Tickets</h3>
+                </div>
+                <a href="my-tickets.html" class="panel-link-action">
+                  <span>View All Tickets</span> <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+
+              <div class="tickets-table-wrap">
+                <table class="tickets-table-sh">
+                  <thead>
+                    <tr>
+                      <th>REFERENCE</th>
+                      <th>SUBJECT</th>
+                      <th>CATEGORY</th>
+                      <th>ORDER #</th>
+                      <th>PRIORITY</th>
+                      <th>STATUS</th>
+                      <th>UPDATED</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-tickets-tbody">
+                    <tr>
+                      <td colspan="8" style="text-align: center; padding: 2rem; color: #94a3b8;">
+                        <i class="fa-solid fa-spinner fa-spin" style="margin-right: 6px;"></i> Loading recent support tickets...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- SECTION E: Popular Help Articles -->
+            <div class="panel-glass-card">
+              <div class="panel-header-row">
+                <div class="panel-title-wrap">
+                  <i class="fa-solid fa-book-open-reader"></i>
+                  <h3>Popular Help Solutions & Guides</h3>
+                </div>
+                <a href="../knowledge-base.html" class="panel-link-action">
+                  <span>Browse Full Library</span> <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+
+              <div class="articles-preview-grid" id="popular-articles-container">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #94a3b8;">
+                  <i class="fa-solid fa-spinner fa-spin" style="margin-right: 6px;"></i> Loading popular knowledge base articles...
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION F: Browse Help Categories -->
+            <div class="panel-glass-card" style="margin-bottom: 0;">
+              <div class="panel-header-row">
+                <div class="panel-title-wrap">
+                  <i class="fa-solid fa-folder-tree"></i>
+                  <h3>Browse Support Topics</h3>
+                </div>
+                <span style="font-size: 0.775rem; color: #64748b;">Verified Department Categories</span>
+              </div>
+
+              <div class="categories-browse-grid" id="categories-browse-container">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 1.5rem; color: #94a3b8;">
+                  Loading support categories...
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column (Activities & Support Banner) -->
+          <div>
+
+            <!-- Customer Direct Support Callout -->
+            <div class="customer-support-callout">
+              <h4>Need Direct Agent Assistance?</h4>
+              <p>Our Customer Service Officers are on standby to investigate complex orders, delivery delays, and refund requests.</p>
+              <button onclick="openCreateTicketModal()" class="btn-callout-yellow">
+                <i class="fa-solid fa-headset"></i> Raise Support Ticket
+              </button>
+            </div>
+
+            <!-- SECTION H: Recent Activities Stream -->
+            <div class="panel-glass-card">
+              <div class="panel-header-row">
+                <div class="panel-title-wrap">
+                  <i class="fa-solid fa-clock-rotate-left"></i>
+                  <h3>Recent Activities</h3>
+                </div>
+                <span style="font-size: 0.725rem; font-weight: 700; color: #64748b; background: #f1f5f9; padding: 0.15rem 0.5rem; border-radius: 6px;">Live Log</span>
+              </div>
+
+              <div class="activities-stream-list" id="activities-stream-container">
+                <div style="text-align: center; padding: 2rem 1rem; color: #94a3b8; font-size: 0.8rem;">
+                  <i class="fa-solid fa-spinner fa-spin" style="margin-right: 6px;"></i> Loading activity log...
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick FAQ Accordion Preview -->
+            <div class="panel-glass-card" style="margin-bottom: 0;">
+              <div class="panel-header-row">
+                <div class="panel-title-wrap">
+                  <i class="fa-solid fa-circle-question"></i>
+                  <h3>Frequent Questions</h3>
+                </div>
+                <a href="faq.html" class="panel-link-action">
+                  <span>View All FAQs</span> &rarr;
+                </a>
+              </div>
+              <div id="quick-faqs-container" style="display: flex; flex-direction: column; gap: 0.65rem;">
+                <div style="text-align: center; padding: 1rem; color: #94a3b8; font-size: 0.8rem;">
+                  Loading FAQs...
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODALS:
+       1. Create Support Ticket Modal (Fixed JSON & Multipart integration)
+       2. Article Reader Preview Modal (In-Dashboard reading with helpful feedback)
+       ========================================================================== -->
+
+  <!-- 1. Create Support Ticket Modal -->
+  <div class="modal-backdrop" id="create-ticket-modal">
+    <div class="modal-content" style="max-width: 620px; border-radius: 18px; border: 1px solid #cbd5e1; box-shadow: 0 20px 50px rgba(0, 9, 133, 0.2);">
+      <div class="modal-header" style="background: linear-gradient(135deg, #000985 0%, #1724bf 100%); color: #ffffff; padding: 1.25rem 1.5rem; border-radius: 17px 17px 0 0;">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(245, 204, 0, 0.2); display: flex; align-items: center; justify-content: center; color: #F5CC00;">
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.15rem; color: #ffffff; font-weight: 800;">Create Support Ticket</h3>
+            <p style="margin: 0; font-size: 0.775rem; color: #cbd5e1;">A dedicated support officer will review and reply swiftly.</p>
+          </div>
+        </div>
+        <button onclick="closeCreateTicketModal()" style="background: none; border: none; color: #ffffff; font-size: 1.5rem; cursor: pointer; opacity: 0.85;">&times;</button>
+      </div>
+
+      <form id="create-ticket-form" onsubmit="handleCreateTicketSubmit(event)">
+        <div class="modal-body" style="padding: 1.35rem 1.5rem; max-height: calc(85vh - 140px); overflow-y: auto;">
+          
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 700; color: #0f172a; font-size: 0.825rem;">Ticket Subject <span style="color: #dc2626;">*</span></label>
+            <input type="text" id="modal-subject" class="form-control" placeholder="e.g. Package damaged during delivery, refund inquiry..." required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" style="font-weight: 700; color: #0f172a; font-size: 0.825rem;">Support Category <span style="color: #dc2626;">*</span></label>
+              <select id="modal-category" class="form-control" required>
+                <option value="">Loading categories...</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" style="font-weight: 700; color: #0f172a; font-size: 0.825rem;">Related Order # <span style="color: #64748b; font-weight: 400;">(Optional)</span></label>
+              <input type="text" id="modal-order-number" class="form-control" placeholder="e.g. ORD-2026-9041" />
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 700; color: #0f172a; font-size: 0.825rem;">Priority Level <span style="color: #dc2626;">*</span></label>
+            <select id="modal-priority" class="form-control" required>
+              <option value="LOW">Low - General Question / Non-urgent</option>
+              <option value="MEDIUM" selected>Medium - Standard Issue / Needs Review</option>
+              <option value="HIGH">High - Delayed Delivery / Payment Problem</option>
+              <option value="URGENT">Urgent - Critical Outage / Major Dispute</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 700; color: #0f172a; font-size: 0.825rem;">Issue Description <span style="color: #dc2626;">*</span></label>
+            <textarea id="modal-description" class="form-control" rows="4" placeholder="Please describe your issue in detail so our officers can investigate and solve it accurately..." required style="resize: vertical;"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-weight: 700; color: #0f172a; font-size: 0.825rem;">Attach Screenshot or Document <span style="color: #64748b; font-weight: 400;">(Optional, Max 10MB)</span></label>
+            <input type="file" id="modal-attachment-file" class="form-control" accept="image/*,.pdf,.doc,.docx" />
+          </div>
+
+        </div>
+
+        <div class="modal-footer" style="padding: 1rem 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 0.75rem; border-radius: 0 0 17px 17px;">
+          <button type="button" onclick="closeCreateTicketModal()" class="btn btn-secondary" style="border-radius: 8px;">Cancel</button>
+          <button type="submit" id="btn-submit-ticket-modal" class="btn" style="background: #000985; color: #ffffff; font-weight: 700; border-radius: 8px; padding: 0.55rem 1.35rem; display: inline-flex; align-items: center; gap: 0.45rem;">
+            <i class="fa-solid fa-paper-plane"></i> <span>Submit Ticket</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Article Reader Preview Modal -->
+  <div class="modal-backdrop" id="article-preview-modal">
+    <div class="modal-content" style="max-width: 680px; border-radius: 18px; border: 1px solid #cbd5e1; box-shadow: 0 20px 50px rgba(0, 9, 133, 0.2);">
+      <div class="modal-header" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #e2e8f0;">
+        <div style="flex: 1; padding-right: 1rem;">
+          <div style="display: flex; gap: 0.45rem; align-items: center; margin-bottom: 0.35rem;">
+            <span class="art-cat-tag" id="preview-art-category">General</span>
+            <span style="font-size: 0.725rem; color: #94a3b8;" id="preview-art-meta">0 views</span>
+          </div>
+          <h3 id="preview-art-title" style="margin: 0; font-size: 1.15rem; color: #0f172a; font-weight: 800; line-height: 1.3;">Solution Article</h3>
+        </div>
+        <button onclick="closeArticlePreviewModal()" style="background: none; border: none; color: #64748b; font-size: 1.5rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.5rem; max-height: calc(85vh - 180px); overflow-y: auto;">
+        <div id="preview-art-content" style="font-size: 0.9rem; line-height: 1.65; color: #334155; white-space: pre-line;"></div>
+
+        <!-- In-Modal Helpful / Not Helpful Feedback Widget -->
+        <div style="margin-top: 1.5rem; padding: 1.15rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-align: center;">
+          <p style="margin: 0 0 0.65rem 0; font-size: 0.85rem; font-weight: 700; color: #0f172a;">Was this solution helpful?</p>
+          <div style="display: flex; justify-content: center; gap: 0.75rem;">
+            <button type="button" onclick="recordArticleVote(true)" class="btn btn-sm" style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; font-weight: 700; border-radius: 8px;">
+              <i class="fa-solid fa-thumbs-up"></i> Yes, it helped!
+            </button>
+            <button type="button" onclick="recordArticleVote(false)" class="btn btn-sm" style="background: #fffbeb; border: 1px solid #fde68a; color: #b45309; font-weight: 700; border-radius: 8px;">
+              <i class="fa-solid fa-thumbs-down"></i> Still need help
+            </button>
+          </div>
+          <div id="vote-feedback-note" style="margin-top: 0.65rem; font-size: 0.775rem; color: #64748b; display: none;"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="padding: 0.85rem 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; border-radius: 0 0 17px 17px;">
+        <span style="font-size: 0.775rem; color: #64748b;">SupportHUB Verified Guide</span>
+        <button type="button" onclick="closeArticlePreviewModal()" class="btn btn-secondary" style="border-radius: 8px; font-size: 0.8rem;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Core Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <!-- Dashboard Controller Script -->
+  <script>
+    // State Variables
+    let currentUser = null;
+    let cachedCustomerProfile = null;
+    let cachedCategories = [];
+    let searchDebounceTimer = null;
+    let selectedSuggestionIdx = -1;
+    let currentPreviewArticle = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. RBAC Guard: Ensure user is authenticated customer
+      if (!Auth.requireRole(['CUSTOMER'])) return;
+
+      currentUser = Auth.getUser();
+
+      // 2. Initialize Common Shell (Sidebar, Header User, Live Polling)
+      Auth.renderUserHeader();
+      Auth.renderSidebar();
+      if (typeof NotificationsEngine !== 'undefined') {
+        NotificationsEngine.init();
+      }
+
+      // 3. Render Live Formatted Date
+      renderLiveDate();
+
+      // 4. Set Header Search Keyboard Shortcut (Press / to focus)
+      initKeyboardShortcuts();
+
+      // 5. Parallel Data Fetching
+      await Promise.allSettled([
+        loadCustomerProfileAndStats(),
+        loadRecentTickets(),
+        loadPopularArticles(),
+        loadHelpCategories(),
+        loadRecentActivities(),
+        loadQuickFaqs()
+      ]);
+
+      // 6. Setup Search Input Event Listeners
+      initHeroSearchEvents();
+    });
+
+    /* ==========================================================================
+       A. Live Date Formatter
+       ========================================================================== */
+    function renderLiveDate() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+      const formatted = now.toLocaleDateString('en-US', options);
+      const el = document.getElementById('current-date-text');
+      if (el) el.textContent = formatted;
+    }
+
+    function initKeyboardShortcuts() {
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          const heroInput = document.getElementById('hero-help-search');
+          if (heroInput) {
+            heroInput.focus();
+            heroInput.select();
+          }
+        }
+      });
+    }
+
+    /* ==========================================================================
+       B. Customer Profile, Greeting & Statistics Loading
+       ========================================================================== */
+    async function loadCustomerProfileAndStats() {
+      try {
+        const res = await API.get('/customers/me');
+        const profile = res.data;
+        cachedCustomerProfile = profile;
+
+        if (profile) {
+          // Greeting Name
+          const nameEl = document.getElementById('welcome-cust-name');
+          if (nameEl) {
+            nameEl.textContent = profile.fullName || (currentUser ? currentUser.email : 'Customer');
+          }
+
+          // Header Name & Avatar
+          const hName = document.getElementById('header-user-name');
+          const hAvatar = document.getElementById('header-user-avatar');
+          if (hName) hName.textContent = profile.fullName || currentUser.email;
+          if (hAvatar) {
+            const initials = (profile.fullName || currentUser.email).substring(0, 2).toUpperCase();
+            hAvatar.textContent = initials;
+          }
+
+          // Statistics Counters from Profile & Tickets
+          document.getElementById('stat-open').textContent = profile.openTickets || 0;
+          document.getElementById('stat-progress').textContent = profile.inProgressTickets || 0;
+          document.getElementById('stat-resolved').textContent = profile.resolvedTickets || 0;
+        }
+
+        // To get accurate Waiting for Response count, fetch customer's tickets
+        fetchWaitingTicketsCount();
+
+      } catch (err) {
+        console.warn('Could not load customer profile:', err);
+        if (currentUser) {
+          const nameEl = document.getElementById('welcome-cust-name');
+          if (nameEl) nameEl.textContent = currentUser.fullName || currentUser.email;
+        }
+      }
+    }
+
+    async function fetchWaitingTicketsCount() {
+      try {
+        const res = await API.get('/tickets/my?size=100');
+        const list = res.data && res.data.content ? res.data.content : (res.data || []);
+        
+        const waitingCount = list.filter(t => t.status === 'WAITING_FOR_CUSTOMER').length;
+        const waitingEl = document.getElementById('stat-waiting');
+        if (waitingEl) waitingEl.textContent = waitingCount;
+
+        const openCount = list.filter(t => t.status === 'OPEN').length;
+        const progressCount = list.filter(t => t.status === 'IN_PROGRESS' || t.status === 'ESCALATED').length;
+        const resolvedCount = list.filter(t => t.status === 'RESOLVED').length;
+
+        // If direct ticket counts available, set with live values
+        if (list.length > 0) {
+          document.getElementById('stat-open').textContent = openCount;
+          document.getElementById('stat-progress').textContent = progressCount;
+          document.getElementById('stat-resolved').textContent = resolvedCount;
+        }
+      } catch (e) {
+        console.warn('Could not compute exact status counts:', e);
+      }
+    }
+
+    /* ==========================================================================
+       C. Prominent Help Search & Auto-Suggest Engine
+       ========================================================================== */
+    function initHeroSearchEvents() {
+      const heroInput = document.getElementById('hero-help-search');
+      const clearBtn = document.getElementById('hero-search-clear');
+      const headerInput = document.getElementById('global-header-search');
+
+      if (heroInput) {
+        heroInput.addEventListener('input', (e) => {
+          const val = e.target.value.trim();
+          if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
+
+          if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+          searchDebounceTimer = setTimeout(() => {
+            fetchSearchSuggestions(val);
+          }, 240);
+        });
+
+        heroInput.addEventListener('keydown', (e) => {
+          handleSearchKeydown(e);
+        });
+      }
+
+      if (headerInput) {
+        headerInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const q = headerInput.value.trim();
+            if (q) {
+              window.location.href = `../knowledge-base.html?q=${encodeURIComponent(q)}`;
+            }
+          }
+        });
+      }
+
+      // Close suggestion dropdown on outside click
+      document.addEventListener('click', (e) => {
+        const box = document.querySelector('.hero-search-input-box');
+        const dropdown = document.getElementById('search-suggestions-dropdown');
+        if (dropdown && box && !box.contains(e.target)) {
+          dropdown.classList.remove('show');
+        }
+      });
+    }
+
+    function clearHeroSearch() {
+      const input = document.getElementById('hero-help-search');
+      const clearBtn = document.getElementById('hero-search-clear');
+      const dropdown = document.getElementById('search-suggestions-dropdown');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      if (clearBtn) clearBtn.style.display = 'none';
+      if (dropdown) dropdown.classList.remove('show');
+    }
+
+    function quickFillSearch(term) {
+      const input = document.getElementById('hero-help-search');
+      if (input) {
+        input.value = term;
+        input.focus();
+        fetchSearchSuggestions(term);
+      }
+    }
+
+    async function fetchSearchSuggestions(query) {
+      const dropdown = document.getElementById('search-suggestions-dropdown');
+      if (!dropdown) return;
+
+      if (!query || query.length < 2) {
+        dropdown.classList.remove('show');
+        dropdown.innerHTML = '';
+        return;
+      }
+
+      try {
+        const res = await API.get(`/help/search?q=${encodeURIComponent(query)}`);
+        const data = res.data || {};
+        const faqs = data.matchedFaqs || [];
+        const kbs = data.matchedArticles || [];
+
+        if (faqs.length === 0 && kbs.length === 0) {
+          dropdown.innerHTML = `
+            <div style="padding: 1.5rem; text-align: center; color: #64748b;">
+              <i class="fa-solid fa-magnifying-glass" style="font-size: 1.5rem; color: #cbd5e1; margin-bottom: 0.5rem; display: block;"></i>
+              <p style="margin: 0 0 0.5rem 0; font-size: 0.85rem; font-weight: 700; color: #0f172a;">No exact solutions found for "${escapeHtml(query)}"</p>
+              <p style="margin: 0; font-size: 0.775rem;">Can't find what you need? Our officers are ready to help.</p>
+              <button onclick="openCreateTicketModal('${escapeHtml(query)}')" class="btn btn-sm btn-primary" style="margin-top: 0.75rem; background: #000985; border-radius: 8px;">
+                <i class="fa-solid fa-plus"></i> Open a Ticket for "${escapeHtml(query)}"
+              </button>
+            </div>
+          `;
+          dropdown.classList.add('show');
+          return;
+        }
+
+        let html = '';
+
+        if (kbs.length > 0) {
+          html += `<div class="suggestion-category-header"><span>Knowledge Base Guides</span><span>${kbs.length} matches</span></div>`;
+          kbs.slice(0, 4).forEach((art) => {
+            html += `
+              <div class="suggestion-item" onclick="openPreviewArticle(${art.id}, 'KB')">
+                <div class="suggestion-item-left">
+                  <div class="suggestion-icon kb"><i class="fa-solid fa-book-bookmark"></i></div>
+                  <div>
+                    <div class="suggestion-title">${escapeHtml(art.title)}</div>
+                    <div class="suggestion-meta">
+                      <span class="suggestion-badge-cat">${escapeHtml(art.categoryName || 'General')}</span>
+                      <span><i class="fa-regular fa-eye"></i> ${art.viewCount || 0} views</span>
+                    </div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-arrow-right" style="font-size: 0.75rem; color: #94a3b8;"></i>
+              </div>
+            `;
+          });
+        }
+
+        if (faqs.length > 0) {
+          html += `<div class="suggestion-category-header"><span>Frequently Asked Questions</span><span>${faqs.length} matches</span></div>`;
+          faqs.slice(0, 4).forEach((faq) => {
+            html += `
+              <div class="suggestion-item" onclick="openPreviewFaq('${escapeHtml(faq.question)}', '${escapeHtml(faq.answer)}', '${escapeHtml(faq.categoryName || 'General')}')">
+                <div class="suggestion-item-left">
+                  <div class="suggestion-icon faq"><i class="fa-solid fa-circle-question"></i></div>
+                  <div>
+                    <div class="suggestion-title">${escapeHtml(faq.question)}</div>
+                    <div class="suggestion-meta">
+                      <span class="suggestion-badge-cat">${escapeHtml(faq.categoryName || 'FAQ')}</span>
+                      <span>Instant Answer</span>
+                    </div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-arrow-right" style="font-size: 0.75rem; color: #94a3b8;"></i>
+              </div>
+            `;
+          });
+        }
+
+        html += `
+          <div style="padding: 0.65rem 1rem; background: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;">
+            <a href="../knowledge-base.html?q=${encodeURIComponent(query)}" style="font-size: 0.8rem; font-weight: 700; color: #000985; text-decoration: none;">
+              View all results in Knowledge Base &rarr;
+            </a>
+          </div>
+        `;
+
+        dropdown.innerHTML = html;
+        dropdown.classList.add('show');
+        selectedSuggestionIdx = -1;
+      } catch (err) {
+        console.warn('Help search error:', err);
+      }
+    }
+
+    function handleSearchKeydown(e) {
+      const dropdown = document.getElementById('search-suggestions-dropdown');
+      if (!dropdown || !dropdown.classList.contains('show')) {
+        if (e.key === 'Enter') {
+          executeHeroSearch();
+        }
+        return;
+      }
+
+      const items = dropdown.querySelectorAll('.suggestion-item');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedSuggestionIdx = (selectedSuggestionIdx + 1) % items.length;
+        updateSuggestionFocus(items);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedSuggestionIdx = (selectedSuggestionIdx - 1 + items.length) % items.length;
+        updateSuggestionFocus(items);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (selectedSuggestionIdx >= 0 && items[selectedSuggestionIdx]) {
+          items[selectedSuggestionIdx].click();
+        } else {
+          executeHeroSearch();
+        }
+      } else if (e.key === 'Escape') {
+        dropdown.classList.remove('show');
+      }
+    }
+
+    function updateSuggestionFocus(items) {
+      items.forEach((it, idx) => {
+        if (idx === selectedSuggestionIdx) {
+          it.classList.add('selected');
+          it.scrollIntoView({ block: 'nearest' });
+        } else {
+          it.classList.remove('selected');
+        }
+      });
+    }
+
+    function executeHeroSearch() {
+      const input = document.getElementById('hero-help-search');
+      const q = input ? input.value.trim() : '';
+      if (q) {
+        window.location.href = `../knowledge-base.html?q=${encodeURIComponent(q)}`;
+      }
+    }
+
+    /* ==========================================================================
+       D. Recent Tickets Table Integration
+       ========================================================================== */
+    async function loadRecentTickets() {
+      const tbody = document.getElementById('recent-tickets-tbody');
+      if (!tbody) return;
+
+      try {
+        const res = await API.get('/tickets/my?page=0&size=5');
+        const tickets = res.data && res.data.content ? res.data.content : (res.data || []);
+
+        if (tickets.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="8" style="text-align: center; padding: 2.5rem 1rem; color: #64748b;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #eff2ff; color: #000985; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem auto; font-size: 1.25rem;">
+                  <i class="fa-solid fa-ticket-simple"></i>
+                </div>
+                <h4 style="font-size: 0.95rem; font-weight: 800; color: #0f172a; margin: 0 0 0.25rem 0;">No Support Tickets Found</h4>
+                <p style="font-size: 0.8rem; margin: 0 0 1rem 0; color: #64748b;">Have an inquiry regarding an order, payment, or service? Create your first ticket.</p>
+                <button onclick="openCreateTicketModal()" class="btn btn-sm btn-primary" style="background: #000985; border-radius: 8px; font-weight: 700;">
+                  <i class="fa-solid fa-plus"></i> Create Support Ticket
+                </button>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = tickets.map(t => {
+          const statusClass = (t.status || 'OPEN').toLowerCase();
+          const prioClass = (t.priority || 'MEDIUM').toLowerCase();
+          const orderBadge = t.orderNumber 
+            ? `<span style="font-weight: 600; color: #0369a1;"><i class="fa-solid fa-bag-shopping" style="font-size: 0.7rem;"></i> ${escapeHtml(t.orderNumber)}</span>`
+            : `<span style="color: #94a3b8;">-</span>`;
+          const updatedDate = Utils.formatDate(t.updatedAt || t.createdAt);
+
+          return `
+            <tr>
+              <td>
+                <a href="ticket-details.html?id=${t.id}" class="ticket-ref-pill">
+                  ${escapeHtml(t.ticketNumber || ('TICK-' + t.id))}
+                </a>
+              </td>
+              <td>
+                <a href="ticket-details.html?id=${t.id}" class="ticket-subject-link" title="${escapeHtml(t.subject)}">
+                  ${escapeHtml(t.subject)}
+                </a>
+              </td>
+              <td>
+                <span style="font-weight: 600; font-size: 0.775rem; color: #334155;">
+                  ${escapeHtml(t.categoryName || 'General')}
+                </span>
+              </td>
+              <td>${orderBadge}</td>
+              <td><span class="badge-prio ${prioClass}">${escapeHtml(t.priority)}</span></td>
+              <td><span class="badge-status ${statusClass}">${escapeHtml((t.status || '').replaceAll('_', ' '))}</span></td>
+              <td style="font-size: 0.75rem; color: #64748b; white-space: nowrap;">${updatedDate}</td>
+              <td>
+                <a href="ticket-details.html?id=${t.id}" class="btn-table-action">
+                  <span>View</span> <i class="fa-solid fa-angle-right" style="font-size: 0.7rem;"></i>
+                </a>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error('Failed to load recent tickets:', err);
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; color: #dc2626; padding: 1.5rem; font-size: 0.85rem;">
+              <i class="fa-solid fa-circle-exclamation"></i> Could not load tickets at this moment. Please refresh.
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    /* ==========================================================================
+       E. Popular Help Articles (Real Published Articles from Backend)
+       ========================================================================== */
+    async function loadPopularArticles() {
+      const container = document.getElementById('popular-articles-container');
+      if (!container) return;
+
+      try {
+        const res = await API.get('/knowledge-base/public');
+        const articles = res.data || [];
+
+        if (articles.length === 0) {
+          container.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.825rem;">
+              No published articles available at this time.
+            </div>
+          `;
+          return;
+        }
+
+        // Sort by viewCount descending and pick top 4
+        const topArticles = [...articles].sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0)).slice(0, 4);
+
+        container.innerHTML = topArticles.map(art => {
+          const cat = art.categoryName || 'Guides';
+          const views = (art.viewCount || 0).toLocaleString();
+          const cleanDesc = art.content 
+            ? (art.content.length > 95 ? art.content.substring(0, 95) + '...' : art.content) 
+            : 'Click to read full solution.';
+
+          return `
+            <div class="article-mini-card" onclick="openPreviewArticle(${art.id}, 'KB')">
+              <div>
+                <div class="article-mini-top">
+                  <span class="art-cat-tag">${escapeHtml(cat)}</span>
+                </div>
+                <h4>${escapeHtml(art.title)}</h4>
+                <p>${escapeHtml(cleanDesc)}</p>
+              </div>
+              <div class="article-mini-footer">
+                <span><i class="fa-regular fa-eye"></i> ${views} views</span>
+                <span class="art-read-arrow">Read Solution &rarr;</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.warn('Could not load popular articles:', err);
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; color: #94a3b8; font-size: 0.825rem; padding: 1.5rem;">
+            Unable to load articles right now.
+          </div>
+        `;
+      }
+    }
+
+    /* ==========================================================================
+       F. Browse Help Categories (Actual Categories from Backend)
+       ========================================================================== */
+    async function loadHelpCategories() {
+      const container = document.getElementById('categories-browse-container');
+      if (!container) return;
+
+      try {
+        const res = await API.get('/categories/active');
+        const categories = res.data || [];
+        cachedCategories = categories;
+
+        // Also populate modal category dropdown
+        populateModalCategoryDropdown(categories);
+
+        if (categories.length === 0) {
+          container.innerHTML = '<div style="grid-column: 1 / -1; color: #64748b; text-align: center;">No categories configured.</div>';
+          return;
+        }
+
+        const CAT_ICONS = {
+          'Order Issues': 'fa-box',
+          'Delivery Issues': 'fa-truck',
+          'Payment & Refunds': 'fa-credit-card',
+          'Account Issues': 'fa-user-shield',
+          'Product Information': 'fa-circle-info',
+          'Technical Support': 'fa-gear'
+        };
+
+        container.innerHTML = categories.slice(0, 6).map(c => {
+          const icon = c.icon || CAT_ICONS[c.name] || 'fa-folder';
+          return `
+            <a href="../knowledge-base.html?category=${c.id}" class="category-browse-card">
+              <div class="cat-icon-wrap">
+                <i class="fa-solid ${icon}"></i>
+              </div>
+              <div class="cat-browse-info">
+                <h5>${escapeHtml(c.name)}</h5>
+                <span>Explore articles &rarr;</span>
+              </div>
+            </a>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.warn('Could not load categories:', err);
+      }
+    }
+
+    function populateModalCategoryDropdown(categories) {
+      const select = document.getElementById('modal-category');
+      if (!select) return;
+
+      if (!categories || categories.length === 0) {
+        select.innerHTML = '<option value="">Default General Support</option>';
+        return;
+      }
+
+      select.innerHTML = categories.map(c => `
+        <option value="${c.id}">${escapeHtml(c.name)}</option>
+      `).join('');
+    }
+
+    /* ==========================================================================
+       H. Recent Activities Stream (Real-time Timeline)
+       ========================================================================== */
+    async function loadRecentActivities() {
+      const container = document.getElementById('activities-stream-container');
+      if (!container) return;
+
+      try {
+        const [notifRes, ticketsRes] = await Promise.allSettled([
+          API.get('/notifications'),
+          API.get('/tickets/my?page=0&size=5')
+        ]);
+
+        const notifs = notifRes.status === 'fulfilled' && notifRes.value.data ? notifRes.value.data : [];
+        const tickets = ticketsRes.status === 'fulfilled' && ticketsRes.value.data && ticketsRes.value.data.content 
+          ? ticketsRes.value.data.content 
+          : [];
+
+        // Synthesize activity events
+        let activities = [];
+
+        notifs.slice(0, 5).forEach(n => {
+          let bulletType = 'blue';
+          let icon = 'fa-bell';
+
+          if (n.type && n.type.includes('REPLY')) {
+            bulletType = 'green';
+            icon = 'fa-comment-dots';
+          } else if (n.type && (n.type.includes('STATUS') || n.type.includes('RESOLVED'))) {
+            bulletType = 'purple';
+            icon = 'fa-arrows-rotate';
+          } else if (n.type && n.type.includes('CREATE')) {
+            bulletType = 'blue';
+            icon = 'fa-ticket';
+          }
+
+          activities.push({
+            icon,
+            bulletType,
+            title: n.title || 'System Notification',
+            desc: n.message || '',
+            date: n.createdAt,
+            ticketId: n.relatedTicketId || null
+          });
+        });
+
+        // Add recent ticket creation activities if not already captured
+        tickets.slice(0, 3).forEach(t => {
+          activities.push({
+            icon: 'fa-ticket',
+            bulletType: 'blue',
+            title: `Support Ticket Opened (#${t.ticketNumber || t.id})`,
+            desc: `Subject: ${t.subject}`,
+            date: t.createdAt,
+            ticketId: t.id
+          });
+        });
+
+        if (activities.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 1.5rem 1rem; color: #94a3b8; font-size: 0.8rem;">
+              <i class="fa-regular fa-clock" style="font-size: 1.5rem; display: block; margin-bottom: 0.4rem; color: #cbd5e1;"></i>
+              No recent activity recorded yet.
+            </div>
+          `;
+          return;
+        }
+
+        // Sort by date descending
+        activities.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+        container.innerHTML = activities.slice(0, 5).map(act => {
+          const timeAgo = NotificationsEngine.formatRelativeTime(act.date);
+          const clickHandler = act.ticketId 
+            ? `onclick="window.location.href='ticket-details.html?id=${act.ticketId}'" style="cursor: pointer;"` 
+            : '';
+
+          return `
+            <div class="activity-stream-item" ${clickHandler}>
+              <div class="activity-icon-bullet ${act.bulletType}">
+                <i class="fa-solid ${act.icon}"></i>
+              </div>
+              <div class="activity-stream-body">
+                <div class="activity-stream-title">${escapeHtml(act.title)}</div>
+                <div class="activity-stream-desc">${escapeHtml(act.desc)}</div>
+                <div class="activity-stream-time">${timeAgo}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.warn('Could not load activities:', err);
+        container.innerHTML = '<div style="color: #94a3b8; font-size: 0.8rem; text-align: center;">Activity stream currently idle.</div>';
+      }
+    }
+
+    /* ==========================================================================
+       I. Quick FAQs Preview in Right Rail
+       ========================================================================== */
+    async function loadQuickFaqs() {
+      const container = document.getElementById('quick-faqs-container');
+      if (!container) return;
+
+      try {
+        const res = await API.get('/faqs/public/popular');
+        const faqs = res.data || [];
+
+        if (faqs.length === 0) {
+          container.innerHTML = '<div style="color: #94a3b8; font-size: 0.775rem;">No popular FAQs available.</div>';
+          return;
+        }
+
+        container.innerHTML = faqs.slice(0, 4).map(f => `
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.65rem 0.85rem; cursor: pointer; transition: all 0.15s ease;"
+               onclick="openPreviewFaq('${escapeHtml(f.question)}', '${escapeHtml(f.answer)}', '${escapeHtml(f.categoryName || 'General')}')"
+               onmouseover="this.style.background='#ffffff'; this.style.borderColor='#000985';"
+               onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#e2e8f0';">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 0.2rem; display: flex; align-items: center; justify-content: space-between;">
+              <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(f.question)}</span>
+              <i class="fa-solid fa-angle-right" style="color: #000985; font-size: 0.75rem;"></i>
+            </div>
+            <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">${escapeHtml(f.categoryName || 'General Support')}</div>
+          </div>
+        `).join('');
+
+      } catch (err) {
+        console.warn('Could not load popular FAQs:', err);
+      }
+    }
+
+    /* ==========================================================================
+       J. Ticket Creation Modal Logic (Fixed JSON & Multipart)
+       ========================================================================== */
+    function openCreateTicketModal(prefillSubject = '') {
+      const modal = document.getElementById('create-ticket-modal');
+      const subjectInput = document.getElementById('modal-subject');
+
+      if (modal) {
+        modal.classList.add('show');
+        if (prefillSubject && subjectInput) {
+          subjectInput.value = prefillSubject;
+          document.getElementById('modal-description').focus();
+        } else if (subjectInput) {
+          subjectInput.focus();
+        }
+      }
+    }
+
+    function closeCreateTicketModal() {
+      const modal = document.getElementById('create-ticket-modal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    async function handleCreateTicketSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('btn-submit-ticket-modal');
+      const origText = submitBtn ? submitBtn.innerHTML : 'Submit Ticket';
+
+      const subject = document.getElementById('modal-subject').value.trim();
+      const categoryId = document.getElementById('modal-category').value;
+      const orderNumber = document.getElementById('modal-order-number').value.trim();
+      const priority = document.getElementById('modal-priority').value;
+      const description = document.getElementById('modal-description').value.trim();
+      const fileInput = document.getElementById('modal-attachment-file');
+
+      if (!subject || subject.length < 5) {
+        Utils.showToast('Please provide a descriptive subject (at least 5 characters)', 'error');
+        return;
+      }
+
+      if (!categoryId) {
+        Utils.showToast('Please select a support category', 'error');
+        return;
+      }
+
+      if (!description || description.length < 10) {
+        Utils.showToast('Please describe your issue in detail (at least 10 characters)', 'error');
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+        }
+
+        const payload = {
+          subject,
+          categoryId: parseInt(categoryId),
+          orderNumber: orderNumber || null,
+          priority,
+          description
+        };
+
+        // If file attachment is included, use multipart
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          const formData = new FormData();
+          const jsonBlob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+          formData.append('data', jsonBlob);
+          formData.append('request', jsonBlob);
+          formData.append('file', fileInput.files[0]);
+          await API.postFormData('/tickets', formData);
+        } else {
+          // Direct JSON creation (fixes HTTP 415 error bug)
+          await API.post('/tickets/create-json', payload);
+        }
+
+        Utils.showToast('Support ticket created successfully! An officer will respond shortly.', 'success');
+        document.getElementById('create-ticket-form').reset();
+        closeCreateTicketModal();
+
+        // Refresh Tickets and Counters
+        await Promise.allSettled([
+          loadCustomerProfileAndStats(),
+          loadRecentTickets(),
+          loadRecentActivities()
+        ]);
+
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to create support ticket. Please try again.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origText;
+        }
+      }
+    }
+
+    /* ==========================================================================
+       K. In-Dashboard Article & FAQ Reader Modal
+       ========================================================================== */
+    async function openPreviewArticle(id, type) {
+      const modal = document.getElementById('article-preview-modal');
+      const titleEl = document.getElementById('preview-art-title');
+      const catEl = document.getElementById('preview-art-category');
+      const metaEl = document.getElementById('preview-art-meta');
+      const contentEl = document.getElementById('preview-art-content');
+      const noteEl = document.getElementById('vote-feedback-note');
+
+      if (!modal) return;
+      if (noteEl) noteEl.style.display = 'none';
+
+      try {
+        titleEl.textContent = 'Loading article...';
+        contentEl.textContent = '';
+        modal.classList.add('show');
+
+        const res = await API.get(`/knowledge-base/${id}`);
+        const article = res.data;
+        currentPreviewArticle = article;
+
+        titleEl.textContent = article.title;
+        catEl.textContent = article.categoryName || 'General Guide';
+        metaEl.textContent = `${article.viewCount || 0} views • Updated ${Utils.formatDate(article.updatedAt || article.createdAt)}`;
+        contentEl.textContent = article.content;
+
+      } catch (err) {
+        titleEl.textContent = 'Guide Details';
+        contentEl.textContent = 'Could not load article content. Please browse the full Help Center.';
+      }
+    }
+
+    function openPreviewFaq(question, answer, categoryName) {
+      const modal = document.getElementById('article-preview-modal');
+      const titleEl = document.getElementById('preview-art-title');
+      const catEl = document.getElementById('preview-art-category');
+      const metaEl = document.getElementById('preview-art-meta');
+      const contentEl = document.getElementById('preview-art-content');
+      const noteEl = document.getElementById('vote-feedback-note');
+
+      if (!modal) return;
+      if (noteEl) noteEl.style.display = 'none';
+
+      currentPreviewArticle = { title: question, categoryName };
+
+      titleEl.textContent = question;
+      catEl.textContent = categoryName || 'FAQ';
+      metaEl.textContent = 'Instant Verified Solution';
+      contentEl.textContent = answer;
+
+      modal.classList.add('show');
+    }
+
+    function closeArticlePreviewModal() {
+      const modal = document.getElementById('article-preview-modal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    function recordArticleVote(isHelpful) {
+      const noteEl = document.getElementById('vote-feedback-note');
+      if (!noteEl) return;
+
+      if (isHelpful) {
+        noteEl.innerHTML = '<span style="color: #16a34a; font-weight: 700;"><i class="fa-solid fa-circle-check"></i> Thank you! Glad this resolved your issue.</span>';
+        noteEl.style.display = 'block';
+        Utils.showToast('Thank you for your feedback!', 'success');
+      } else {
+        const title = currentPreviewArticle ? currentPreviewArticle.title : '';
+        noteEl.innerHTML = `
+          <div style="color: #b45309; font-weight: 600; margin-bottom: 0.35rem;">Issue still unresolved?</div>
+          <button onclick="closeArticlePreviewModal(); openCreateTicketModal('${escapeHtml(title)}');" class="btn btn-sm btn-primary" style="background: #000985; border-radius: 6px; font-weight: 700;">
+            <i class="fa-solid fa-ticket"></i> Raise Support Ticket for this issue
+          </button>
+        `;
+        noteEl.style.display = 'block';
+      }
+    }
+
+    // Modal click-outside dismissal
+    window.addEventListener('click', (e) => {
+      const ticketModal = document.getElementById('create-ticket-modal');
+      const artModal = document.getElementById('article-preview-modal');
+
+      if (e.target === ticketModal) closeCreateTicketModal();
+      if (e.target === artModal) closeArticlePreviewModal();
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+
+</html>

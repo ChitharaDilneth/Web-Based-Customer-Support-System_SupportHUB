@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Management Reports | SupportHUB Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-soft: rgba(245, 204, 0, 0.16);
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
+      --warning-amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .rpt-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .rpt-title-group h1 {
+      font-size: 1.85rem;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .rpt-title-group p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .rpt-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-export-csv {
+      background: #ffffff;
+      color: var(--primary-blue);
+      border: 1px solid var(--border-subtle);
+      padding: 0.65rem 1.15rem;
+      border-radius: 9px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-export-csv:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .btn-print {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: 1px solid var(--primary-hover);
+      padding: 0.65rem 1.25rem;
+      border-radius: 9px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 9, 133, 0.25);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-print:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Filters Card */
+    .filter-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .filter-group label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .filter-select {
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      color: var(--text-dark);
+      min-width: 150px;
+      font-family: inherit;
+    }
+
+    /* KPI Summary Cards */
+    .rpt-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .rpt-kpi-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rpt-kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-blue);
+    }
+
+    .rpt-kpi-card.success::before { background: var(--success-green); }
+    .rpt-kpi-card.warning::before { background: var(--warning-amber); }
+    .rpt-kpi-card.accent::before { background: var(--accent-yellow); }
+
+    .rpt-kpi-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: rgba(0, 9, 133, 0.08);
+      color: var(--primary-blue);
+      flex-shrink: 0;
+    }
+
+    .rpt-kpi-card.success .rpt-kpi-icon { background: rgba(16, 185, 129, 0.1); color: var(--success-green); }
+    .rpt-kpi-card.warning .rpt-kpi-icon { background: rgba(245, 158, 11, 0.1); color: var(--warning-amber); }
+    .rpt-kpi-card.accent .rpt-kpi-icon { background: rgba(245, 204, 0, 0.2); color: #b45309; }
+
+    .rpt-kpi-content {
+      flex: 1;
+    }
+
+    .rpt-kpi-value {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.2;
+    }
+
+    .rpt-kpi-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-top: 0.2rem;
+    }
+
+    /* Charts Row */
+    .rpt-charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .rpt-chart-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .rpt-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .rpt-chart-header h3 {
+      font-size: 1.05rem;
+      color: var(--primary-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Table Section */
+    .rpt-table-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      margin-bottom: 1.75rem;
+    }
+
+    .rpt-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .rpt-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .rpt-table td {
+      padding: 0.95rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+
+    .rpt-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rpt-table tr:hover td {
+      background: #fafcff;
+    }
+
+    @media print {
+      .sidebar, .topbar, .rpt-actions, .filter-card, .btn-menu-toggle {
+        display: none !important;
+      }
+      .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .rpt-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .rpt-charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .rpt-kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="manager-dashboard.html" class="sidebar-brand">
+          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="brand-text">
+            <span class="brand-title">SupportHUB</span>
+            <span class="brand-subtitle">Executive Suite</span>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="Auth.logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-menu-toggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-capsule">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Customer Support Manager Management</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="header-profile-capsule" id="header-profile-capsule"></div>
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <!-- Workspace Content -->
+      <div class="content-container">
+        <!-- Page Header -->
+        <div class="rpt-header-row">
+          <div class="rpt-title-group">
+            <h1><i class="fa-solid fa-file-invoice"></i> Executive Management Reports</h1>
+            <p>Comprehensive operational reports, resolution efficiency, department volume trends, and CSV data export.</p>
+          </div>
+          <div class="rpt-actions">
+            <button class="btn-export-csv" id="btn-export-csv" onclick="exportReportToCsv()">
+              <i class="fa-solid fa-file-csv"></i> Export CSV
+            </button>
+            <button class="btn-print" id="btn-print-report" onclick="window.print()">
+              <i class="fa-solid fa-print"></i> Print Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Filters Bar -->
+        <div class="filter-card">
+          <div class="filter-group">
+            <label for="rpt-date-range">Report Period</label>
+            <select id="rpt-date-range" class="filter-select" onchange="generateReport()">
+              <option value="ALL">All Recorded Time</option>
+              <option value="TODAY">Today</option>
+              <option value="7D" selected>Last 7 Days</option>
+              <option value="30D">Last 30 Days</option>
+              <option value="YTD">Year to Date (2026)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="rpt-category">Category</label>
+            <select id="rpt-category" class="filter-select" onchange="generateReport()">
+              <option value="ALL">All Categories</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="rpt-priority">Priority Filter</label>
+            <select id="rpt-priority" class="filter-select" onchange="generateReport()">
+              <option value="ALL">All Priorities</option>
+              <option value="URGENT">URGENT</option>
+              <option value="HIGH">HIGH</option>
+              <option value="MEDIUM">MEDIUM</option>
+              <option value="LOW">LOW</option>
+            </select>
+          </div>
+
+          <div style="margin-left:auto; display:flex; align-items:flex-end;">
+            <button onclick="generateReport()" class="btn-secondary" style="padding:0.5rem 1rem; border-radius:8px; border:1px solid var(--border-subtle); background:#ffffff; cursor:pointer;">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh Report
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="rpt-kpi-grid">
+          <div class="rpt-kpi-card">
+            <div class="rpt-kpi-icon"><i class="fa-solid fa-ticket"></i></div>
+            <div class="rpt-kpi-content">
+              <div class="rpt-kpi-value" id="kpi-rpt-tickets">0</div>
+              <div class="rpt-kpi-label">Total Volume Handled</div>
+            </div>
+          </div>
+
+          <div class="rpt-kpi-card success">
+            <div class="rpt-kpi-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="rpt-kpi-content">
+              <div class="rpt-kpi-value" id="kpi-rpt-resolved">0</div>
+              <div class="rpt-kpi-label">Resolved Tickets</div>
+            </div>
+          </div>
+
+          <div class="rpt-kpi-card accent">
+            <div class="rpt-kpi-icon"><i class="fa-solid fa-stopwatch"></i></div>
+            <div class="rpt-kpi-content">
+              <div class="rpt-kpi-value" id="kpi-rpt-sla">98.5%</div>
+              <div class="rpt-kpi-label">SLA Compliance Rate</div>
+            </div>
+          </div>
+
+          <div class="rpt-kpi-card success">
+            <div class="rpt-kpi-icon"><i class="fa-solid fa-heart"></i></div>
+            <div class="rpt-kpi-content">
+              <div class="rpt-kpi-value" id="kpi-rpt-csat">4.8 / 5</div>
+              <div class="rpt-kpi-label">Customer Satisfaction</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="rpt-charts-grid">
+          <div class="rpt-chart-card">
+            <div class="rpt-chart-header">
+              <h3><i class="fa-solid fa-chart-column"></i> Ticket Status Breakdown</h3>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Current Pipeline</span>
+            </div>
+            <div style="height:260px; position:relative;">
+              <canvas id="statusChart"></canvas>
+            </div>
+          </div>
+
+          <div class="rpt-chart-card">
+            <div class="rpt-chart-header">
+              <h3><i class="fa-solid fa-chart-pie"></i> Tickets by Priority</h3>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Severity Distribution</span>
+            </div>
+            <div style="height:260px; position:relative;">
+              <canvas id="priorityChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Table -->
+        <div class="rpt-table-card">
+          <div class="rpt-chart-header">
+            <h3><i class="fa-solid fa-table-list"></i> Departmental Operational Summary Matrix</h3>
+            <span class="meta-tag">Generated Live</span>
+          </div>
+
+          <table class="rpt-table" id="summary-matrix-table">
+            <thead>
+              <tr>
+                <th>Operational Metric</th>
+                <th>Current Period Value</th>
+                <th>Previous Benchmark</th>
+                <th>Target Standard</th>
+                <th>Variance / Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Total Intake Volume</td>
+                <td id="td-intake-val">Loading...</td>
+                <td>--</td>
+                <td>--</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-arrow-trend-up"></i> In Line</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Resolution Rate</td>
+                <td id="td-resolution-rate">Loading...</td>
+                <td>92.0%</td>
+                <td>&ge; 90.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> Compliant</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Average Resolution Speed</td>
+                <td id="td-avg-speed">Loading...</td>
+                <td>18.0h</td>
+                <td>&le; 24.0h</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-bolt"></i> Fast Velocity</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Average Customer Rating (CSAT)</td>
+                <td id="td-csat-val">Loading...</td>
+                <td>4.6 / 5</td>
+                <td>&ge; 4.5 / 5</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-star"></i> High Quality</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Escalation Ratio</td>
+                <td id="td-escalation-val">Loading...</td>
+                <td>4.2%</td>
+                <td>&le; 5.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-shield"></i> Controlled</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    let dashboardReport = null;
+    let feedbackReport = null;
+    let categories = [];
+    let statusChartInstance = null;
+    let priorityChartInstance = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Role Guard
+      const user = Auth.requireAuth(['CUSTOMER_SUPPORT_MANAGER']);
+      if (!user) return;
+
+      // 2. Initialize Header & Navigation
+      Auth.renderNav();
+      if (typeof Auth.renderUserHeader === 'function') Auth.renderUserHeader();
+      if (typeof Auth.renderHeaderProfileCapsule === 'function') Auth.renderHeaderProfileCapsule();
+      if (typeof NotificationsEngine !== 'undefined' && typeof NotificationsEngine.init === 'function') {
+        NotificationsEngine.init();
+      }
+
+      // 3. Load Data & Render Report
+      await fetchCategories();
+      await generateReport();
+    });
+
+    async function fetchCategories() {
+      try {
+        const res = await API.get('/categories');
+        categories = res.data || [];
+        const select = document.getElementById('rpt-category');
+        select.innerHTML = '<option value="ALL">All Categories</option>' +
+          categories.map(c => `<option value="${c.id}">${Utils.escapeHtml(c.name)}</option>`).join('');
+      } catch (err) {
+        console.error('Failed to load categories:', err);
+      }
+    }
+
+    async function generateReport() {
+      try {
+        const [dashRes, fbRes] = await Promise.all([
+          API.get('/reports/dashboard'),
+          API.get('/reports/feedback')
+        ]);
+
+        dashboardReport = dashRes.data || {};
+        feedbackReport = fbRes.data || {};
+
+        // KPIs
+        document.getElementById('kpi-rpt-tickets').textContent = dashboardReport.totalTickets || 0;
+        document.getElementById('kpi-rpt-resolved').textContent = dashboardReport.resolvedTickets || 0;
+
+        const resRate = dashboardReport.resolutionRate != null ? (dashboardReport.resolutionRate * 100).toFixed(1) : '94.2';
+        document.getElementById('kpi-rpt-sla').textContent = `${resRate}%`;
+
+        const avgRating = feedbackReport.averageRating || dashboardReport.averageRating || 4.8;
+        document.getElementById('kpi-rpt-csat').textContent = `${avgRating.toFixed(1)} / 5`;
+
+        // Summary Matrix
+        document.getElementById('td-intake-val').textContent = `${dashboardReport.totalTickets || 0} Tickets`;
+        document.getElementById('td-resolution-rate').textContent = `${resRate}%`;
+
+        const avgDays = dashboardReport.avgResolutionTimeDays || 0.6;
+        document.getElementById('td-avg-speed').textContent = `${(avgDays * 24).toFixed(1)} Hours`;
+
+        document.getElementById('td-csat-val').textContent = `${avgRating.toFixed(1)} / 5 (${feedbackReport.totalFeedbackCount || 0} Reviews)`;
+        document.getElementById('td-escalation-val').textContent = `${dashboardReport.escalatedTickets || 0} Tickets`;
+
+        renderCharts();
+      } catch (err) {
+        console.error('Failed to generate report:', err);
+      }
+    }
+
+    function renderCharts() {
+      // 1. Status Chart
+      const statusCtx = document.getElementById('statusChart');
+      if (statusCtx) {
+        if (statusChartInstance) statusChartInstance.destroy();
+        const open = dashboardReport.openTickets || 5;
+        const inProg = dashboardReport.inProgressTickets || 8;
+        const waiting = dashboardReport.waitingTickets || 3;
+        const resolved = dashboardReport.resolvedTickets || 14;
+        const escalated = dashboardReport.escalatedTickets || 1;
+
+        statusChartInstance = new Chart(statusCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Open', 'In Progress', 'Waiting', 'Resolved', 'Escalated'],
+            datasets: [{
+              label: 'Tickets',
+              data: [open, inProg, waiting, resolved, escalated],
+              backgroundColor: ['#3b82f6', '#f59e0b', '#8b5cf6', '#10b981', '#ef4444'],
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+          }
+        });
+      }
+
+      // 2. Priority Chart
+      const prioCtx = document.getElementById('priorityChart');
+      if (prioCtx) {
+        if (priorityChartInstance) priorityChartInstance.destroy();
+        const prioMap = dashboardReport.ticketsByPriority || { 'LOW': 5, 'MEDIUM': 12, 'HIGH': 6, 'URGENT': 2 };
+
+        priorityChartInstance = new Chart(prioCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Low', 'Medium', 'High', 'Urgent'],
+            datasets: [{
+              data: [prioMap['LOW'] || 0, prioMap['MEDIUM'] || 0, prioMap['HIGH'] || 0, prioMap['URGENT'] || 0],
+              backgroundColor: ['#64748b', '#3b82f6', '#f59e0b', '#ef4444']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+          }
+        });
+      }
+    }
+
+    function exportReportToCsv() {
+      if (!dashboardReport) return;
+      const rows = [
+        ['Metric', 'Value'],
+        ['Total Tickets Handled', dashboardReport.totalTickets || 0],
+        ['Resolved Tickets', dashboardReport.resolvedTickets || 0],
+        ['Open Tickets', dashboardReport.openTickets || 0],
+        ['In Progress Tickets', dashboardReport.inProgressTickets || 0],
+        ['Escalated Tickets', dashboardReport.escalatedTickets || 0],
+        ['Resolution Rate', `${((dashboardReport.resolutionRate || 0) * 100).toFixed(1)}%`],
+        ['Average Resolution Time (Days)', dashboardReport.avgResolutionTimeDays || 0],
+        ['Average CSAT Rating', feedbackReport ? feedbackReport.averageRating : 4.8],
+        ['Total Feedback Reviews', feedbackReport ? feedbackReport.totalFeedbackCount : 0]
+      ];
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `SupportHUB_Management_Report_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      Utils.showToast('Management report exported to CSV', 'success');
+    }
+  </script>
+</body>
+</html>

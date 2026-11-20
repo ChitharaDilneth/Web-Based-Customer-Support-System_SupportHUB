@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Investigation Workspace - SupportHUB</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-light: rgba(245, 204, 0, 0.15);
+      --amber-note-bg: #fffbeb;
+      --amber-note-border: #fcd34d;
+      --bg-canvas: #f8fafc;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem !important;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Top Breadcrumb & Actions Bar */
+    .workspace-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .back-queue-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      text-decoration: none;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.45rem 0.95rem;
+      transition: all 0.15s ease;
+    }
+
+    .back-queue-link:hover {
+      background: #f1f5f9;
+      transform: translateX(-2px);
+    }
+
+    /* Ticket Header Banner */
+    .ticket-header-banner {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .th-left-meta {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .th-pill-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .th-ref {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      background: rgba(0, 9, 133, 0.06);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+    }
+
+    .th-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0 0 0.45rem 0;
+      line-height: 1.3;
+    }
+
+    .th-sub-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    /* SLA Live Countdown Card in Header */
+    .sla-countdown-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-width: 200px;
+    }
+
+    .sla-countdown-box.breached {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+
+    .sla-countdown-box.at-risk {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .sla-clock-icon {
+      font-size: 1.75rem;
+      color: var(--primary-blue);
+    }
+
+    .sla-countdown-box.breached .sla-clock-icon { color: #dc2626; }
+    .sla-countdown-box.at-risk .sla-clock-icon { color: #d97706; }
+
+    .sla-time-meta h4 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin: 0 0 0.15rem 0;
+    }
+
+    .sla-time-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0;
+    }
+
+    .sla-countdown-box.breached .sla-time-val { color: #dc2626; }
+
+    /* 2-Column Investigation Layout */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1200px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 9, 133, 0.02);
+      margin-bottom: 1.25rem;
+    }
+
+    .panel-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .panel-card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-card-title i {
+      color: var(--primary-blue);
+    }
+
+    /* Conversation Timeline & Thread */
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .message-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      position: relative;
+    }
+
+    .message-card.customer-message {
+      border-left: 4px solid #3b82f6;
+      background: #ffffff;
+    }
+
+    .message-card.officer-reply {
+      border-left: 4px solid var(--primary-blue);
+      background: #f8fafc;
+    }
+
+    .message-card.internal-note {
+      border: 1px solid var(--amber-note-border);
+      border-left: 4px solid var(--accent-yellow);
+      background: var(--amber-note-bg);
+    }
+
+    .msg-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .msg-sender-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-blue);
+      color: #ffffff;
+      font-size: 0.725rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .msg-sender-name {
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .msg-role-pill {
+      font-size: 0.675rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .internal-badge {
+      background: #fef08a;
+      color: #854d0e;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .msg-timestamp {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .msg-body {
+      font-size: 0.875rem;
+      color: var(--text-main);
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    /* Dual Mode Composer */
+    .composer-tabs-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5rem;
+    }
+
+    .composer-tab-btn {
+      background: transparent;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .composer-tab-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .composer-tab-btn.active.tab-public {
+      background: var(--primary-blue);
+      color: #ffffff;
+    }
+
+    .composer-tab-btn.active.tab-internal {
+      background: #d97706;
+      color: #ffffff;
+    }
+
+    .canned-responses-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .canned-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .canned-pill-btn {
+      background: #f1f5f9;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.725rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .canned-pill-btn:hover {
+      background: #ffffff;
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    .composer-textarea {
+      width: 100%;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.85rem;
+      font-family: inherit;
+      font-size: 0.875rem;
+      box-sizing: border-box;
+      outline: none;
+      transition: all 0.2s ease;
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .composer-textarea:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.08);
+    }
+
+    .internal-warning-banner {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.775rem;
+      color: #92400e;
+      margin-bottom: 0.75rem;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Side Column Cards */
+    .side-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.825rem;
+    }
+
+    .side-detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .side-detail-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .side-detail-val {
+      color: var(--text-main);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Actions Panel Buttons */
+    .btn-action-tile {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.65rem 1rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 0.6rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-tile:hover {
+      background: #f8fafc;
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+      transform: translateX(2px);
+    }
+
+    .btn-action-tile.btn-resolve {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: #16a34a;
+    }
+
+    .btn-action-tile.btn-resolve:hover {
+      background: #16a34a;
+      color: #ffffff;
+    }
+
+    .btn-action-tile.btn-escalate {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #dc2626;
+    }
+
+    .btn-action-tile.btn-escalate:hover {
+      background: #dc2626;
+      color: #ffffff;
+    }
+
+    /* Badges */
+    .badge-priority {
+      font-size: 0.725rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .badge-priority.urgent { background: #fee2e2; color: #dc2626; }
+    .badge-priority.high { background: #ffedd5; color: #ea580c; }
+    .badge-priority.medium { background: #fef3c7; color: #d97706; }
+    .badge-priority.low { background: #e0f2fe; color: #0284c7; }
+
+    .badge-status {
+      font-size: 0.725rem;
+      font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border-radius: 6px;
+    }
+    .badge-status.open { background: #eff6ff; color: #2563eb; }
+    .badge-status.in_progress { background: #fff7ed; color: #ea580c; }
+    .badge-status.waiting_for_customer { background: #faf5ff; color: #9333ea; }
+    .badge-status.escalated { background: #fef2f2; color: #dc2626; }
+    .badge-status.resolved { background: #f0fdf4; color: #16a34a; }
+    .badge-status.closed { background: #f1f5f9; color: #475569; }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="logo-support">Support</span><span class="logo-hub">HUB</span>
+        </div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left"></div>
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+                <span>Notifications</span>
+                <button onclick="NotificationsEngine.markAllRead()" style="background: none; border: none; color: var(--primary-blue); font-size: 0.75rem; cursor: pointer; font-weight: 600;">Mark all read</button>
+              </div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <div id="header-profile-capsule"></div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="page-body">
+        
+        <!-- Breadcrumb & Top Bar -->
+        <div class="workspace-top-bar">
+          <a href="assigned-tickets.html" class="back-queue-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Assigned Queue
+          </a>
+          <div style="display: flex; gap: 0.5rem;">
+            <button onclick="reloadTicketData()" class="btn-action-secondary" title="Refresh Ticket">
+              <i class="fa-solid fa-rotate"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Ticket Header Banner -->
+        <div class="ticket-header-banner">
+          <div class="th-left-meta">
+            <div class="th-pill-row">
+              <span class="th-ref" id="t-number">TCK-0000</span>
+              <span class="badge-priority" id="t-priority-badge">MEDIUM</span>
+              <span class="badge-status" id="t-status-badge">OPEN</span>
+              <span style="font-size: 0.75rem; font-weight: 700; background: #f1f5f9; padding: 0.2rem 0.55rem; border-radius: 6px; color: var(--text-muted);" id="t-category-badge">
+                <i class="fa-solid fa-layer-group"></i> Support
+              </span>
+            </div>
+            <h1 class="th-title" id="t-subject">Loading Ticket Details...</h1>
+            <div class="th-sub-meta">
+              <span><i class="fa-solid fa-user" style="color: var(--primary-blue);"></i> <strong id="t-customer-name">Customer</strong></span>
+              <span><i class="fa-regular fa-calendar"></i> Created: <span id="t-created-at">--</span></span>
+              <span><i class="fa-regular fa-clock"></i> Updated: <span id="t-updated-at">--</span></span>
+            </div>
+          </div>
+
+          <!-- SLA Live Clock Meter -->
+          <div class="sla-countdown-box" id="sla-box">
+            <div class="sla-clock-icon"><i class="fa-regular fa-clock"></i></div>
+            <div class="sla-time-meta">
+              <h4>SLA Resolution Time</h4>
+              <p class="sla-time-val" id="sla-countdown-text">Calculating...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-Column Workspace Grid -->
+        <div class="workspace-grid">
+          
+          <!-- Left Column (70%): Original Problem, Conversation Stream, Composer -->
+          <div class="workspace-left-main">
+            
+            <!-- Customer's Problem Description Panel -->
+            <div class="panel-card">
+              <div class="panel-card-head">
+                <div class="panel-card-title">
+                  <i class="fa-solid fa-circle-question"></i>
+                  <span>Original Customer Request</span>
+                </div>
+              </div>
+              <p id="t-description" style="font-size: 0.9rem; line-height: 1.6; color: var(--text-main); margin: 0 0 1rem 0; white-space: pre-wrap;">
+                Loading description...
+              </p>
+              
+              <!-- Customer Attachments Container -->
+              <div id="attachments-container" style="border-top: 1px solid #f1f5f9; padding-top: 0.85rem; display: none;">
+                <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 0.5rem;">
+                  <i class="fa-solid fa-paperclip"></i> Initial Attachments
+                </div>
+                <div id="attachments-list" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+              </div>
+            </div>
+
+            <!-- Conversation & Investigation Notes Stream -->
+            <div class="panel-card">
+              <div class="panel-card-head">
+                <div class="panel-card-title">
+                  <i class="fa-solid fa-comments"></i>
+                  <span>Investigation Timeline & Messages</span>
+                </div>
+                <span style="font-size: 0.775rem; color: var(--text-muted);" id="timeline-count">0 entries</span>
+              </div>
+
+              <div class="timeline-container" id="timeline-stream">
+                <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                  <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+                  Loading timeline...
+                </div>
+              </div>
+
+              <!-- Dual-Mode Composer -->
+              <div class="panel-card" style="margin-bottom: 0; background: #ffffff; border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.25rem;">
+                
+                <!-- Composer Mode Tabs -->
+                <div class="composer-tabs-bar">
+                  <button type="button" class="composer-tab-btn tab-public active" id="tab-btn-public" onclick="switchComposerMode(false)">
+                    <i class="fa-solid fa-reply"></i> Reply to Customer (Public)
+                  </button>
+                  <button type="button" class="composer-tab-btn tab-internal" id="tab-btn-internal" onclick="switchComposerMode(true)">
+                    <i class="fa-solid fa-lock"></i> Internal Staff Note (Private)
+                  </button>
+                </div>
+
+                <!-- Internal Note Caution Banner -->
+                <div class="internal-warning-banner" id="internal-banner">
+                  <i class="fa-solid fa-triangle-exclamation" style="font-size: 1rem;"></i>
+                  <span><strong>INTERNAL INVESTIGATION NOTE:</strong> This entry will be saved securely for Support Officers, Supervisors, and Managers. Customers cannot view this note.</span>
+                </div>
+
+                <!-- Canned Responses Quick Macro Picker -->
+                <div class="canned-responses-bar">
+                  <span class="canned-label"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-yellow);"></i> Quick Templates:</span>
+                  <button type="button" class="canned-pill-btn" onclick="insertCanned('photos')">Request Photos</button>
+                  <button type="button" class="canned-pill-btn" onclick="insertCanned('tracking')">Carrier Inquiry</button>
+                  <button type="button" class="canned-pill-btn" onclick="insertCanned('refund')">Refund In-Review</button>
+                  <button type="button" class="canned-pill-btn" onclick="insertCanned('resolution')">Resolution Summary</button>
+                </div>
+
+                <form id="composer-form" onsubmit="handleSendMessage(event)">
+                  <textarea id="composer-text" class="composer-textarea" placeholder="Type your response to the customer..." required></textarea>
+                  
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; flex-wrap: wrap; gap: 0.75rem;">
+                    <div>
+                      <input type="file" id="reply-file" style="font-size: 0.75rem;" />
+                    </div>
+                    <button type="submit" id="btn-send-reply" class="btn-workspace" style="padding: 0.55rem 1.25rem;">
+                      <i class="fa-solid fa-paper-plane"></i> Send Reply
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Right Column (30%): Customer Context, Order/Refund Tool, Status & Escalation Actions -->
+          <div class="workspace-right-sidebar">
+            
+            <!-- Customer Context Card -->
+            <div class="panel-card">
+              <div class="panel-card-head">
+                <div class="panel-card-title">
+                  <i class="fa-solid fa-id-card"></i>
+                  <span>Customer Profile</span>
+                </div>
+              </div>
+              <div class="side-detail-row">
+                <span class="side-detail-label">Full Name</span>
+                <span class="side-detail-val" id="cust-name">--</span>
+              </div>
+              <div class="side-detail-row">
+                <span class="side-detail-label">Email</span>
+                <span class="side-detail-val" id="cust-email" style="font-size: 0.775rem;">--</span>
+              </div>
+              <div class="side-detail-row">
+                <span class="side-detail-label">Phone</span>
+                <span class="side-detail-val" id="cust-phone">--</span>
+              </div>
+              <div class="side-detail-row">
+                <span class="side-detail-label">Customer ID</span>
+                <span class="side-detail-val" id="cust-id">#--</span>
+              </div>
+            </div>
+
+            <!-- E-Commerce Order & Refund Manager -->
+            <div class="panel-card">
+              <div class="panel-card-head">
+                <div class="panel-card-title">
+                  <i class="fa-solid fa-box-open"></i>
+                  <span>E-Commerce Fulfillment</span>
+                </div>
+              </div>
+              <div class="side-detail-row">
+                <span class="side-detail-label">Order #</span>
+                <span class="side-detail-val" id="order-num-val" style="color: var(--primary-blue);">--</span>
+              </div>
+              <div class="side-detail-row">
+                <span class="side-detail-label">Tracking #</span>
+                <span class="side-detail-val" id="tracking-num-val">--</span>
+              </div>
+              <div style="margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid #f1f5f9;">
+                <label style="display: block; font-size: 0.775rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.35rem;">
+                  <i class="fa-solid fa-hand-holding-dollar"></i> E-Commerce Refund Status
+                </label>
+                <div style="display: flex; gap: 0.4rem;">
+                  <select id="refund-status-select" class="presence-select" style="flex: 1;">
+                    <option value="NONE">NONE</option>
+                    <option value="REQUESTED">REQUESTED</option>
+                    <option value="PROCESSING">PROCESSING</option>
+                    <option value="COMPLETED">COMPLETED</option>
+                    <option value="REJECTED">REJECTED</option>
+                  </select>
+                  <button type="button" onclick="handleUpdateRefundStatus()" class="btn-action-primary" style="padding: 0.35rem 0.65rem; font-size: 0.75rem;">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ticket Lifecycle Operations -->
+            <div class="panel-card">
+              <div class="panel-card-head">
+                <div class="panel-card-title">
+                  <i class="fa-solid fa-sliders"></i>
+                  <span>Ticket Operations</span>
+                </div>
+              </div>
+
+              <!-- Start Working Action -->
+              <button type="button" onclick="quickStatusChange('IN_PROGRESS')" class="btn-action-tile" id="btn-start-work" style="display: none;">
+                <span><i class="fa-solid fa-play" style="color: #ea580c; margin-right: 0.4rem;"></i> Start Working (In Progress)</span>
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+
+              <!-- Request Info Action -->
+              <button type="button" onclick="quickStatusChange('WAITING_FOR_CUSTOMER')" class="btn-action-tile">
+                <span><i class="fa-solid fa-clock" style="color: #9333ea; margin-right: 0.4rem;"></i> Awaiting Customer Info</span>
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+
+              <!-- Mark Resolved Action -->
+              <button type="button" onclick="openResolveModal()" class="btn-action-tile btn-resolve">
+                <span><i class="fa-solid fa-circle-check" style="margin-right: 0.4rem;"></i> Mark Issue Resolved</span>
+                <i class="fa-solid fa-check"></i>
+              </button>
+
+              <!-- Request Escalation Action -->
+              <button type="button" onclick="openEscalateModal()" class="btn-action-tile btn-escalate">
+                <span><i class="fa-solid fa-triangle-exclamation" style="margin-right: 0.4rem;"></i> Request Escalation</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Resolution Confirmation Modal -->
+  <div class="modal-backdrop" id="resolve-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Confirm Ticket Resolution</h3>
+        <button onclick="closeResolveModal()" class="close-modal">&times;</button>
+      </div>
+      <form onsubmit="handleResolveSubmit(event)">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0 0 1rem 0;">
+          Marking this ticket as <strong>RESOLVED</strong> indicates the customer's problem has been investigated and solved. The customer will be prompted to confirm resolution and provide satisfaction feedback.
+        </p>
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">Resolution Summary *</label>
+          <textarea id="resolve-note" class="form-control" rows="3" placeholder="Describe the steps taken to fix the issue or deliver the solution..." required style="width: 100%; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.65rem; font-family: inherit; font-size: 0.825rem; box-sizing: border-box;"></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" onclick="closeResolveModal()" class="btn-action-secondary">Cancel</button>
+          <button type="submit" class="btn-action-primary" style="background: #16a34a;">Confirm & Resolve</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Escalation Request Modal -->
+  <div class="modal-backdrop" id="escalate-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: #dc2626;"><i class="fa-solid fa-triangle-exclamation"></i> Request Supervisor Escalation</h3>
+        <button onclick="closeEscalateModal()" class="close-modal">&times;</button>
+      </div>
+      <form onsubmit="handleEscalateSubmit(event)">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0 0 1rem 0;">
+          This request will flag the ticket as <strong>ESCALATED</strong> and immediately dispatch a high-priority notification to Operations Supervisors for review.
+        </p>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">Escalation Reason *</label>
+          <select id="escalate-reason-select" class="presence-select" style="width: 100%; box-sizing: border-box;" required>
+            <option value="SLA_RISK">SLA Breach Risk (Approaching Deadline)</option>
+            <option value="BEYOND_AUTHORITY">Beyond Officer Authority (Refund / Replacement Limit)</option>
+            <option value="CUSTOMER_DISSATISFACTION">High Customer Dissatisfaction / Dispute</option>
+            <option value="TECHNICAL_COMPLEXITY">Complex Technical Issue Requiring Specialist</option>
+            <option value="OTHER">Other Operational Requirement</option>
+          </select>
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">Detailed Explanation for Supervisor *</label>
+          <textarea id="escalate-note" class="form-control" rows="3" placeholder="Provide background, customer sentiment, and what supervisor intervention is needed..." required style="width: 100%; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.65rem; font-family: inherit; font-size: 0.825rem; box-sizing: border-box;"></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" onclick="closeEscalateModal()" class="btn-action-secondary">Cancel</button>
+          <button type="submit" class="btn-action-primary" style="background: #dc2626;">Submit Escalation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    let currentTicket = null;
+    let ticketId = null;
+    let isInternalNoteMode = false;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.requireRole(['CUSTOMER_SERVICE_OFFICER'])) return;
+
+      Auth.renderSidebar();
+      Auth.renderUserHeader();
+      NotificationsEngine.init();
+
+      const params = new URLSearchParams(window.location.search);
+      ticketId = params.get('id');
+
+      if (!ticketId) {
+        Utils.showToast('No ticket ID provided. Returning to assigned queue...', 'error');
+        setTimeout(() => window.location.href = 'assigned-tickets.html', 1500);
+        return;
+      }
+
+      await loadTicketData();
+    });
+
+    async function loadTicketData() {
+      try {
+        const res = await API.get(`/tickets/${ticketId}`);
+        currentTicket = res.data;
+        renderTicketDetails();
+      } catch (err) {
+        console.error('Failed to load ticket', err);
+        Utils.showToast(err.message || 'Unable to load ticket details', 'error');
+      }
+    }
+
+    function reloadTicketData() {
+      loadTicketData();
+      Utils.showToast('Ticket data refreshed', 'info');
+    }
+
+    function renderTicketDetails() {
+      if (!currentTicket) return;
+
+      const t = currentTicket;
+
+      // Header Meta
+      document.getElementById('t-number').textContent = t.ticketNumber || `TCK-${t.id}`;
+      document.getElementById('t-subject').textContent = t.subject || 'No Subject';
+      document.getElementById('t-created-at').textContent = Utils.formatDate(t.createdAt);
+      document.getElementById('t-updated-at').textContent = Utils.formatDate(t.updatedAt || t.createdAt);
+      document.getElementById('t-customer-name').textContent = t.customerName || 'Customer';
+
+      // Category
+      const catBadge = document.getElementById('t-category-badge');
+      if (catBadge) {
+        catBadge.innerHTML = `<i class="fa-solid fa-layer-group"></i> ${Utils.escapeHtml(t.categoryName || 'Support')}`;
+      }
+
+      // Priority Badge
+      const p = (t.priority || 'MEDIUM').toLowerCase();
+      const pBadge = document.getElementById('t-priority-badge');
+      pBadge.className = `badge-priority ${p}`;
+      pBadge.textContent = t.priority || 'MEDIUM';
+
+      // Status Badge
+      const s = (t.status || 'OPEN').toLowerCase();
+      const sBadge = document.getElementById('t-status-badge');
+      sBadge.className = `badge-status ${s}`;
+      sBadge.textContent = (t.status || 'OPEN').replace(/_/g, ' ');
+
+      // Start Work Button toggle
+      const btnStart = document.getElementById('btn-start-work');
+      if (btnStart) {
+        btnStart.style.display = t.status === 'OPEN' ? 'flex' : 'none';
+      }
+
+      // SLA Countdown Meter
+      renderSlaCountdown();
+
+      // Problem description
+      document.getElementById('t-description').textContent = t.description || 'No description provided.';
+
+      // Customer Info
+      document.getElementById('cust-name').textContent = t.customerName || 'Customer';
+      document.getElementById('cust-email').textContent = t.customerEmail || 'No email provided';
+      document.getElementById('cust-id').textContent = t.customerId ? `#${t.customerId}` : '#N/A';
+
+      // E-Commerce Order & Tracking
+      document.getElementById('order-num-val').textContent = t.orderNumber || 'None';
+      document.getElementById('tracking-num-val').textContent = t.trackingNumber || 'None';
+      
+      const refundSelect = document.getElementById('refund-status-select');
+      if (refundSelect && t.refundStatus) {
+        refundSelect.value = t.refundStatus;
+      }
+
+      // Attachments
+      renderAttachments();
+
+      // Timeline & Messages
+      renderTimelineStream();
+    }
+
+    function renderSlaCountdown() {
+      const t = currentTicket;
+      const slaBox = document.getElementById('sla-box');
+      const textEl = document.getElementById('sla-countdown-text');
+
+      if (!t || !slaBox || !textEl) return;
+
+      if (t.status === 'RESOLVED' || t.status === 'CLOSED') {
+        slaBox.className = 'sla-countdown-box';
+        textEl.textContent = 'Completed (SLA Met)';
+        return;
+      }
+
+      if (t.isSlaBreached || (t.slaRemainingHours != null && t.slaRemainingHours < 0)) {
+        slaBox.className = 'sla-countdown-box breached';
+        textEl.textContent = 'SLA Breached!';
+      } else if (t.slaRemainingHours != null && t.slaRemainingHours <= 4) {
+        slaBox.className = 'sla-countdown-box at-risk';
+        textEl.textContent = `${t.slaRemainingHours}h Left (At Risk)`;
+      } else if (t.slaRemainingHours != null) {
+        slaBox.className = 'sla-countdown-box';
+        textEl.textContent = `${t.slaRemainingHours} Hours Remaining`;
+      } else {
+        slaBox.className = 'sla-countdown-box';
+        textEl.textContent = 'Standard SLA Active';
+      }
+    }
+
+    function renderAttachments() {
+      const container = document.getElementById('attachments-container');
+      const list = document.getElementById('attachments-list');
+      const atts = currentTicket.attachments || [];
+
+      if (!atts || atts.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'block';
+      list.innerHTML = atts.map(a => {
+        const fileName = a.originalFileName || 'attachment';
+        const fileUrl = API.getFileUrl(a.fileUrl);
+        return `
+          <a href="${fileUrl}" target="_blank" class="canned-pill-btn" style="display: inline-flex; align-items: center; gap: 0.35rem; text-decoration: none;">
+            <i class="fa-solid fa-paperclip"></i>
+            <span>${Utils.escapeHtml(fileName)}</span>
+          </a>
+        `;
+      }).join('');
+    }
+
+    function renderTimelineStream() {
+      const container = document.getElementById('timeline-stream');
+      const countEl = document.getElementById('timeline-count');
+      const replies = currentTicket.replies || [];
+      const history = currentTicket.history || [];
+
+      // Combine replies and history into chronological event stream
+      const events = [];
+
+      replies.forEach(r => {
+        events.push({
+          type: 'REPLY',
+          id: r.id,
+          timestamp: new Date(r.createdAt).getTime(),
+          dateStr: r.createdAt,
+          userEmail: r.userName || r.userEmail,
+          role: r.userRole,
+          message: r.message,
+          isInternal: r.internal,
+          attachments: r.attachments || []
+        });
+      });
+
+      history.forEach(h => {
+        events.push({
+          type: 'AUDIT',
+          id: h.id,
+          timestamp: new Date(h.timestamp).getTime(),
+          dateStr: h.timestamp,
+          action: h.action,
+          details: h.details,
+          performedBy: h.performedBy
+        });
+      });
+
+      // Sort chronological
+      events.sort((a, b) => a.timestamp - b.timestamp);
+
+      if (countEl) countEl.textContent = `${events.length} timeline events`;
+
+      if (events.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 2rem; color: var(--text-muted); background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1;">
+            <i class="fa-regular fa-comment-dots" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
+            No replies or notes recorded yet. Use the composer below to begin communication.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = events.map(ev => {
+        if (ev.type === 'REPLY') {
+          const isCustomer = ev.role === 'CUSTOMER';
+          const cardClass = ev.isInternal 
+            ? 'internal-note' 
+            : (isCustomer ? 'customer-message' : 'officer-reply');
+          
+          const roleLabel = ev.isInternal
+            ? '<span class="internal-badge"><i class="fa-solid fa-lock"></i> INTERNAL NOTE</span>'
+            : `<span class="msg-role-pill">${ev.role ? ev.role.replace(/_/g, ' ') : 'Staff'}</span>`;
+
+          const avatarInitials = (ev.userEmail || 'U').substring(0, 2).toUpperCase();
+
+          return `
+            <div class="message-card ${cardClass}">
+              <div class="msg-header">
+                <div class="msg-sender-info">
+                  <div class="msg-avatar" style="${isCustomer ? 'background: #3b82f6;' : (ev.isInternal ? 'background: #d97706;' : 'background: var(--primary-blue);')}">
+                    ${avatarInitials}
+                  </div>
+                  <span class="msg-sender-name">${Utils.escapeHtml(ev.userEmail || 'User')}</span>
+                  ${roleLabel}
+                </div>
+                <span class="msg-timestamp">${Utils.formatDate(ev.dateStr)}</span>
+              </div>
+              <div class="msg-body">${Utils.escapeHtml(ev.message || '')}</div>
+            </div>
+          `;
+        } else {
+          // Audit milestone item
+          return `
+            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.45rem 0.85rem; background: #f1f5f9; border-radius: 8px; font-size: 0.775rem; color: #475569;">
+              <i class="fa-solid fa-clock-rotate-left" style="color: var(--primary-blue);"></i>
+              <strong style="color: var(--text-main);">${ev.action ? ev.action.replace(/_/g, ' ') : 'EVENT'}:</strong>
+              <span>${Utils.escapeHtml(ev.details || '')}</span>
+              <span style="margin-left: auto; color: var(--text-muted); font-size: 0.725rem;">${Utils.formatDate(ev.dateStr)}</span>
+            </div>
+          `;
+        }
+      }).join('');
+    }
+
+    function switchComposerMode(isInternal) {
+      isInternalNoteMode = isInternal;
+      document.getElementById('tab-btn-public').classList.toggle('active', !isInternal);
+      document.getElementById('tab-btn-internal').classList.toggle('active', isInternal);
+      document.getElementById('internal-banner').style.display = isInternal ? 'flex' : 'none';
+      
+      const textarea = document.getElementById('composer-text');
+      const sendBtn = document.getElementById('btn-send-reply');
+
+      if (isInternal) {
+        textarea.placeholder = "Enter private investigation notes, warehouse findings, or internal staff remarks...";
+        sendBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Save Internal Note';
+        sendBtn.style.background = '#d97706';
+      } else {
+        textarea.placeholder = "Type your response to the customer...";
+        sendBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Reply';
+        sendBtn.style.background = 'var(--primary-blue)';
+      }
+    }
+
+    function insertCanned(type) {
+      const textarea = document.getElementById('composer-text');
+      const templates = {
+        photos: "Hello,\n\nTo help us investigate this issue further, could you please provide clear photographs of the received package, outer shipping label, and the specific damage?\n\nThank you for your cooperation.",
+        tracking: "Hello,\n\nWe have initiated an inquiry with the carrier regarding your shipment tracking. We will update you as soon as the logistics team provides confirmation.",
+        refund: "Hello,\n\nYour return/refund request is currently being reviewed by our fulfillment department. We are verifying the delivery records and will provide status within 24 hours.",
+        resolution: "Hello,\n\nWe are pleased to inform you that this issue has been resolved. Please review the updated details. If everything is to your satisfaction, please confirm resolution.\n\nThank you for choosing SupportHUB."
+      };
+      if (templates[type]) {
+        textarea.value = templates[type];
+        textarea.focus();
+      }
+    }
+
+    async function handleSendMessage(e) {
+      e.preventDefault();
+      const message = document.getElementById('composer-text').value.trim();
+      const fileInput = document.getElementById('reply-file');
+      const file = fileInput.files[0];
+
+      if (!message) {
+        Utils.showToast('Please enter a message before sending', 'warning');
+        return;
+      }
+
+      const btn = document.getElementById('btn-send-reply');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+
+      try {
+        await API.post(`/tickets/${ticketId}/replies`, {
+          message: message,
+          isInternal: isInternalNoteMode
+        });
+
+        // If attachment present, upload
+        if (file) {
+          const formData = new FormData();
+          formData.append('file', file);
+          await API.postMultipart(`/tickets/${ticketId}/attachments`, formData);
+        }
+
+        Utils.showToast(isInternalNoteMode ? 'Internal note saved securely' : 'Reply sent to customer', 'success');
+        document.getElementById('composer-text').value = '';
+        fileInput.value = '';
+        await loadTicketData();
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to submit response', 'error');
+      } finally {
+        btn.disabled = false;
+        switchComposerMode(isInternalNoteMode);
+      }
+    }
+
+    async function quickStatusChange(status) {
+      try {
+        await API.patch(`/tickets/${ticketId}/status`, { status, note: `Status updated by officer to ${status}` });
+        Utils.showToast(`Ticket status updated to ${status.replace(/_/g, ' ')}`, 'success');
+        await loadTicketData();
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to update status', 'error');
+      }
+    }
+
+    async function handleUpdateRefundStatus() {
+      const refundStatus = document.getElementById('refund-status-select').value;
+      try {
+        await API.patch(`/tickets/${ticketId}/refund-status`, { refundStatus, note: `Refund status updated by officer` });
+        Utils.showToast(`Refund status set to ${refundStatus}`, 'success');
+        await loadTicketData();
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to update refund status', 'error');
+      }
+    }
+
+    /* Resolve Modal */
+    function openResolveModal() {
+      document.getElementById('resolve-note').value = '';
+      document.getElementById('resolve-modal').classList.add('show');
+    }
+
+    function closeResolveModal() {
+      document.getElementById('resolve-modal').classList.remove('show');
+    }
+
+    async function handleResolveSubmit(e) {
+      e.preventDefault();
+      const note = document.getElementById('resolve-note').value.trim();
+      try {
+        await API.patch(`/tickets/${ticketId}/status`, {
+          status: 'RESOLVED',
+          note: note
+        });
+        Utils.showToast('Ticket marked as RESOLVED', 'success');
+        closeResolveModal();
+        await loadTicketData();
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to resolve ticket', 'error');
+      }
+    }
+
+    /* Escalation Modal */
+    function openEscalateModal() {
+      document.getElementById('escalate-note').value = '';
+      document.getElementById('escalate-modal').classList.add('show');
+    }
+
+    function closeEscalateModal() {
+      document.getElementById('escalate-modal').classList.remove('show');
+    }
+
+    async function handleEscalateSubmit(e) {
+      e.preventDefault();
+      const reason = document.getElementById('escalate-reason-select').value;
+      const note = document.getElementById('escalate-note').value.trim();
+      const fullNote = `[Reason: ${reason}] ${note}`;
+
+      try {
+        await API.patch(`/tickets/${ticketId}/status`, {
+          status: 'ESCALATED',
+          note: fullNote
+        });
+        Utils.showToast('Ticket escalated to Operations Supervisor', 'success');
+        closeEscalateModal();
+        await loadTicketData();
+      } catch (err) {
+        Utils.showToast(err.message || 'Failed to escalate ticket', 'error');
+      }
+    }
+  </script>
+</body>
+
+</html>

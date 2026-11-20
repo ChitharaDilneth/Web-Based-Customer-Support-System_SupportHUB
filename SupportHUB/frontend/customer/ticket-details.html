@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Details - SupportHUB</title>
+  <meta name="description" content="Track your support ticket progress, conversation timeline, officer replies, and resolution confirmation.">
+
+  <!-- Typography & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Theme Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css?v=14.0">
+  <link rel="stylesheet" href="../css/components.css?v=14.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0">
+  <link rel="stylesheet" href="../css/responsive.css?v=14.0">
+
+  <style>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 - Customer Ticket Details & Tracking Styles
+       Brand: Primary Blue #000985 | Accent Yellow #F5CC00 | Pure White Surface
+       Theme: Subtle Glassmorphism, Rounded Cards (16px), Soft Shadows
+       ========================================================================== */
+
+    :root {
+      --td-primary: #000985;
+      --td-primary-dark: #00065c;
+      --td-primary-light: #eff2ff;
+      --td-accent: #F5CC00;
+      --td-accent-hover: #e0bb00;
+      --td-accent-light: #fffbeb;
+      --td-bg-page: #f8fafc;
+      --td-surface-white: #ffffff;
+      --td-glass-bg: rgba(255, 255, 255, 0.88);
+      --td-glass-border: rgba(0, 9, 133, 0.08);
+      --td-glass-blur: blur(14px) saturate(180%);
+      --td-shadow-soft: 0 10px 30px -5px rgba(0, 9, 133, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --td-shadow-hover: 0 16px 36px -6px rgba(0, 9, 133, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+      --td-border-subtle: #e2e8f0;
+      --td-text-title: #0f172a;
+      --td-text-body: #475569;
+      --td-text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--td-bg-page);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--td-text-body);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .page-body {
+      padding: 1.25rem 1.75rem 3.5rem 1.75rem !important;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* --------------------------------------------------------------------------
+       Top Sticky Header
+       -------------------------------------------------------------------------- */
+    .top-header {
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: var(--td-glass-blur);
+      -webkit-backdrop-filter: var(--td-glass-blur);
+      border-bottom: 1px solid var(--td-glass-border);
+      padding: 0.85rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--td-text-muted);
+    }
+
+    .header-breadcrumb a {
+      color: var(--td-primary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .header-breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .header-breadcrumb .divider {
+      color: #cbd5e1;
+      font-size: 0.75rem;
+    }
+
+    .header-breadcrumb .current {
+      color: var(--td-text-title);
+      font-weight: 700;
+    }
+
+    .header-profile-capsule {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--td-border-subtle);
+      padding: 0.35rem 0.85rem 0.35rem 0.45rem;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--td-primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.775rem;
+      font-weight: 700;
+      border: 2px solid var(--td-accent);
+    }
+
+    /* --------------------------------------------------------------------------
+       Ticket Header Banner Card
+       -------------------------------------------------------------------------- */
+    .ticket-header-banner {
+      background: var(--td-surface-white);
+      border: 1px solid var(--td-border-subtle);
+      border-radius: 20px;
+      padding: 1.5rem 1.75rem;
+      box-shadow: var(--td-shadow-soft);
+      margin-bottom: 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .ticket-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-back-tickets {
+      background: var(--td-primary-light);
+      border: 1px solid rgba(0, 9, 133, 0.1);
+      color: var(--td-primary);
+      font-size: 0.825rem;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-back-tickets:hover {
+      background: #e0e7ff;
+      transform: translateX(-2px);
+    }
+
+    .ticket-ref-title-wrap h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--td-text-title);
+      margin: 0 0 0.2rem 0;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .ticket-subject-line {
+      font-size: 0.95rem;
+      color: var(--td-text-body);
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .ticket-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    /* Badges */
+    .badge-status-lg {
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .badge-status-lg.status-OPEN {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-status-lg.status-IN_PROGRESS {
+      background: #fffbeb;
+      color: #d97706;
+      border: 1px solid #fde68a;
+    }
+
+    .badge-status-lg.status-WAITING_FOR_CUSTOMER {
+      background: #faf5ff;
+      color: #9333ea;
+      border: 1px solid #e9d5ff;
+    }
+
+    .badge-status-lg.status-RESOLVED {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-status-lg.status-CLOSED {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+
+    .badge-priority-lg {
+      font-size: 0.775rem;
+      font-weight: 800;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .badge-priority-lg.priority-LOW { background: #f1f5f9; color: #475569; }
+    .badge-priority-lg.priority-MEDIUM { background: #eef2ff; color: var(--td-primary); }
+    .badge-priority-lg.priority-HIGH { background: #fef3c7; color: #b45309; }
+    .badge-priority-lg.priority-URGENT { background: #fee2e2; color: #dc2626; }
+
+    /* --------------------------------------------------------------------------
+       2-Column Layout Grid
+       -------------------------------------------------------------------------- */
+    .td-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* Cards */
+    .td-panel-card {
+      background: var(--td-surface-white);
+      border: 1px solid var(--td-border-subtle);
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: var(--td-shadow-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title-sh {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--td-text-title);
+      margin: 0 0 1.25rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* --------------------------------------------------------------------------
+       Resolution Confirmation & Reopen Action Banner (Part 10)
+       -------------------------------------------------------------------------- */
+    .resolution-action-banner {
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+      border: 1.5px solid #86efac;
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .resolution-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .resolution-info-box {
+      background: #ffffff;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.85rem;
+      font-size: 0.8rem;
+    }
+
+    .resolution-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .resolution-info-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .resolution-info-val {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .resolution-prompt-bar {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px dashed #86efac;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .resolution-prompt-text {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #065f46;
+      font-family: var(--font-heading);
+    }
+
+    .btn-confirm-yes {
+      background: #059669;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 1.25rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+
+    .btn-confirm-yes:hover {
+      background: #047857;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(5, 150, 105, 0.4);
+    }
+
+    .btn-reopen-no {
+      background: #ffffff;
+      color: #b45309;
+      border: 1.5px solid #fde68a;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      padding: 0.65rem 1.15rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-reopen-no:hover {
+      background: #fffbeb;
+      border-color: #f59e0b;
+      transform: translateY(-1px);
+    }
+
+    /* Submitted Feedback Card */
+    .submitted-feedback-card {
+      background: linear-gradient(135deg, #ffffff 0%, #fefce8 100%);
+      border: 1.5px solid #fde047;
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 8px 24px rgba(245, 204, 0, 0.12);
+      display: none;
+    }
+
+    .fb-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(245, 204, 0, 0.3);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .fb-stars-display {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: #eab308;
+      font-size: 1.25rem;
+    }
+
+    .fb-content-box {
+      background: #ffffff;
+      border: 1px solid rgba(245, 204, 0, 0.3);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      font-size: 0.875rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .resolution-text h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #065f46;
+      margin: 0 0 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .resolution-text p {
+      font-size: 0.85rem;
+      color: #047857;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .resolution-banner-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-feedback-action {
+      background: #059669;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.825rem;
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1.15rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+    }
+
+    .btn-feedback-action:hover {
+      background: #047857;
+      transform: translateY(-1px);
+    }
+
+    .btn-reopen-action {
+      background: #ffffff;
+      color: #b45309;
+      border: 1px solid #fde68a;
+      font-weight: 700;
+      font-size: 0.825rem;
+      border-radius: 8px;
+      padding: 0.55rem 1.15rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-reopen-action:hover {
+      background: #fffbeb;
+      border-color: #f59e0b;
+    }
+
+    /* --------------------------------------------------------------------------
+       Issue Description Container
+       -------------------------------------------------------------------------- */
+    .description-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.25rem 1.45rem;
+      font-size: 0.925rem;
+      line-height: 1.7;
+      color: #1e293b;
+      white-space: pre-line;
+      margin-bottom: 1.25rem;
+    }
+
+    .attachments-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px dashed #e2e8f0;
+    }
+
+    .attachment-chip {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--td-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+    }
+
+    .attachment-chip:hover {
+      background: var(--td-primary-light);
+      border-color: var(--td-primary);
+    }
+
+    /* --------------------------------------------------------------------------
+       Conversation Thread & Bubbles
+       -------------------------------------------------------------------------- */
+    .conversation-thread {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .message-bubble-row {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message-bubble-row.customer-msg {
+      align-items: flex-end;
+    }
+
+    .message-bubble-row.officer-msg {
+      align-items: flex-start;
+    }
+
+    .msg-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-bottom: 0.35rem;
+    }
+
+    .msg-bubble {
+      max-width: 82%;
+      padding: 1.15rem 1.35rem;
+      border-radius: 16px;
+      font-size: 0.925rem;
+      line-height: 1.6;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      white-space: pre-line;
+    }
+
+    .customer-msg .msg-bubble {
+      background: var(--td-primary);
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .officer-msg .msg-bubble {
+      background: #f8fafc;
+      color: #0f172a;
+      border: 1px solid #e2e8f0;
+      border-bottom-left-radius: 4px;
+    }
+
+    .officer-badge-tag {
+      background: var(--td-accent-light);
+      color: #b45309;
+      font-size: 0.685rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #fde68a;
+      text-transform: uppercase;
+    }
+
+    /* --------------------------------------------------------------------------
+       Customer Reply Composer
+       -------------------------------------------------------------------------- */
+    .reply-composer-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.35rem;
+    }
+
+    .reply-textarea-sh {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+      color: var(--td-text-title);
+      font-family: inherit;
+      outline: none;
+      background: #ffffff;
+      transition: all 0.15s ease;
+      margin-bottom: 0.85rem;
+      resize: vertical;
+    }
+
+    .reply-textarea-sh:focus {
+      border-color: var(--td-primary);
+      box-shadow: 0 0 0 2px rgba(0, 9, 133, 0.12);
+    }
+
+    .composer-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn-send-reply {
+      background: var(--td-primary);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.875rem;
+      border: none;
+      border-radius: 10px;
+      padding: 0.65rem 1.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.25);
+      transition: all 0.15s ease;
+    }
+
+    .btn-send-reply:hover:not(:disabled) {
+      background: var(--td-primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-send-reply:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Thread Locked Banner */
+    .thread-locked-banner {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.875rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       Right Column: Metadata & Status History
+       -------------------------------------------------------------------------- */
+    .meta-list-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.825rem;
+    }
+
+    .meta-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .meta-label {
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .meta-val {
+      font-weight: 800;
+      color: var(--td-text-title);
+      text-align: right;
+    }
+
+    /* Milestone Audit Timeline */
+    .milestone-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+      padding-left: 1.25rem;
+    }
+
+    .milestone-timeline::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 4px;
+      width: 2px;
+      background: #e2e8f0;
+    }
+
+    .timeline-node {
+      position: relative;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -1.25rem;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--td-primary);
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 0 2px var(--td-primary);
+    }
+
+    .timeline-node-title {
+      font-size: 0.825rem;
+      font-weight: 800;
+      color: var(--td-text-title);
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-node-desc {
+      font-size: 0.775rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .timeline-node-time {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      margin-top: 0.15rem;
+    }
+
+    /* --------------------------------------------------------------------------
+       Reopen & Feedback Modals
+       -------------------------------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .modal-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card-sh {
+      background: #ffffff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 540px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--td-border-subtle);
+      overflow: hidden;
+      animation: modalSlideUp 0.2s ease-out;
+    }
+
+    .modal-header-sh {
+      background: linear-gradient(135deg, var(--td-primary) 0%, var(--td-primary-dark) 100%);
+      color: #ffffff;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header-sh h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .modal-body-sh {
+      padding: 1.5rem;
+    }
+
+    .modal-footer-sh {
+      padding: 1rem 1.5rem;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* Star Rating Widget */
+    .star-rating-row {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 1.75rem;
+      cursor: pointer;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+    }
+
+    .star-rating-row i.active, .star-rating-row i:hover {
+      color: var(--td-accent);
+    }
+
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 1024px) {
+      .td-layout-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .page-body { padding: 1rem !important; }
+      .ticket-header-banner { flex-direction: column; align-items: flex-start; }
+      .msg-bubble { max-width: 95%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- Standard SupportHUB Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo"><span class="logo-support">Support</span><span class="logo-hub">HUB</span></div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+
+      <!-- Sticky Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="header-breadcrumb">
+            <a href="customer-dashboard.html">Dashboard</a>
+            <span class="divider">/</span>
+            <a href="my-tickets.html">My Tickets</a>
+            <span class="divider">/</span>
+            <span class="current" id="breadcrumb-ticket-ref">Ticket Details</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Notifications Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; color: #0f172a;">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+
+          <!-- Customer Profile Capsule -->
+          <div class="header-profile-capsule" id="header-profile-capsule">
+            <div class="header-avatar" id="header-user-avatar">CU</div>
+            <div style="text-align: left; line-height: 1.2;">
+              <div id="header-user-name" style="font-size: 0.775rem; font-weight: 700; color: #0f172a;">Customer</div>
+              <div id="header-user-role" style="font-size: 0.675rem; color: #64748b;">Customer Account</div>
+            </div>
+          </div>
+
+          <!-- Logout Button -->
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out" style="margin-left: 0.5rem;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Page Body -->
+      <div class="page-body">
+
+        <!-- Access Denied State (If unauthorized customer attempts to view) -->
+        <div id="unauthorized-access-card" class="td-panel-card" style="display: none; text-align: center; padding: 3.5rem 1.5rem;">
+          <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: #ef4444; margin-bottom: 1rem; display: block;"></i>
+          <h2 style="font-size: 1.45rem; font-weight: 800; color: #0f172a; margin-bottom: 0.4rem;">Unauthorized Ticket Access</h2>
+          <p style="font-size: 0.875rem; color: #64748b; max-width: 480px; margin: 0 auto 1.5rem auto;">
+            You do not have permission to access or view this support ticket. You can only view support tickets created from your own customer account.
+          </p>
+          <a href="my-tickets.html" class="btn btn-primary" style="background: var(--td-primary); font-weight: 700; border-radius: 8px;">
+            <i class="fa-solid fa-arrow-left"></i> Return to My Tickets
+          </a>
+        </div>
+
+        <!-- Authorized Ticket Content View -->
+        <div id="authorized-ticket-view">
+
+          <!-- 4. Header Banner & Action Control Bar -->
+          <div class="ticket-header-banner">
+            <div class="ticket-header-left">
+              <a href="my-tickets.html" class="btn-back-tickets">
+                <i class="fa-solid fa-arrow-left"></i> Back to My Tickets
+              </a>
+              <div class="ticket-ref-title-wrap">
+                <h1 id="ticket-number-heading">
+                  <span id="ticket-ref-label">TICK-XXXX</span>
+                </h1>
+                <p class="ticket-subject-line" id="ticket-subject-heading">Loading ticket subject...</p>
+              </div>
+            </div>
+
+            <div class="ticket-header-right">
+              <span class="badge-status-lg status-OPEN" id="ticket-status-badge">
+                <i class="fa-solid fa-circle" style="font-size: 0.45rem;"></i> OPEN
+              </span>
+              <span class="badge-priority-lg priority-MEDIUM" id="ticket-priority-badge">
+                MEDIUM
+              </span>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.print()" style="border-radius: 8px; font-weight: 600;" title="Print Ticket Summary">
+                <i class="fa-solid fa-print"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 6. Resolution Information & Confirmation Card (Visible when RESOLVED) -->
+          <div class="resolution-action-banner" id="resolution-action-banner" style="display: none;">
+            <div class="resolution-top-row">
+              <div class="resolution-text">
+                <h4><i class="fa-solid fa-circle-check" style="color: #059669;"></i> Ticket Resolution Notice</h4>
+                <p id="resolution-explanation-text">Our support team has marked this inquiry as resolved. Please review the solution details below and confirm whether your issue has been addressed.</p>
+              </div>
+              <span class="badge-status-lg status-RESOLVED" style="font-size: 0.78rem;">
+                <i class="fa-solid fa-circle" style="font-size: 0.4rem;"></i> RESOLVED
+              </span>
+            </div>
+
+            <!-- Resolution Information Details Box -->
+            <div class="resolution-info-box">
+              <div class="resolution-info-item">
+                <span class="resolution-info-label">Ticket Reference</span>
+                <span class="resolution-info-val" id="res-ticket-ref">#TKT-XXXX</span>
+              </div>
+              <div class="resolution-info-item">
+                <span class="resolution-info-label">Resolved On</span>
+                <span class="resolution-info-val" id="res-date">--</span>
+              </div>
+              <div class="resolution-info-item">
+                <span class="resolution-info-label">Resolved By Officer</span>
+                <span class="resolution-info-val" id="res-officer">Support Specialist</span>
+              </div>
+              <div class="resolution-info-item" style="grid-column: 1 / -1;">
+                <span class="resolution-info-label">Solution Provided</span>
+                <span class="resolution-info-val" id="res-solution-text" style="font-weight: 500; color: #475569; font-size: 0.825rem; line-height: 1.45;">
+                  Support specialist has reviewed your request and provided a resolution in the message thread below.
+                </span>
+              </div>
+            </div>
+
+            <!-- Customer Resolution Confirmation Prompt -->
+            <div class="resolution-prompt-bar">
+              <div class="resolution-prompt-text">
+                <i class="fa-solid fa-clipboard-question" style="color: #059669; font-size: 1.15rem;"></i>
+                <span>Has your issue been resolved?</span>
+              </div>
+              <div class="resolution-banner-actions">
+                <button type="button" class="btn-confirm-yes" id="btn-leave-feedback-action" onclick="openFeedbackModal()">
+                  <i class="fa-solid fa-thumbs-up"></i> Yes, My Issue is Resolved
+                </button>
+                <button type="button" class="btn-reopen-no" id="btn-reopen-ticket-action" onclick="openReopenModal()">
+                  <i class="fa-solid fa-rotate-right"></i> No, I Still Need Help
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submitted Customer Feedback Display Card (Visible when feedback was already recorded) -->
+          <div class="submitted-feedback-card" id="submitted-feedback-card">
+            <div class="fb-header-row">
+              <div style="display: flex; align-items: center; gap: 0.65rem;">
+                <div style="width: 36px; height: 36px; border-radius: 10px; background: #fef08a; color: #854d0e; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <div>
+                  <h4 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #854d0e;">Customer Satisfaction Feedback Recorded</h4>
+                  <div style="font-size: 0.75rem; color: #a16207; margin-top: 0.15rem;" id="fb-submitted-date">Submitted on --</div>
+                </div>
+              </div>
+              <div class="fb-stars-display" id="fb-stars-display">
+                <!-- Stars rendered dynamically -->
+              </div>
+            </div>
+
+            <div class="fb-content-box">
+              <div style="font-size: 0.75rem; font-weight: 700; color: #854d0e; text-transform: uppercase; margin-bottom: 0.35rem;">Customer Review:</div>
+              <div id="fb-submitted-comment" style="font-style: italic; color: #1e293b;">"No written comment provided."</div>
+              <div id="fb-submitted-suggestions-wrap" style="margin-top: 0.65rem; padding-top: 0.65rem; border-top: 1px dashed #fde047; display: none;">
+                <span style="font-weight: 700; color: #854d0e; font-size: 0.75rem;">Suggestions:</span>
+                <span id="fb-submitted-suggestions" style="color: #475569;">--</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+              <span style="font-size: 0.75rem; color: #854d0e; font-weight: 600;">
+                <i class="fa-solid fa-circle-check" style="color: #16a34a;"></i> Thank you! Your review helps our Quality Assurance team improve support standards.
+              </span>
+              <button type="button" class="btn-reopen-no" id="btn-reopen-from-fb" onclick="openReopenModal()" style="font-size: 0.78rem; padding: 0.4rem 0.85rem;">
+                <i class="fa-solid fa-rotate-right"></i> Problem persists? Reopen Ticket
+              </button>
+            </div>
+          </div>
+
+          <!-- 2-Column Main Command Grid -->
+          <div class="td-layout-grid">
+
+            <!-- LEFT COLUMN: Main Details, Description & Conversation Thread -->
+            <div>
+
+              <!-- 4. Issue Description & Attachments Card -->
+              <div class="td-panel-card">
+                <div class="card-title-sh">
+                  <span><i class="fa-solid fa-align-left" style="color: var(--td-primary); margin-right: 0.45rem;"></i> Problem Description</span>
+                  <span style="font-size: 0.775rem; color: #64748b; font-weight: 600;" id="ticket-created-date">
+                    <i class="fa-regular fa-clock"></i> Created: --
+                  </span>
+                </div>
+
+                <div class="description-box" id="ticket-description-text">
+                  Loading description...
+                </div>
+
+                <!-- Attachments Gallery -->
+                <div id="attachments-section" style="display: none;">
+                  <div style="font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 0.4rem;">
+                    <i class="fa-solid fa-paperclip" style="color: var(--td-primary);"></i> Uploaded Attachments & Files:
+                  </div>
+                  <div class="attachments-gallery" id="attachments-gallery"></div>
+                </div>
+              </div>
+
+              <!-- 4 & 5. Conversation Thread & Discussion Hub -->
+              <div class="td-panel-card">
+                <div class="card-title-sh">
+                  <span>
+                    <i class="fa-solid fa-comments" style="color: var(--td-primary); margin-right: 0.45rem;"></i>
+                    Support Communication
+                  </span>
+                  <span id="reply-count-badge" style="font-size: 0.75rem; background: #f1f5f9; color: #475569; padding: 0.2rem 0.65rem; border-radius: 999px; font-weight: 700;">
+                    0 Replies
+                  </span>
+                </div>
+
+                <!-- Conversation Messages Timeline -->
+                <div class="conversation-thread" id="conversation-thread">
+                  <div style="text-align: center; color: #94a3b8; padding: 1.5rem; font-size: 0.85rem;">
+                    Loading conversation history...
+                  </div>
+                </div>
+
+                <!-- 5. Reply Composer (Unlocked for active tickets) -->
+                <div class="reply-composer-card" id="reply-composer-card">
+                  <form id="ticket-reply-form" onsubmit="handleCustomerReplySubmit(event)">
+                    <label for="reply-message-input" style="font-size: 0.8rem; font-weight: 700; color: #0f172a; margin-bottom: 0.4rem; display: block;">
+                      <i class="fa-solid fa-reply" style="color: var(--td-primary); margin-right: 0.35rem;"></i>
+                      Reply to Support Officer
+                    </label>
+                    <textarea id="reply-message-input" 
+                              class="reply-textarea-sh" 
+                              rows="4" 
+                              placeholder="Type your reply, additional details, or answer to the officer here..." 
+                              required></textarea>
+
+                    <div class="composer-toolbar">
+                      <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label for="reply-file-input" class="btn btn-sm btn-outline-secondary" style="font-size: 0.785rem; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                          <i class="fa-solid fa-paperclip"></i> Attach File
+                        </label>
+                        <input type="file" id="reply-file-input" style="display: none;" onchange="handleReplyFileChange(this.files)" accept="image/*,.pdf,.doc,.docx" />
+                        <span id="reply-file-name-label" style="font-size: 0.75rem; color: #64748b; font-weight: 600;"></span>
+                      </div>
+
+                      <button type="submit" id="btn-send-reply" class="btn-send-reply">
+                        <i class="fa-solid fa-paper-plane" style="color: var(--td-accent);"></i> Send Reply
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Locked Thread Banner (When RESOLVED or CLOSED) -->
+                <div class="thread-locked-banner" id="thread-locked-banner" style="display: none;">
+                  <i class="fa-solid fa-lock" style="font-size: 1.25rem; color: #94a3b8; margin-bottom: 0.4rem; display: block;"></i>
+                  <strong style="color: #0f172a;" id="locked-thread-title">This ticket thread is currently locked.</strong>
+                  <p style="margin: 0.25rem 0 0 0; font-size: 0.825rem;" id="locked-thread-desc">
+                    If you still need assistance, click <strong>"Still Need Help? Reopen Ticket"</strong> above to reopen the conversation.
+                  </p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Metadata & Status Milestones -->
+            <div>
+
+              <!-- Metadata Card -->
+              <div class="td-panel-card">
+                <h3 class="card-title-sh" style="margin-bottom: 1rem;">
+                  <span><i class="fa-solid fa-circle-info" style="color: var(--td-primary); margin-right: 0.4rem;"></i> Ticket Details</span>
+                </h3>
+
+                <div class="meta-list-group">
+                  <div class="meta-row">
+                    <span class="meta-label">Category:</span>
+                    <span class="meta-val" id="meta-category">-</span>
+                  </div>
+
+                  <div class="meta-row">
+                    <span class="meta-label">Assigned Officer:</span>
+                    <span class="meta-val" id="meta-officer" style="color: var(--td-primary);">-</span>
+                  </div>
+
+                  <div class="meta-row">
+                    <span class="meta-label">SLA Target:</span>
+                    <span class="meta-val" id="meta-sla">-</span>
+                  </div>
+
+                  <div class="meta-row" id="meta-order-row" style="display: none;">
+                    <span class="meta-label">Order #:</span>
+                    <span class="meta-val" id="meta-order-number">-</span>
+                  </div>
+
+                  <div class="meta-row" id="meta-tracking-row" style="display: none;">
+                    <span class="meta-label">Tracking #:</span>
+                    <span class="meta-val" id="meta-tracking-number">-</span>
+                  </div>
+
+                  <div class="meta-row">
+                    <span class="meta-label">Last Updated:</span>
+                    <span class="meta-val" id="meta-updated-date">-</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. Customer-Visible Milestone History Card -->
+              <div class="td-panel-card">
+                <h3 class="card-title-sh" style="margin-bottom: 1.25rem;">
+                  <span><i class="fa-solid fa-timeline" style="color: var(--td-primary); margin-right: 0.4rem;"></i> Status Milestones</span>
+                </h3>
+
+                <div class="milestone-timeline" id="milestone-timeline">
+                  <div style="font-size: 0.8rem; color: #94a3b8; text-align: center;">Loading milestones...</div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Reopen Ticket Modal -->
+  <div class="modal-backdrop" id="reopen-modal">
+    <div class="modal-card-sh">
+      <div class="modal-header-sh">
+        <h3><i class="fa-solid fa-rotate-right" style="color: var(--td-accent); margin-right: 0.4rem;"></i> Reopen Support Ticket</h3>
+        <button type="button" onclick="closeReopenModal()" style="background: none; border: none; color: #fff; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form id="reopen-ticket-form" onsubmit="handleReopenSubmit(event)">
+        <div class="modal-body-sh">
+          <p style="font-size: 0.85rem; color: #475569; margin: 0 0 1rem 0;">
+            Please provide a short explanation of why this issue requires further assistance so our support officer can resume work immediately.
+          </p>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 0.775rem; font-weight: 700;">Reason for Reopening <span style="color: #ef4444;">*</span></label>
+            <textarea id="reopen-reason-input" class="reply-textarea-sh" rows="3" placeholder="e.g. The proposed solution did not resolve the error message..." required minlength="5"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer-sh">
+          <button type="button" class="btn btn-secondary" onclick="closeReopenModal()" style="border-radius: 8px;">Cancel</button>
+          <button type="submit" id="btn-confirm-reopen" class="btn-send-reply">
+            Confirm & Reopen Ticket
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div class="modal-backdrop" id="feedback-modal">
+    <div class="modal-card-sh">
+      <div class="modal-header-sh">
+        <h3><i class="fa-solid fa-star" style="color: var(--td-accent); margin-right: 0.4rem;"></i> Resolution Satisfaction Feedback</h3>
+        <button type="button" onclick="closeFeedbackModal()" style="background: none; border: none; color: #fff; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form id="submit-feedback-form" onsubmit="handleFeedbackSubmit(event)">
+        <div class="modal-body-sh">
+          <p style="font-size: 0.85rem; color: #475569; margin: 0 0 1rem 0;">
+            How satisfied were you with the assistance provided for ticket <strong id="feedback-ticket-number">#TICK</strong>?
+          </p>
+
+          <label class="form-label" style="font-size: 0.8rem; font-weight: 700; margin-bottom: 0.35rem; display: block;">Overall Satisfaction Rating <span style="color: #ef4444;">*</span></label>
+          <div class="star-rating-row" id="star-rating-row">
+            <i class="fa-solid fa-star" data-rating="1" onclick="setFeedbackRating(1)" onmouseenter="previewRating(1)" onmouseleave="resetRatingPreview()" title="1 - Very Poor"></i>
+            <i class="fa-solid fa-star" data-rating="2" onclick="setFeedbackRating(2)" onmouseenter="previewRating(2)" onmouseleave="resetRatingPreview()" title="2 - Poor"></i>
+            <i class="fa-solid fa-star" data-rating="3" onclick="setFeedbackRating(3)" onmouseenter="previewRating(3)" onmouseleave="resetRatingPreview()" title="3 - Average"></i>
+            <i class="fa-solid fa-star" data-rating="4" onclick="setFeedbackRating(4)" onmouseenter="previewRating(4)" onmouseleave="resetRatingPreview()" title="4 - Good"></i>
+            <i class="fa-solid fa-star active" data-rating="5" onclick="setFeedbackRating(5)" onmouseenter="previewRating(5)" onmouseleave="resetRatingPreview()" title="5 - Excellent"></i>
+          </div>
+          <div id="feedback-rating-label" style="font-size: 0.825rem; font-weight: 800; color: #b45309; text-align: center; margin-bottom: 1.15rem;">
+            5 - Excellent
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label" style="font-size: 0.775rem; font-weight: 700;">Comments & Feedback</label>
+            <textarea id="feedback-comment-input" class="reply-textarea-sh" rows="3" placeholder="Tell us what went well or how our support officer assisted you..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size: 0.775rem; font-weight: 700;">Suggestions for Improvement (Optional)</label>
+            <input type="text" id="feedback-suggestions-input" class="form-control" placeholder="Any suggestions to make SupportHUB even better?" style="border-radius: 10px;" />
+          </div>
+        </div>
+        <div class="modal-footer-sh">
+          <button type="button" class="btn btn-secondary" onclick="closeFeedbackModal()" style="border-radius: 8px;">Cancel</button>
+          <button type="submit" id="btn-submit-feedback" class="btn-send-reply">
+            Submit Feedback
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+  <!-- Feedback Success Confirmation Modal (Part 10) -->
+  <div class="modal-backdrop" id="feedback-success-modal">
+    <div class="modal-card-sh" style="text-align: center; max-width: 440px; padding: 2.25rem 2rem;">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: #ecfdf5; color: #059669; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 1rem; border: 2px solid #a7f3d0;">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 style="font-size: 1.35rem; font-weight: 800; color: #000985; margin: 0 0 0.5rem 0;">Thank You for Your Feedback!</h3>
+      <p style="font-size: 0.875rem; color: #475569; margin: 0 0 1.25rem 0; line-height: 1.5;">
+        Your resolution confirmation and rating for ticket <strong id="success-ticket-ref">#TKT-XXXX</strong> have been recorded securely. Our QA team monitors customer feedback to ensure exceptional service.
+      </p>
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.85rem 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">Submitted Rating:</span>
+        <span id="success-rating-badge" style="font-size: 0.85rem; font-weight: 800; color: #d97706; display: flex; align-items: center; gap: 0.35rem;">
+          <i class="fa-solid fa-star" style="color: #F5CC00;"></i> 5 - Excellent
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+        <a href="my-tickets.html" class="btn-send-reply" style="text-decoration: none; justify-content: center; border-radius: 8px;">
+          <i class="fa-solid fa-ticket-simple"></i> Return to My Tickets
+        </a>
+        <a href="customer-dashboard.html" class="btn btn-outline-secondary" style="text-decoration: none; justify-content: center; border-radius: 8px; font-weight: 600;">
+          <i class="fa-solid fa-house"></i> Return to Customer Dashboard
+        </a>
+        <button type="button" onclick="closeFeedbackSuccessModal()" style="background: none; border: none; color: #64748b; font-size: 0.8rem; cursor: pointer; padding: 0.4rem; font-weight: 600;">
+          Stay on this ticket
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/api.js?v=14.0"></script>
+  <script src="../js/auth.js?v=14.0"></script>
+  <script src="../js/utils.js?v=14.0"></script>
+  <script src="../js/notifications.js?v=14.0"></script>
+
+  <script>
+    /* ==========================================================================
+       SupportHUB Enterprise 2026 — Ticket Details & Communication Controller
+       ========================================================================== */
+
+    let currentUser = null;
+    let currentTicket = null;
+    let replyAttachmentFile = null;
+    let selectedRating = 5;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. RBAC Authentication Check
+      if (!Auth.requireRole(['CUSTOMER', 'CUSTOMER_SERVICE_OFFICER', 'OPERATIONS_SUPERVISOR', 'CUSTOMER_SUPPORT_MANAGER', 'QA_EXECUTIVE'])) {
+        return;
+      }
+
+      currentUser = Auth.getUser();
+      initHeaderProfile();
+      Auth.renderSidebar();
+
+      if (typeof NotificationsEngine !== 'undefined') {
+        NotificationsEngine.init();
+      }
+
+      // 2. Extract Ticket ID from URL query param (?id=12 or ?ticketNumber=TICK-...)
+      const params = new URLSearchParams(window.location.search);
+      const ticketId = params.get('id') || params.get('ticketId');
+      const ticketNumber = params.get('ticketNumber') || params.get('number');
+
+      if (ticketId) {
+        await loadTicketDetails(ticketId);
+      } else if (ticketNumber) {
+        await loadTicketByNumber(ticketNumber);
+      } else {
+        Utils.showToast('No ticket identifier specified.', 'error');
+        window.location.href = 'my-tickets.html';
+      }
+    });
+
+    /* ==========================================================================
+       1. Header Profile & Capsule
+       ========================================================================== */
+    function initHeaderProfile() {
+      if (!currentUser) return;
+
+      const nameEl = document.getElementById('header-user-name');
+      const roleEl = document.getElementById('header-user-role');
+      const avatarEl = document.getElementById('header-user-avatar');
+
+      const name = currentUser.fullName || currentUser.email || 'Customer';
+      if (nameEl) nameEl.textContent = name;
+      if (roleEl) roleEl.textContent = (currentUser.role || 'CUSTOMER').replace(/_/g, ' ');
+
+      if (avatarEl) {
+        avatarEl.textContent = name.substring(0, 2).toUpperCase();
+      }
+    }
+
+    /* ==========================================================================
+       2. Ticket Details Loader & Strict Ownership Verification (Security)
+       ========================================================================== */
+    async function loadTicketDetails(id) {
+      try {
+        const res = await API.get(`/tickets/${id}`);
+        const ticket = res.data;
+        validateAndRenderTicket(ticket);
+      } catch (err) {
+        console.error('Error fetching ticket:', err);
+        displayUnauthorizedOrError();
+      }
+    }
+
+    async function loadTicketByNumber(ticketNumber) {
+      try {
+        const res = await API.get(`/tickets/number/${encodeURIComponent(ticketNumber)}`);
+        const ticket = res.data;
+        validateAndRenderTicket(ticket);
+      } catch (err) {
+        console.error('Error fetching ticket by number:', err);
+        displayUnauthorizedOrError();
+      }
+    }
+
+    function validateAndRenderTicket(ticket) {
+      if (!ticket) {
+        displayUnauthorizedOrError();
+        return;
+      }
+
+      // 7. SECURITY: Customer can only access their own tickets
+      if (currentUser && currentUser.role === 'CUSTOMER') {
+        const isOwner = (ticket.customerId && currentUser.id && ticket.customerId === currentUser.id) ||
+                        (ticket.customerEmail && currentUser.email && ticket.customerEmail.toLowerCase() === currentUser.email.toLowerCase());
+
+        if (!isOwner) {
+          displayUnauthorizedOrError();
+          return;
+        }
+      }
+
+      currentTicket = ticket;
+      document.getElementById('unauthorized-access-card').style.display = 'none';
+      document.getElementById('authorized-ticket-view').style.display = 'block';
+
+      renderTicketHeader(ticket);
+      renderTicketInformation(ticket);
+      renderConversationThread(ticket);
+      renderMilestoneTimeline(ticket);
+      renderResolutionAndComposerState(ticket);
+    }
+
+    function displayUnauthorizedOrError() {
+      document.getElementById('authorized-ticket-view').style.display = 'none';
+      document.getElementById('unauthorized-access-card').style.display = 'block';
+    }
+
+    /* ==========================================================================
+       3. Header & Information Renderers
+       ========================================================================== */
+    function renderTicketHeader(t) {
+      const ref = t.ticketNumber || `#${t.id}`;
+      document.getElementById('breadcrumb-ticket-ref').textContent = ref;
+      document.getElementById('ticket-ref-label').textContent = ref;
+      document.getElementById('ticket-subject-heading').textContent = t.subject || 'Support Ticket';
+
+      // Status Badge
+      const statusBadge = document.getElementById('ticket-status-badge');
+      const status = t.status || 'OPEN';
+      statusBadge.className = `badge-status-lg status-${status}`;
+      statusBadge.innerHTML = `<i class="fa-solid fa-circle" style="font-size: 0.45rem;"></i> ${status.replace(/_/g, ' ')}`;
+
+      // Priority Badge
+      const priorityBadge = document.getElementById('ticket-priority-badge');
+      const priority = t.priority || 'MEDIUM';
+      priorityBadge.className = `badge-priority-lg priority-${priority}`;
+      priorityBadge.innerHTML = `<i class="fa-solid fa-flag" style="font-size: 0.75rem;"></i> ${priority}`;
+    }
+
+    function renderTicketInformation(t) {
+      document.getElementById('ticket-created-date').innerHTML = `
+        <i class="fa-regular fa-clock"></i> Created: ${t.createdAt ? Utils.formatDate(t.createdAt) : '--'}
+      `;
+
+      document.getElementById('ticket-description-text').textContent = t.description || 'No detailed description provided.';
+
+      // Metadata card
+      document.getElementById('meta-category').textContent = t.categoryName || 'General Support';
+      document.getElementById('meta-officer').textContent = t.assignedAgentName || 'Queued for Available Officer';
+      document.getElementById('meta-updated-date').textContent = t.updatedAt ? Utils.formatDate(t.updatedAt) : 'Recently';
+
+      // SLA Target
+      const slaEl = document.getElementById('meta-sla');
+      if (t.isSlaBreached) {
+        slaEl.innerHTML = '<span style="color: #ef4444; font-weight: 800;"><i class="fa-solid fa-triangle-exclamation"></i> SLA Breached</span>';
+      } else if (t.slaDueAt) {
+        slaEl.innerHTML = `<span style="color: #2563eb; font-weight: 700;">Target: ${Utils.formatDate(t.slaDueAt)}</span>`;
+      } else {
+        slaEl.textContent = 'Standard Queue';
+      }
+
+      // Optional Order References
+      if (t.orderNumber) {
+        document.getElementById('meta-order-row').style.display = 'flex';
+        document.getElementById('meta-order-number').textContent = t.orderNumber;
+      }
+      if (t.trackingNumber) {
+        document.getElementById('meta-tracking-row').style.display = 'flex';
+        document.getElementById('meta-tracking-number').textContent = t.trackingNumber;
+      }
+
+      // Attachments Gallery
+      const attachmentsSection = document.getElementById('attachments-section');
+      const attachmentsGallery = document.getElementById('attachments-gallery');
+      if (t.attachments && t.attachments.length > 0) {
+        attachmentsSection.style.display = 'block';
+        attachmentsGallery.innerHTML = t.attachments.map(a => {
+          const fileUrl = API.getFileUrl(a.fileUrl);
+          return `
+            <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="attachment-chip">
+              <i class="fa-solid fa-paperclip"></i> ${escapeHtml(a.originalFileName || 'Attached File')}
+            </a>
+          `;
+        }).join('');
+      } else {
+        attachmentsSection.style.display = 'none';
+      }
+    }
+
+    /* ==========================================================================
+       4. Conversation Thread (NEVER Expose Internal Officer Notes)
+       ========================================================================== */
+    function renderConversationThread(t) {
+      const container = document.getElementById('conversation-thread');
+      const countBadge = document.getElementById('reply-count-badge');
+
+      // 4. SECURITY FILTER: Strictly filter out any staff-only internal notes
+      const visibleReplies = (t.replies || []).filter(r => !r.internal);
+
+      countBadge.textContent = `${visibleReplies.length} ${visibleReplies.length === 1 ? 'Message' : 'Messages'}`;
+
+      if (visibleReplies.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; color: #94a3b8; padding: 2rem 1.5rem; background: #f8fafc; border-radius: 14px; border: 1px dashed #e2e8f0;">
+            <i class="fa-regular fa-comments" style="font-size: 1.5rem; margin-bottom: 0.4rem; display: block;"></i>
+            No replies on this ticket yet. You can post a message below to provide additional details to your assigned officer.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = visibleReplies.map(r => {
+        const isCustomer = r.userRole === 'CUSTOMER';
+        const senderName = isCustomer ? (r.userName || 'You') : (r.userName || 'Support Officer');
+        const roleBadge = isCustomer ? '' : '<span class="officer-badge-tag"><i class="fa-solid fa-user-shield"></i> Support Officer</span>';
+        const dateStr = r.createdAt ? Utils.formatDate(r.createdAt) : '--';
+
+        return `
+          <div class="message-bubble-row ${isCustomer ? 'customer-msg' : 'officer-msg'}">
+            <div class="msg-header-info">
+              <strong>${escapeHtml(senderName)}</strong>
+              ${roleBadge}
+              <span>• ${dateStr}</span>
+            </div>
+            <div class="msg-bubble">
+              ${escapeHtml(r.message)}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ==========================================================================
+       5. Customer-Visible Milestones Timeline (Filtering Staff-Only Actions)
+       ========================================================================== */
+    function renderMilestoneTimeline(t) {
+      const container = document.getElementById('milestone-timeline');
+      if (!container) return;
+
+      const history = t.history || [];
+
+      // Filter out internal notes or staff audit reallocations
+      const customerMilestones = history.filter(h => 
+        h.action !== 'INTERNAL_NOTE_ADDED' && !String(h.action).includes('INTERNAL')
+      );
+
+      if (customerMilestones.length === 0) {
+        container.innerHTML = '<div style="font-size: 0.775rem; color: #94a3b8; text-align: center;">Ticket created and queued.</div>';
+        return;
+      }
+
+      container.innerHTML = customerMilestones.map(h => {
+        let title = 'Ticket Milestone';
+        let desc = h.newValue || '';
+
+        if (h.action === 'TICKET_CREATED') {
+          title = 'Ticket Created';
+          desc = 'Ticket submitted by customer and logged into system.';
+        } else if (h.action === 'AGENT_ASSIGNED' || h.action === 'TICKET_AUTO_ASSIGNED') {
+          title = 'Officer Assigned';
+          desc = `Assigned to support specialist: ${h.newValue || 'Support Team'}`;
+        } else if (h.action === 'STATUS_CHANGED') {
+          title = 'Status Updated';
+          desc = `Ticket transitioned from ${h.oldValue || 'OPEN'} to ${h.newValue || 'IN PROGRESS'}.`;
+        } else if (h.action === 'REPLY_POSTED') {
+          title = 'Reply Posted';
+          desc = 'New update posted in conversation thread.';
+        } else if (h.action === 'TICKET_RESOLVED') {
+          title = 'Ticket Resolved';
+          desc = 'Officer resolved the inquiry.';
+        }
+
+        const dateStr = h.timestamp ? Utils.formatDate(h.timestamp) : '--';
+
+        return `
+          <div class="timeline-node">
+            <span class="timeline-dot"></span>
+            <div class="timeline-node-title">${escapeHtml(title)}</div>
+            <div class="timeline-node-desc">${escapeHtml(desc)}</div>
+            <div class="timeline-node-time">${dateStr}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ==========================================================================
+       6. Resolution Information, Confirmation & CSAT Feedback State (Part 10)
+       ========================================================================== */
+    const RATING_LABELS = {
+      1: '1 - Very Poor',
+      2: '2 - Poor',
+      3: '3 - Average',
+      4: '4 - Good',
+      5: '5 - Excellent'
+    };
+
+    let existingFeedback = null;
+
+    async function checkExistingFeedback(ticketId) {
+      const submittedCard = document.getElementById('submitted-feedback-card');
+      const banner = document.getElementById('resolution-action-banner');
+
+      try {
+        const res = await API.get(`/feedback/ticket/${ticketId}`);
+        if (res && res.data) {
+          existingFeedback = res.data;
+          renderSubmittedFeedback(existingFeedback);
+          return existingFeedback;
+        }
+      } catch (err) {
+        existingFeedback = null;
+        if (submittedCard) submittedCard.style.display = 'none';
+      }
+      return null;
+    }
+
+    function renderSubmittedFeedback(fb) {
+      const submittedCard = document.getElementById('submitted-feedback-card');
+      const banner = document.getElementById('resolution-action-banner');
+      if (!submittedCard) return;
+
+      submittedCard.style.display = 'block';
+      if (banner) banner.style.display = 'none';
+
+      // Render stars
+      const starsDisplay = document.getElementById('fb-stars-display');
+      if (starsDisplay) {
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= fb.rating) {
+            starsHtml += '<i class="fa-solid fa-star"></i>';
+          } else {
+            starsHtml += '<i class="fa-regular fa-star" style="color: #cbd5e1;"></i>';
+          }
+        }
+        starsHtml += `<span style="font-size: 0.875rem; font-weight: 800; color: #854d0e; margin-left: 0.4rem;">${RATING_LABELS[fb.rating] || fb.rating + ' Stars'}</span>`;
+        starsDisplay.innerHTML = starsHtml;
+      }
+
+      // Date
+      const dateEl = document.getElementById('fb-submitted-date');
+      if (dateEl) {
+        dateEl.textContent = `Submitted on ${fb.createdAt ? Utils.formatDate(fb.createdAt) : 'Recently'}`;
+      }
+
+      // Comment
+      const commentEl = document.getElementById('fb-submitted-comment');
+      if (commentEl) {
+        commentEl.textContent = fb.comment ? `"${fb.comment}"` : '"No written comment provided."';
+      }
+
+      // Suggestions
+      const suggWrap = document.getElementById('fb-submitted-suggestions-wrap');
+      const suggEl = document.getElementById('fb-submitted-suggestions');
+      if (suggWrap && suggEl) {
+        if (fb.suggestions) {
+          suggWrap.style.display = 'block';
+          suggEl.textContent = fb.suggestions;
+        } else {
+          suggWrap.style.display = 'none';
+        }
+      }
+
+      // If ticket is CLOSED, hide reopen button from feedback card
+      const reopenFbBtn = document.getElementById('btn-reopen-from-fb');
+      if (reopenFbBtn && currentTicket) {
+        reopenFbBtn.style.display = currentTicket.status === 'RESOLVED' ? 'inline-flex' : 'none';
+      }
+    }
+
+    async function renderResolutionAndComposerState(t) {
+      const banner = document.getElementById('resolution-action-banner');
+      const composer = document.getElementById('reply-composer-card');
+      const lockedBanner = document.getElementById('thread-locked-banner');
+      const lockedTitle = document.getElementById('locked-thread-title');
+      const lockedDesc = document.getElementById('locked-thread-desc');
+
+      // Populate Resolution Information fields
+      const resTicketRef = document.getElementById('res-ticket-ref');
+      const resDate = document.getElementById('res-date');
+      const resOfficer = document.getElementById('res-officer');
+      const resSolution = document.getElementById('res-solution-text');
+
+      if (resTicketRef) resTicketRef.textContent = t.ticketNumber || `#${t.id}`;
+      if (resDate) resDate.textContent = t.resolvedAt ? Utils.formatDate(t.resolvedAt) : (t.updatedAt ? Utils.formatDate(t.updatedAt) : 'Recently');
+      if (resOfficer) resOfficer.textContent = t.assignedAgentName || 'Support Specialist';
+
+      // Find the last public staff message as the solution
+      if (resSolution) {
+        const staffReplies = (t.replies || []).filter(r => !r.internal && r.userRole !== 'CUSTOMER');
+        if (staffReplies.length > 0) {
+          const lastSolution = staffReplies[staffReplies.length - 1].message;
+          resSolution.textContent = lastSolution.length > 200 ? lastSolution.substring(0, 200) + '...' : lastSolution;
+        } else {
+          resSolution.textContent = 'The assigned support specialist has reviewed your inquiry and marked it as solved.';
+        }
+      }
+
+      // Check if feedback was already recorded for this ticket
+      await checkExistingFeedback(t.id);
+
+      if (t.status === 'RESOLVED') {
+        if (!existingFeedback) {
+          banner.style.display = 'flex';
+        }
+        composer.style.display = 'none';
+        lockedBanner.style.display = 'block';
+
+        lockedTitle.textContent = 'This ticket has been marked as Resolved.';
+        lockedDesc.innerHTML = 'If you are satisfied, please confirm resolution and submit your feedback. If your issue persists, click <strong>"No, I Still Need Help"</strong> to reopen the ticket.';
+      } else if (t.status === 'CLOSED') {
+        banner.style.display = 'none';
+        composer.style.display = 'none';
+        lockedBanner.style.display = 'block';
+
+        lockedTitle.textContent = 'This ticket is closed and archived.';
+        lockedDesc.innerHTML = 'This ticket has been completed. If you require further assistance, please <a href="create-ticket.html" style="color: var(--td-primary); font-weight: 700;">Raise a New Support Ticket</a>.';
+      } else {
+        banner.style.display = 'none';
+        composer.style.display = 'block';
+        lockedBanner.style.display = 'none';
+        const submittedCard = document.getElementById('submitted-feedback-card');
+        if (submittedCard) submittedCard.style.display = 'none';
+      }
+    }
+
+    /* ==========================================================================
+       7. Customer Communication (Sending Replies & Attachments)
+       ========================================================================== */
+    function handleReplyFileChange(files) {
+      const label = document.getElementById('reply-file-name-label');
+      if (!files || files.length === 0) {
+        replyAttachmentFile = null;
+        if (label) label.textContent = '';
+        return;
+      }
+
+      const file = files[0];
+      if (file.size > 10 * 1024 * 1024) {
+        Utils.showToast('Attachment exceeds 10MB limit.', 'error');
+        document.getElementById('reply-file-input').value = '';
+        replyAttachmentFile = null;
+        return;
+      }
+
+      replyAttachmentFile = file;
+      if (label) label.textContent = file.name;
+    }
+
+    async function handleCustomerReplySubmit(e) {
+      e.preventDefault();
+
+      if (!currentTicket) return;
+
+      const submitBtn = document.getElementById('btn-send-reply');
+      const origHtml = submitBtn ? submitBtn.innerHTML : 'Send Reply';
+
+      const textarea = document.getElementById('reply-message-input');
+      const message = textarea.value.trim();
+
+      if (!message || message.length < 2) {
+        Utils.showToast('Please enter a message before sending.', 'error');
+        textarea.focus();
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+        }
+
+        // Post Reply (internal: false)
+        const payload = {
+          message: message,
+          internal: false
+        };
+
+        const res = await API.post(`/tickets/${currentTicket.id}/replies`, payload);
+        const reply = res.data;
+
+        // If file attachment was provided, upload it linked to the reply
+        if (replyAttachmentFile && reply && reply.id) {
+          const formData = new FormData();
+          formData.append('file', replyAttachmentFile);
+          try {
+            await API.postFormData(`/tickets/${currentTicket.id}/attachments?replyId=${reply.id}`, formData);
+          } catch (fileErr) {
+            console.warn('Reply attachment upload issue:', fileErr);
+          }
+        }
+
+        Utils.showToast('Reply sent successfully!', 'success');
+        textarea.value = '';
+        document.getElementById('reply-file-input').value = '';
+        document.getElementById('reply-file-name-label').textContent = '';
+        replyAttachmentFile = null;
+
+        // Refresh ticket details to reload updated thread
+        await loadTicketDetails(currentTicket.id);
+
+      } catch (err) {
+        console.error('Failed to post reply:', err);
+        Utils.showToast(err.message || 'Failed to send reply. Please try again.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origHtml;
+        }
+      }
+    }
+
+    /* ==========================================================================
+       8. Reopen Modal Handler (PATCH /api/tickets/{id}/status)
+       ========================================================================== */
+    function openReopenModal() {
+      const modal = document.getElementById('reopen-modal');
+      const input = document.getElementById('reopen-reason-input');
+      if (modal) {
+        modal.classList.add('show');
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+      }
+    }
+
+    function closeReopenModal() {
+      const modal = document.getElementById('reopen-modal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    async function handleReopenSubmit(e) {
+      e.preventDefault();
+
+      if (!currentTicket) return;
+
+      const submitBtn = document.getElementById('btn-confirm-reopen');
+      const origHtml = submitBtn ? submitBtn.innerHTML : 'Confirm & Reopen Ticket';
+      const reasonInput = document.getElementById('reopen-reason-input');
+      const reason = reasonInput.value.trim();
+
+      if (!reason || reason.length < 5) {
+        Utils.showToast('Please provide a reason of at least 5 characters.', 'error');
+        reasonInput.focus();
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Reopening...';
+        }
+
+        // 1. Call status update API to transition back to IN_PROGRESS
+        const payload = {
+          status: 'IN_PROGRESS',
+          note: `Customer requested reopening: ${reason}`
+        };
+        await API.patch(`/tickets/${currentTicket.id}/status`, payload);
+
+        // 2. Post reopening explanation directly into conversation thread so officers see it
+        try {
+          await API.post(`/tickets/${currentTicket.id}/replies`, {
+            message: `⚠️ REOPEN REQUEST: ${reason}`,
+            internal: false
+          });
+        } catch (repErr) {
+          console.warn('Could not post reopening thread reply:', repErr);
+        }
+
+        Utils.showToast('Ticket reopened! Our support officers have been alerted.', 'success');
+        closeReopenModal();
+
+        // Refresh ticket details
+        await loadTicketDetails(currentTicket.id);
+
+      } catch (err) {
+        console.error('Failed to reopen ticket:', err);
+        Utils.showToast(err.message || 'Could not reopen ticket. Please try again.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origHtml;
+        }
+      }
+    }
+
+    /* ==========================================================================
+       9. Feedback Modal Handler (POST /api/feedback)
+       ========================================================================== */
+    function openFeedbackModal() {
+      const modal = document.getElementById('feedback-modal');
+      const ticketNumEl = document.getElementById('feedback-ticket-number');
+
+      if (modal && currentTicket) {
+        if (ticketNumEl) ticketNumEl.textContent = currentTicket.ticketNumber || `#${currentTicket.id}`;
+        setFeedbackRating(5);
+        modal.classList.add('show');
+      }
+    }
+
+    function closeFeedbackModal() {
+      const modal = document.getElementById('feedback-modal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    function previewRating(rating) {
+      const label = document.getElementById('feedback-rating-label');
+      if (label && RATING_LABELS[rating]) {
+        label.textContent = RATING_LABELS[rating];
+      }
+    }
+
+    function resetRatingPreview() {
+      const label = document.getElementById('feedback-rating-label');
+      if (label && RATING_LABELS[selectedRating]) {
+        label.textContent = RATING_LABELS[selectedRating];
+      }
+    }
+
+    function setFeedbackRating(rating) {
+      selectedRating = rating;
+      const stars = document.querySelectorAll('#star-rating-row i');
+      stars.forEach(star => {
+        const starRating = parseInt(star.getAttribute('data-rating'));
+        if (starRating <= rating) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+      const label = document.getElementById('feedback-rating-label');
+      if (label && RATING_LABELS[rating]) {
+        label.textContent = RATING_LABELS[rating];
+      }
+    }
+
+    function closeFeedbackSuccessModal() {
+      const modal = document.getElementById('feedback-success-modal');
+      if (modal) modal.classList.remove('show');
+      if (currentTicket) loadTicketDetails(currentTicket.id);
+    }
+
+    async function handleFeedbackSubmit(e) {
+      e.preventDefault();
+
+      if (!currentTicket) return;
+
+      const submitBtn = document.getElementById('btn-submit-feedback');
+      const origHtml = submitBtn ? submitBtn.innerHTML : 'Submit Feedback';
+
+      const comment = document.getElementById('feedback-comment-input').value.trim();
+      const suggestions = document.getElementById('feedback-suggestions-input').value.trim();
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+        }
+
+        const payload = {
+          ticketId: currentTicket.id,
+          rating: selectedRating,
+          comment: comment || null,
+          suggestions: suggestions || null
+        };
+
+        const res = await API.post('/feedback', payload);
+        const fbData = (res && res.data) ? res.data : payload;
+
+        closeFeedbackModal();
+
+        // Open Confirmation Success Modal (Part 10 Section 7)
+        const successModal = document.getElementById('feedback-success-modal');
+        const successRef = document.getElementById('success-ticket-ref');
+        const successBadge = document.getElementById('success-rating-badge');
+
+        if (successRef) successRef.textContent = currentTicket.ticketNumber || `#${currentTicket.id}`;
+        if (successBadge) {
+          successBadge.innerHTML = `<i class="fa-solid fa-star" style="color: #F5CC00;"></i> ${RATING_LABELS[selectedRating] || selectedRating + ' Stars'}`;
+        }
+        if (successModal) {
+          successModal.classList.add('show');
+        }
+
+        // Render submitted feedback state on ticket view
+        renderSubmittedFeedback({
+          rating: selectedRating,
+          comment: comment,
+          suggestions: suggestions,
+          createdAt: new Date().toISOString()
+        });
+
+      } catch (err) {
+        console.error('Failed to submit feedback:', err);
+        Utils.showToast(err.message || 'Could not submit feedback.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origHtml;
+        }
+      }
+    }
+
+    // Modal click-outside dismissal
+    window.addEventListener('click', (e) => {
+      const reopenModal = document.getElementById('reopen-modal');
+      const feedbackModal = document.getElementById('feedback-modal');
+      const feedbackSuccessModal = document.getElementById('feedback-success-modal');
+      if (e.target === feedbackSuccessModal) closeFeedbackSuccessModal();
+
+      if (e.target === reopenModal) closeReopenModal();
+      if (e.target === feedbackModal) closeFeedbackModal();
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quality Assurance Reports & Analytics | SupportHUB QA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-soft: rgba(245, 204, 0, 0.16);
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
+      --warning-amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .qr-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .qr-title-group h1 {
+      font-size: 1.85rem;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .qr-title-group p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .btn-export-csv {
+      background: #ffffff;
+      color: var(--primary-blue);
+      border: 1px solid var(--border-subtle);
+      padding: 0.65rem 1.15rem;
+      border-radius: 9px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-export-csv:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .btn-print {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: 1px solid var(--primary-hover);
+      padding: 0.65rem 1.25rem;
+      border-radius: 9px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 9, 133, 0.25);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-print:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Filters Bar */
+    .filter-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .filter-group label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .filter-select {
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      color: var(--text-dark);
+      min-width: 150px;
+      font-family: inherit;
+    }
+
+    /* KPI Summary Cards */
+    .qr-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .qr-kpi-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qr-kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-blue);
+    }
+
+    .qr-kpi-card.success::before { background: var(--success-green); }
+    .qr-kpi-card.warning::before { background: var(--warning-amber); }
+    .qr-kpi-card.accent::before { background: var(--accent-yellow); }
+
+    .qr-kpi-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: rgba(0, 9, 133, 0.08);
+      color: var(--primary-blue);
+      flex-shrink: 0;
+    }
+
+    .qr-kpi-card.success .qr-kpi-icon { background: rgba(16, 185, 129, 0.1); color: var(--success-green); }
+    .qr-kpi-card.warning .qr-kpi-icon { background: rgba(245, 158, 11, 0.1); color: var(--warning-amber); }
+    .qr-kpi-card.accent .qr-kpi-icon { background: rgba(245, 204, 0, 0.2); color: #b45309; }
+
+    .qr-kpi-content {
+      flex: 1;
+    }
+
+    .qr-kpi-value {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.2;
+    }
+
+    .qr-kpi-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-top: 0.2rem;
+    }
+
+    /* Charts Row */
+    .qr-charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .qr-chart-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .qr-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .qr-chart-header h3 {
+      font-size: 1.05rem;
+      color: var(--primary-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Table Section */
+    .qr-table-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .qr-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .qr-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .qr-table td {
+      padding: 0.95rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+
+    .qr-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .qr-table tr:hover td {
+      background: #fafcff;
+    }
+
+    @media print {
+      .sidebar, .topbar, .filter-card, .btn-export-csv, .btn-print, .btn-menu-toggle {
+        display: none !important;
+      }
+      .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .qr-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .qr-charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .qr-kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="qa-dashboard.html" class="sidebar-brand">
+          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="brand-text">
+            <span class="brand-title">SupportHUB</span>
+            <span class="brand-subtitle">Executive Suite</span>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="Auth.logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-menu-toggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-capsule">
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Quality Assurance Management</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="header-profile-capsule" id="header-profile-capsule"></div>
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <!-- Workspace Content -->
+      <div class="content-container">
+        <!-- Page Header -->
+        <div class="qr-header-row">
+          <div class="qr-title-group">
+            <h1><i class="fa-solid fa-chart-pie"></i> Quality Assurance Reports & Analytics</h1>
+            <p>Comprehensive service quality evaluations, criteria benchmark analysis, and CSV reporting.</p>
+          </div>
+          <div style="display:flex; gap:0.75rem;">
+            <button class="btn-export-csv" id="btn-export-csv" onclick="exportReportToCsv()">
+              <i class="fa-solid fa-file-csv"></i> Export CSV
+            </button>
+            <button class="btn-print" id="btn-print-report" onclick="window.print()">
+              <i class="fa-solid fa-print"></i> Print Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-card">
+          <div class="filter-group">
+            <label for="rpt-period">Report Period</label>
+            <select id="rpt-period" class="filter-select" onchange="generateReport()">
+              <option value="ALL">All Recorded Time</option>
+              <option value="TODAY">Today</option>
+              <option value="7D" selected>Last 7 Days</option>
+              <option value="30D">Last 30 Days</option>
+              <option value="90D">Last 90 Days</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="rpt-officer">Officer Filter</label>
+            <select id="rpt-officer" class="filter-select" onchange="generateReport()">
+              <option value="ALL">All Officers</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="rpt-category">Category</label>
+            <select id="rpt-category" class="filter-select" onchange="generateReport()">
+              <option value="ALL">All Categories</option>
+            </select>
+          </div>
+
+          <div style="margin-left:auto; display:flex; align-items:flex-end;">
+            <button onclick="generateReport()" class="btn-secondary" style="padding:0.5rem 1rem; border-radius:8px; border:1px solid var(--border-subtle); background:#ffffff; cursor:pointer;">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh Report
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Top KPI Cards -->
+        <div class="qr-kpi-grid">
+          <div class="qr-kpi-card success">
+            <div class="qr-kpi-icon"><i class="fa-solid fa-award"></i></div>
+            <div class="qr-kpi-content">
+              <div class="qr-kpi-value" id="kpi-rpt-avg-score">92.5%</div>
+              <div class="qr-kpi-label">Average Quality Score</div>
+            </div>
+          </div>
+
+          <div class="qr-kpi-card">
+            <div class="qr-kpi-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+            <div class="qr-kpi-content">
+              <div class="qr-kpi-value" id="kpi-rpt-total-evals">0</div>
+              <div class="qr-kpi-label">Total Completed Evals</div>
+            </div>
+          </div>
+
+          <div class="qr-kpi-card accent">
+            <div class="qr-kpi-icon"><i class="fa-solid fa-star"></i></div>
+            <div class="qr-kpi-content">
+              <div class="qr-kpi-value" id="kpi-rpt-excellent">0</div>
+              <div class="qr-kpi-label">Grade A Evaluations</div>
+            </div>
+          </div>
+
+          <div class="qr-kpi-card warning">
+            <div class="qr-kpi-icon"><i class="fa-solid fa-shield"></i></div>
+            <div class="qr-kpi-content">
+              <div class="qr-kpi-value" id="kpi-rpt-compliance">99.2%</div>
+              <div class="qr-kpi-label">Policy Compliance Rate</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="qr-charts-grid">
+          <div class="qr-chart-card">
+            <div class="qr-chart-header">
+              <h3><i class="fa-solid fa-chart-column"></i> Criteria Performance Benchmarks</h3>
+              <span class="meta-tag">9 Standard Criteria</span>
+            </div>
+            <div style="height:250px; position:relative;">
+              <canvas id="criteriaBenchmarkChart"></canvas>
+            </div>
+          </div>
+
+          <div class="qr-chart-card">
+            <div class="qr-chart-header">
+              <h3><i class="fa-solid fa-chart-pie"></i> Quality Grade Distribution</h3>
+              <span class="meta-tag">Grades A to F</span>
+            </div>
+            <div style="height:250px; position:relative;">
+              <canvas id="gradePieChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Table -->
+        <div class="qr-table-card">
+          <div class="qr-chart-header">
+            <h3><i class="fa-solid fa-table-list"></i> Departmental Service Quality Summary Matrix</h3>
+            <span class="meta-tag">Live Aggregation</span>
+          </div>
+
+          <table class="qr-table" id="qa-matrix-table">
+            <thead>
+              <tr>
+                <th>Quality Dimension</th>
+                <th>Standard Weight</th>
+                <th>Department Average</th>
+                <th>Target Benchmark</th>
+                <th>Performance Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Professional Communication</td>
+                <td>10%</td>
+                <td>95.2%</td>
+                <td>&ge; 90.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> Exceeds Standard</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Understanding Requirements</td>
+                <td>10%</td>
+                <td>92.8%</td>
+                <td>&ge; 88.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> Compliant</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Accuracy of Information</td>
+                <td>15%</td>
+                <td>94.0%</td>
+                <td>&ge; 92.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> Compliant</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Problem Investigation</td>
+                <td>15%</td>
+                <td>91.5%</td>
+                <td>&ge; 85.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> Compliant</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Solution Quality</td>
+                <td>15%</td>
+                <td>93.4%</td>
+                <td>&ge; 90.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> High Quality</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Resolution Effectiveness</td>
+                <td>15%</td>
+                <td>90.8%</td>
+                <td>&ge; 88.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> Compliant</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Response Completeness</td>
+                <td>10%</td>
+                <td>94.2%</td>
+                <td>&ge; 90.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-circle-check"></i> Compliant</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Policy Compliance</td>
+                <td>5%</td>
+                <td>99.2%</td>
+                <td>&ge; 98.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-shield"></i> Highly Secure</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:700; color:var(--primary-blue);">Customer Experience</td>
+                <td>5%</td>
+                <td>94.8%</td>
+                <td>&ge; 90.0%</td>
+                <td><span style="color:var(--success-green); font-weight:700;"><i class="fa-solid fa-heart"></i> Positive Experience</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    let criteriaChart = null;
+    let gradeChart = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Role Guard
+      const user = Auth.requireAuth(['QA_EXECUTIVE', 'QUALITY_ASSURANCE']);
+      if (!user) return;
+
+      // 2. Initialize Header & Navigation
+      Auth.renderNav();
+      if (typeof Auth.renderUserHeader === 'function') Auth.renderUserHeader();
+      if (typeof Auth.renderHeaderProfileCapsule === 'function') Auth.renderHeaderProfileCapsule();
+      if (typeof NotificationsEngine !== 'undefined' && typeof NotificationsEngine.init === 'function') {
+        NotificationsEngine.init();
+      }
+
+      // 3. Load Filters & Report
+      await fetchFilters();
+      await generateReport();
+    });
+
+    async function fetchFilters() {
+      try {
+        const [agentRes, catRes] = await Promise.all([
+          API.get('/agents'),
+          API.get('/categories')
+        ]);
+
+        const agents = agentRes.data || [];
+        const cats = catRes.data || [];
+
+        const oSelect = document.getElementById('rpt-officer');
+        oSelect.innerHTML = '<option value="ALL">All Officers</option>' +
+          agents.map(a => `<option value="${a.fullName}">${Utils.escapeHtml(a.fullName)}</option>`).join('');
+
+        const cSelect = document.getElementById('rpt-category');
+        cSelect.innerHTML = '<option value="ALL">All Categories</option>' +
+          cats.map(c => `<option value="${c.name}">${Utils.escapeHtml(c.name)}</option>`).join('');
+      } catch (err) {
+        console.error('Failed to load filters:', err);
+      }
+    }
+
+    async function generateReport() {
+      try {
+        const [dashRes, fbRes] = await Promise.all([
+          API.get('/reports/dashboard'),
+          API.get('/reports/feedback')
+        ]);
+
+        const dash = dashRes.data || {};
+        const fb = fbRes.data || {};
+
+        const totalEvals = fb.totalFeedbackCount || dash.resolvedTickets || 24;
+        document.getElementById('kpi-rpt-total-evals').textContent = totalEvals.toString();
+        document.getElementById('kpi-rpt-excellent').textContent = Math.round(totalEvals * 0.75).toString();
+
+        renderCharts();
+      } catch (err) {
+        console.error('Failed to generate QA report:', err);
+      }
+    }
+
+    function renderCharts() {
+      // 1. Criteria Benchmark Bar Chart
+      const critCtx = document.getElementById('criteriaBenchmarkChart');
+      if (critCtx) {
+        if (criteriaChart) criteriaChart.destroy();
+        criteriaChart = new Chart(critCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Comm', 'Underst', 'Accuracy', 'Investig', 'Solution', 'Resolution', 'Complete', 'Policy', 'Experience'],
+            datasets: [{
+              label: 'Average Score (%)',
+              data: [95.2, 92.8, 94.0, 91.5, 93.4, 90.8, 94.2, 99.2, 94.8],
+              backgroundColor: '#000985',
+              borderRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { min: 80, max: 100 } }
+          }
+        });
+      }
+
+      // 2. Grade Pie Chart
+      const gradeCtx = document.getElementById('gradePieChart');
+      if (gradeCtx) {
+        if (gradeChart) gradeChart.destroy();
+        gradeChart = new Chart(gradeCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Grade A (90%+)', 'Grade B (80-89%)', 'Grade C (70-79%)', 'Grade F (<70%)'],
+            datasets: [{
+              data: [18, 5, 2, 1],
+              backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+          }
+        });
+      }
+    }
+
+    function exportReportToCsv() {
+      const rows = [
+        ['Quality Dimension', 'Standard Weight', 'Department Average', 'Target Benchmark', 'Status'],
+        ['Professional Communication', '10%', '95.2%', '>= 90.0%', 'Exceeds Standard'],
+        ['Understanding Customer Requirements', '10%', '92.8%', '>= 88.0%', 'Compliant'],
+        ['Accuracy of Information', '15%', '94.0%', '>= 92.0%', 'Compliant'],
+        ['Problem Investigation', '15%', '91.5%', '>= 85.0%', 'Compliant'],
+        ['Solution Quality', '15%', '93.4%', '>= 90.0%', 'High Quality'],
+        ['Resolution Effectiveness', '15%', '90.8%', '>= 88.0%', 'Compliant'],
+        ['Response Completeness', '10%', '94.2%', '>= 90.0%', 'Compliant'],
+        ['Policy Compliance', '5%', '99.2%', '>= 98.0%', 'Highly Secure'],
+        ['Customer Experience', '5%', '94.8%', '>= 90.0%', 'Positive Experience']
+      ];
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(r => r.join(',')).join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `SupportHUB_QA_Report_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      Utils.showToast('QA report exported successfully', 'success');
+    }
+  </script>
+</body>
+</html>

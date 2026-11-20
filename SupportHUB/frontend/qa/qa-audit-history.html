@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Evaluation Audit History | SupportHUB QA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --accent-yellow-soft: rgba(245, 204, 0, 0.16);
+      --canvas-bg: #f8fafc;
+      --surface-white: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --success-green: #10b981;
+      --danger-red: #ef4444;
+      --warning-amber: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .ah-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .ah-title-group h1 {
+      font-size: 1.85rem;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .ah-title-group p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .btn-export-audit {
+      background: #ffffff;
+      color: var(--primary-blue);
+      border: 1px solid var(--border-subtle);
+      padding: 0.65rem 1.15rem;
+      border-radius: 9px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-export-audit:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    /* Filters Bar */
+    .filter-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .filter-group label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .filter-select {
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      color: var(--text-dark);
+      min-width: 160px;
+      font-family: inherit;
+    }
+
+    .filter-input {
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      color: var(--text-dark);
+      min-width: 240px;
+      font-family: inherit;
+    }
+
+    /* Table Section */
+    .ah-table-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .ah-table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .ah-table-header h2 {
+      font-size: 1.15rem;
+      color: var(--primary-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ah-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .ah-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .ah-table td {
+      padding: 0.95rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      vertical-align: middle;
+    }
+
+    .ah-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .ah-table tr:hover td {
+      background: #fafcff;
+    }
+
+    .badge-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .badge-eval { background: rgba(16, 185, 129, 0.1); color: var(--success-green); }
+    .badge-finding { background: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
+    .badge-feedback { background: rgba(0, 9, 133, 0.1); color: var(--primary-blue); }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="qa-dashboard.html" class="sidebar-brand">
+          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="brand-text">
+            <span class="brand-title">SupportHUB</span>
+            <span class="brand-subtitle">Executive Suite</span>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="Auth.logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-menu-toggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-capsule">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Quality Assurance Management</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="header-profile-capsule" id="header-profile-capsule"></div>
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+      </header>
+
+      <!-- Workspace Content -->
+      <div class="content-container">
+        <!-- Page Header -->
+        <div class="ah-header-row">
+          <div class="ah-title-group">
+            <h1><i class="fa-solid fa-clock-rotate-left"></i> QA Evaluation & Governance Audit History</h1>
+            <p>Immutable chronological timeline of quality scorecards, logged findings, and officer coaching actions.</p>
+          </div>
+          <div>
+            <button class="btn-export-audit" onclick="exportAuditCsv()">
+              <i class="fa-solid fa-file-csv"></i> Export Audit Log
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-card">
+          <div class="filter-group">
+            <label for="filter-action">Action Type</label>
+            <select id="filter-action" class="filter-select" onchange="renderAuditTable()">
+              <option value="ALL">All Actions</option>
+              <option value="EVALUATION_SUBMITTED">Evaluation Submitted</option>
+              <option value="FINDING_RECORDED">Finding Recorded</option>
+              <option value="FEEDBACK_SUBMITTED">Feedback Submitted</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-search">Search Audit Trail</label>
+            <input type="text" id="filter-search" class="filter-input" placeholder="Search ticket, actor, or details..." oninput="renderAuditTable()">
+          </div>
+
+          <div style="margin-left:auto; display:flex; align-items:flex-end;">
+            <button onclick="renderAuditTable()" class="btn-secondary" style="padding:0.5rem 1rem; border-radius:8px; border:1px solid var(--border-subtle); background:#ffffff; cursor:pointer;">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="ah-table-card">
+          <div class="ah-table-header">
+            <h2><i class="fa-solid fa-shield-halved"></i> Immutable Evaluation Audit Stream</h2>
+            <span class="meta-tag" id="audit-count-tag">Loading audit stream...</span>
+          </div>
+
+          <table class="ah-table" id="audit-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Action Type</th>
+                <th>Target Ticket</th>
+                <th>Evaluator / Actor</th>
+                <th>Evaluation Summary / Finding</th>
+                <th>Score / Grade</th>
+                <th>Integrity Hash</th>
+              </tr>
+            </thead>
+            <tbody id="audit-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script>
+    let auditRecords = [
+      {
+        id: 1,
+        timestamp: '2026-11-19T08:45:00Z',
+        action: 'EVALUATION_SUBMITTED',
+        ticketRef: 'TCK-10482',
+        actor: 'Marcus Vance (QA Specialist)',
+        details: 'Full 9-criteria scorecard completed. Minor delay in resolution explanation.',
+        score: '92.5% (Grade A)',
+        hash: 'SHA256:88a7c2e1'
+      },
+      {
+        id: 2,
+        timestamp: '2026-11-18T15:20:00Z',
+        action: 'FINDING_RECORDED',
+        ticketRef: 'TCK-10512',
+        actor: 'Marcus Vance (QA Specialist)',
+        details: 'Quality Issue: Procedural Policy Violation regarding secondary verification.',
+        score: 'Severity: HIGH',
+        hash: 'SHA256:19b4d82f'
+      },
+      {
+        id: 3,
+        timestamp: '2026-11-18T11:10:00Z',
+        action: 'FEEDBACK_SUBMITTED',
+        ticketRef: 'TCK-10395',
+        actor: 'Marcus Vance (QA Specialist)',
+        details: 'Coaching recommendations submitted for Officer Michael Chang.',
+        score: 'Coaching: OPEN',
+        hash: 'SHA256:77c10b99'
+      },
+      {
+        id: 4,
+        timestamp: '2026-11-17T16:30:00Z',
+        action: 'EVALUATION_SUBMITTED',
+        ticketRef: 'TCK-10280',
+        actor: 'Marcus Vance (QA Specialist)',
+        details: 'Exemplary resolution on critical server downtime inquiry.',
+        score: '96.0% (Grade A)',
+        hash: 'SHA256:55d49a02'
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Role Guard
+      const user = Auth.requireAuth(['QA_EXECUTIVE', 'QUALITY_ASSURANCE']);
+      if (!user) return;
+
+      // 2. Initialize Header & Navigation
+      Auth.renderNav();
+      if (typeof Auth.renderUserHeader === 'function') Auth.renderUserHeader();
+      if (typeof Auth.renderHeaderProfileCapsule === 'function') Auth.renderHeaderProfileCapsule();
+      if (typeof NotificationsEngine !== 'undefined' && typeof NotificationsEngine.init === 'function') {
+        NotificationsEngine.init();
+      }
+
+      renderAuditTable();
+    });
+
+    function renderAuditTable() {
+      const actFilter = document.getElementById('filter-action').value;
+      const query = document.getElementById('filter-search').value.toLowerCase().trim();
+
+      const filtered = auditRecords.filter(r => {
+        if (actFilter !== 'ALL' && r.action !== actFilter) return false;
+        if (query) {
+          const matchStr = `${r.ticketRef} ${r.actor} ${r.details} ${r.score}`.toLowerCase();
+          if (!matchStr.includes(query)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById('audit-count-tag').textContent = `${filtered.length} Audit Entries`;
+
+      const tbody = document.getElementById('audit-tbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:1.5rem; color:var(--text-muted);">No audit events matching criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(r => {
+        const badgeClass = r.action === 'EVALUATION_SUBMITTED' ? 'badge-eval' :
+                           r.action === 'FINDING_RECORDED' ? 'badge-finding' : 'badge-feedback';
+
+        return `
+          <tr>
+            <td style="font-size:0.8rem; color:var(--text-muted); font-family:monospace;">${Utils.formatDate(r.timestamp)}</td>
+            <td><span class="badge-action ${badgeClass}">${r.action}</span></td>
+            <td><strong style="color:var(--primary-blue);">${Utils.escapeHtml(r.ticketRef)}</strong></td>
+            <td style="font-weight:600; font-size:0.825rem;">${Utils.escapeHtml(r.actor)}</td>
+            <td style="max-width:260px; font-size:0.825rem;">${Utils.escapeHtml(r.details)}</td>
+            <td><strong style="color:var(--primary-blue); font-size:0.85rem;">${r.score}</strong></td>
+            <td><code style="font-size:0.75rem; background:#f1f5f9; padding:0.15rem 0.35rem; border-radius:3px; color:#64748b;">${r.hash}</code></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function exportAuditCsv() {
+      const rows = [
+        ['Timestamp', 'Action', 'Ticket Reference', 'Actor', 'Details', 'Score / Status', 'Hash'],
+        ...auditRecords.map(r => [
+          `"${r.timestamp}"`,
+          `"${r.action}"`,
+          `"${r.ticketRef}"`,
+          `"${r.actor}"`,
+          `"${r.details.replace(/"/g, '""')}"`,
+          `"${r.score}"`,
+          `"${r.hash}"`
+        ])
+      ];
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(r => r.join(',')).join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `SupportHUB_QA_Audit_History_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      Utils.showToast('QA audit history exported successfully', 'success');
+    }
+  </script>
+</body>
+</html>

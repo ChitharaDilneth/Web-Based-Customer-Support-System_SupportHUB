@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations Supervisor Profile - SupportHUB</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+
+  <style>
+    :root {
+      --primary-blue: #000985;
+      --primary-hover: #000766;
+      --accent-yellow: #F5CC00;
+      --bg-canvas: #f4f7fb;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 20px -2px rgba(0, 9, 133, 0.08);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .profile-page-container {
+      padding: 1.5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Page Header */
+    .profile-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .profile-header-title h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      margin: 0 0 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .profile-header-title p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Profile Hero Card */
+    .profile-hero-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-blue) 0%, var(--accent-yellow) 100%);
+    }
+
+    .hero-identity {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .hero-avatar-wrap {
+      position: relative;
+    }
+
+    .hero-avatar {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-blue) 0%, #050B2E 100%);
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0, 9, 133, 0.25);
+      border: 3px solid var(--accent-yellow);
+    }
+
+    .hero-status-dot {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #10b981;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+    }
+
+    .hero-details h2 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 0.35rem 0;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .badge-role-supervisor {
+      background: rgba(0, 9, 133, 0.1);
+      color: var(--primary-blue);
+      border: 1px solid rgba(0, 9, 133, 0.2);
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-status-active {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .badge-status-active::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    /* 2-Column Responsive Layout */
+    .profile-layout-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .profile-layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .profile-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.75rem;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .card-icon-pill {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .card-icon-pill.blue {
+      background: rgba(0, 9, 133, 0.08);
+      color: var(--primary-blue);
+    }
+
+    .card-icon-pill.yellow {
+      background: rgba(245, 204, 0, 0.15);
+      color: #92400e;
+    }
+
+    .card-icon-pill.green {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    .card-title h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0;
+    }
+
+    .card-title p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin: 0.2rem 0 0 0;
+    }
+
+    /* Form Fields */
+    .form-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid-2col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 0.45rem;
+    }
+
+    .form-control-custom {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.65rem 0.95rem;
+      font-size: 0.875rem;
+      color: var(--text-main);
+      box-sizing: border-box;
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .form-control-custom:focus {
+      background: #ffffff;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(0, 9, 133, 0.1);
+    }
+
+    .form-control-custom:read-only,
+    .form-control-custom:disabled {
+      background: #f1f5f9;
+      color: #64748b;
+      cursor: not-allowed;
+      border-color: #e2e8f0;
+    }
+
+    .password-field-wrap {
+      position: relative;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--primary-blue);
+    }
+
+    /* Action Buttons */
+    .btn-save-primary {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 1.35rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-save-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.2);
+    }
+
+    .btn-cancel-secondary {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cancel-secondary:hover {
+      background: #f8fafc;
+      color: var(--text-main);
+    }
+
+    /* Security Specs List */
+    .specs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0.95rem;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #f1f5f9;
+      font-size: 0.825rem;
+    }
+
+    .spec-label {
+      color: #475569;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .spec-val {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* KPI Summary Strip */
+    .kpi-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .kpi-mini-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.85rem;
+      text-align: center;
+    }
+
+    .kpi-mini-val {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+    }
+
+    .kpi-mini-label {
+      font-size: 0.725rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="logo-support">Support</span><span class="logo-hub">HUB</span>
+        </div>
+      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left"></div>
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="notif-bell-container" id="notif-bell">
+            <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
+            <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
+            <div class="notif-dropdown" id="notif-dropdown">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+                <span>Notifications</span>
+                <button onclick="NotificationsEngine.markAllRead()" style="background: none; border: none; color: var(--primary-blue); font-size: 0.75rem; cursor: pointer; font-weight: 600;">Mark all read</button>
+              </div>
+              <div id="notif-dropdown-list"></div>
+            </div>
+          </div>
+          <div id="header-profile-capsule"></div>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="profile-page-container">
+        <!-- Header Bar -->
+        <div class="profile-header-bar">
+          <div class="profile-header-title">
+            <h1><i class="fa-solid fa-id-badge"></i> Supervisor Profile & Credentials</h1>
+            <p>Manage your account identity, contact details, organizational specialization, and security credentials.</p>
+          </div>
+          <div>
+            <a href="supervisor-dashboard.html" class="btn-cancel-secondary">
+              <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Card -->
+        <div class="profile-hero-card">
+          <div class="hero-identity">
+            <div class="hero-avatar-wrap">
+              <div class="hero-avatar" id="hero-avatar-text">SU</div>
+              <div class="hero-status-dot" title="Active Account"></div>
+            </div>
+            <div class="hero-details">
+              <h2 id="hero-name-display">Loading Supervisor...</h2>
+              <div class="hero-meta-row">
+                <span><i class="fa-solid fa-envelope"></i> <span id="hero-email-display">supervisor@demo.com</span></span>
+                <span><i class="fa-solid fa-id-card"></i> <span id="hero-code-display">SUP-1001</span></span>
+                <span class="badge-role-supervisor" id="hero-role-display">Operations Supervisor</span>
+                <span class="badge-status-active" id="hero-status-display">Active</span>
+              </div>
+            </div>
+          </div>
+          <div style="text-align: right; font-size: 0.8rem; color: var(--text-muted);">
+            <div><i class="fa-regular fa-calendar-days"></i> Joined: <strong id="hero-joined-date">Active Account</strong></div>
+            <div style="margin-top: 0.35rem;"><i class="fa-regular fa-clock"></i> Last Login: <strong id="hero-last-login">Active Session</strong></div>
+          </div>
+        </div>
+
+        <!-- 2-Column Grid -->
+        <div class="profile-layout-grid">
+          
+          <!-- Column 1: Personal & Organization Info Form -->
+          <div class="profile-card">
+            <div class="card-header-row">
+              <div class="card-header-left">
+                <div class="card-icon-pill blue">
+                  <i class="fa-solid fa-user-pen"></i>
+                </div>
+                <div class="card-title">
+                  <h3>Personal & Contact Details</h3>
+                  <p>Authorized supervisor identity records in SupportHUB.</p>
+                </div>
+              </div>
+              <button type="button" id="btn-edit-toggle" onclick="toggleEditMode()" class="btn-cancel-secondary">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+            </div>
+
+            <form id="profile-details-form" onsubmit="saveProfileDetails(event)">
+              <div class="form-grid-2col">
+                <div class="form-group">
+                  <label class="form-label" for="prof-fullname">Full Name *</label>
+                  <input type="text" id="prof-fullname" class="form-control-custom" required readonly>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-email">Official Email (Read-Only)</label>
+                  <input type="email" id="prof-email" class="form-control-custom" readonly>
+                </div>
+              </div>
+
+              <div class="form-grid-2col">
+                <div class="form-group">
+                  <label class="form-label" for="prof-phone">Phone Number</label>
+                  <input type="text" id="prof-phone" class="form-control-custom" readonly>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-empcode">Employee ID</label>
+                  <input type="text" id="prof-empcode" class="form-control-custom" readonly>
+                </div>
+              </div>
+
+              <div class="form-grid-2col">
+                <div class="form-group">
+                  <label class="form-label" for="prof-dept">Department</label>
+                  <input type="text" id="prof-dept" class="form-control-custom" readonly>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-designation">Designation</label>
+                  <input type="text" id="prof-designation" class="form-control-custom" readonly>
+                </div>
+              </div>
+
+              <div id="edit-actions-row" style="display: none; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem;">
+                <button type="button" onclick="cancelEditMode()" class="btn-cancel-secondary">
+                  <i class="fa-solid fa-xmark"></i> Cancel
+                </button>
+                <button type="submit" id="btn-save-profile" class="btn-save-primary">
+                  <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Column 2: Account Security & Password Change -->
+          <div>
+            <div class="profile-card">
+              <div class="card-header-row">
+                <div class="card-header-left">
+                  <div class="card-icon-pill yellow">
+                    <i class="fa-solid fa-key"></i>
+                  </div>
+                  <div class="card-title">
+                    <h3>Account Security</h3>
+                    <p>Change your authentication password securely.</p>
+                  </div>
+                </div>
+              </div>
+
+              <form id="password-change-form" onsubmit="changePassword(event)">
+                <div class="form-group">
+                  <label class="form-label" for="current-password">Current Password *</label>
+                  <div class="password-field-wrap">
+                    <input type="password" id="current-password" class="form-control-custom" placeholder="••••••••" required>
+                    <button type="button" class="password-toggle-btn" onclick="togglePasswordVis('current-password', this)">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="new-password">New Password * (Min 6 Characters)</label>
+                  <div class="password-field-wrap">
+                    <input type="password" id="new-password" class="form-control-custom" placeholder="••••••••" minlength="6" required>
+                    <button type="button" class="password-toggle-btn" onclick="togglePasswordVis('new-password', this)">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="confirm-password">Confirm New Password *</label>
+                  <div class="password-field-wrap">
+                    <input type="password" id="confirm-password" class="form-control-custom" placeholder="••••••••" minlength="6" required>
+                    <button type="button" class="password-toggle-btn" onclick="togglePasswordVis('confirm-password', this)">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" id="btn-submit-pwd" class="btn-save-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;">
+                  <i class="fa-solid fa-shield-halved"></i> Update Password
+                </button>
+              </form>
+            </div>
+
+            <!-- Credentials & Operational Scope Box -->
+            <div class="profile-card">
+              <div class="card-header-row">
+                <div class="card-header-left">
+                  <div class="card-icon-pill green">
+                    <i class="fa-solid fa-shield-check"></i>
+                  </div>
+                  <div class="card-title">
+                    <h3>Security Posture & Scope</h3>
+                    <p>Compliance, RBAC, and operational stats.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="specs-list">
+                <div class="spec-row">
+                  <span class="spec-label"><i class="fa-solid fa-lock" style="color: #64748b;"></i> Encryption</span>
+                  <span class="spec-val">BCrypt (12 Rounds)</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label"><i class="fa-solid fa-fingerprint" style="color: #64748b;"></i> Auth Token</span>
+                  <span class="spec-val">Stateless JWT Signed</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label"><i class="fa-solid fa-user-lock" style="color: var(--primary-blue);"></i> Security Scope</span>
+                  <span class="spec-val">OPERATIONS_SUPERVISOR</span>
+                </div>
+              </div>
+
+              <!-- Operational Caseload Snapshot -->
+              <div class="kpi-mini-grid">
+                <div class="kpi-mini-box">
+                  <div class="kpi-mini-val" id="stat-total-tickets">--</div>
+                  <div class="kpi-mini-label">Team Tickets</div>
+                </div>
+                <div class="kpi-mini-box">
+                  <div class="kpi-mini-val" id="stat-active-tickets" style="color: #d97706;">--</div>
+                  <div class="kpi-mini-label">In-Flight</div>
+                </div>
+                <div class="kpi-mini-box">
+                  <div class="kpi-mini-val" id="stat-officers-count" style="color: #059669;">--</div>
+                  <div class="kpi-mini-label">Officers</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/notifications.js"></script>
+
+  <script>
+    let currentProfile = null;
+    let isEditing = false;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Enforce RBAC
+      if (!Auth.requireRole('OPERATIONS_SUPERVISOR')) return;
+
+      // 2. Render Shell
+      Auth.renderSidebar();
+      Auth.renderHeaderProfile();
+      if (typeof NotificationsEngine !== 'undefined' && NotificationsEngine.init) {
+        NotificationsEngine.init();
+      }
+
+      // 3. Load Live Profile & Operational Stats
+      await loadProfileData();
+      await loadOperationalStats();
+    });
+
+    async function loadProfileData() {
+      try {
+        const res = await API.get('/auth/me');
+        if (res && res.data) {
+          currentProfile = res.data;
+          renderProfile(currentProfile);
+        } else {
+          // Fallback to local storage user
+          const user = Auth.getUser();
+          renderProfile({
+            fullName: user.fullName || 'Operations Supervisor',
+            email: user.email || 'supervisor@demo.com',
+            employeeCode: 'SUP-1001',
+            role: user.role || 'OPERATIONS_SUPERVISOR',
+            phone: '+94 77 123 4567',
+            department: 'Support Operations',
+            designation: 'Lead Operations Supervisor',
+            active: true
+          });
+        }
+      } catch (err) {
+        console.warn('GET /api/auth/me fallback to authenticated session token:', err);
+        const user = Auth.getUser();
+        renderProfile({
+          fullName: (user && user.fullName) || 'Operations Supervisor',
+          email: (user && user.email) || 'supervisor@demo.com',
+          employeeCode: 'SUP-1001',
+          role: 'OPERATIONS_SUPERVISOR',
+          phone: '+94 77 123 4567',
+          department: 'Support Operations',
+          designation: 'Lead Operations Supervisor',
+          active: true
+        });
+      }
+    }
+
+    function renderProfile(p) {
+      const name = p.fullName || 'Operations Supervisor';
+      const email = p.email || 'supervisor@demo.com';
+      const code = p.employeeCode || 'SUP-1001';
+      const initials = name.substring(0, 2).toUpperCase();
+
+      document.getElementById('hero-avatar-text').textContent = initials;
+      document.getElementById('hero-name-display').textContent = name;
+      document.getElementById('hero-email-display').textContent = email;
+      document.getElementById('hero-code-display').textContent = code;
+      document.getElementById('hero-role-display').textContent = 'Operations Supervisor';
+      document.getElementById('hero-status-display').textContent = p.active !== false ? 'Active' : 'Inactive';
+
+      if (p.createdAt) {
+        document.getElementById('hero-joined-date').textContent = new Date(p.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      } else {
+        document.getElementById('hero-joined-date').textContent = 'Active Account';
+      }
+
+      if (p.lastLoginAt) {
+        document.getElementById('hero-last-login').textContent = new Date(p.lastLoginAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      } else {
+        document.getElementById('hero-last-login').textContent = 'Current Session';
+      }
+
+      // Populate Form Fields
+      document.getElementById('prof-fullname').value = name;
+      document.getElementById('prof-email').value = email;
+      document.getElementById('prof-phone').value = p.phone || '+94 77 123 4567';
+      document.getElementById('prof-empcode').value = code;
+      document.getElementById('prof-dept').value = p.department || 'Support Operations';
+      document.getElementById('prof-designation').value = p.designation || 'Lead Operations Supervisor';
+    }
+
+    function toggleEditMode() {
+      isEditing = true;
+      document.getElementById('prof-fullname').removeAttribute('readonly');
+      document.getElementById('prof-phone').removeAttribute('readonly');
+      document.getElementById('prof-dept').removeAttribute('readonly');
+      document.getElementById('prof-designation').removeAttribute('readonly');
+      
+      document.getElementById('prof-fullname').focus();
+      document.getElementById('btn-edit-toggle').style.display = 'none';
+      document.getElementById('edit-actions-row').style.display = 'flex';
+    }
+
+    function cancelEditMode() {
+      isEditing = false;
+      document.getElementById('prof-fullname').setAttribute('readonly', 'true');
+      document.getElementById('prof-phone').setAttribute('readonly', 'true');
+      document.getElementById('prof-dept').setAttribute('readonly', 'true');
+      document.getElementById('prof-designation').setAttribute('readonly', 'true');
+
+      if (currentProfile) {
+        renderProfile(currentProfile);
+      }
+      document.getElementById('btn-edit-toggle').style.display = 'inline-flex';
+      document.getElementById('edit-actions-row').style.display = 'none';
+    }
+
+    async function saveProfileDetails(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('btn-save-profile');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+      const payload = {
+        fullName: document.getElementById('prof-fullname').value.trim(),
+        phone: document.getElementById('prof-phone').value.trim(),
+        department: document.getElementById('prof-dept').value.trim(),
+        designation: document.getElementById('prof-designation').value.trim()
+      };
+
+      try {
+        const res = await API.put('/auth/profile', payload);
+        if (res && res.data) {
+          currentProfile = res.data;
+          renderProfile(currentProfile);
+          // Update local session
+          const user = Auth.getUser() || {};
+          user.fullName = payload.fullName;
+          localStorage.setItem('user', JSON.stringify(user));
+          Auth.renderHeaderProfile();
+        }
+        Utils.showToast('Profile updated successfully', 'success');
+        cancelEditMode();
+      } catch (err) {
+        console.error('Failed to update profile:', err);
+        Utils.showToast(err.message || 'Failed to save profile changes', 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Changes';
+      }
+    }
+
+    async function changePassword(e) {
+      e.preventDefault();
+      const curPwd = document.getElementById('current-password').value;
+      const newPwd = document.getElementById('new-password').value;
+      const confPwd = document.getElementById('confirm-password').value;
+      const submitBtn = document.getElementById('btn-submit-pwd');
+
+      if (newPwd !== confPwd) {
+        Utils.showToast('New password and confirmation do not match', 'error');
+        return;
+      }
+
+      if (newPwd.length < 6) {
+        Utils.showToast('New password must be at least 6 characters', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating Password...';
+
+      try {
+        await API.post('/auth/change-password', {
+          currentPassword: curPwd,
+          newPassword: newPwd
+        });
+
+        Utils.showToast('Password updated successfully! Please use it next time you sign in.', 'success');
+        document.getElementById('password-change-form').reset();
+      } catch (err) {
+        console.error('Password change failed:', err);
+        Utils.showToast(err.message || 'Password update failed. Verify your current password.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Update Password';
+      }
+    }
+
+    function togglePasswordVis(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    async function loadOperationalStats() {
+      try {
+        const [ticketsRes, agentsRes] = await Promise.all([
+          API.get('/tickets?page=0&size=500').catch(() => ({ data: { content: [] } })),
+          API.get('/agents').catch(() => ({ data: [] }))
+        ]);
+
+        const tickets = (ticketsRes && ticketsRes.data && Array.isArray(ticketsRes.data.content))
+          ? ticketsRes.data.content
+          : (Array.isArray(ticketsRes.data) ? ticketsRes.data : []);
+        const agents = (agentsRes && Array.isArray(agentsRes.data)) ? agentsRes.data : [];
+
+        const totalTickets = tickets.length;
+        const activeTickets = tickets.filter(t => t.status !== 'RESOLVED' && t.status !== 'CLOSED').length;
+        const totalOfficers = agents.length;
+
+        document.getElementById('stat-total-tickets').textContent = totalTickets;
+        document.getElementById('stat-active-tickets').textContent = activeTickets;
+        document.getElementById('stat-officers-count').textContent = totalOfficers;
+      } catch (err) {
+        console.warn('Failed to load operational snapshot metrics:', err);
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -122,6 +122,23 @@ public class TicketServiceImpl implements TicketService {
         this.ticketSequenceService = ticketSequenceService;
     }
 
+    public TicketServiceImpl(
+            TicketRepository ticketRepository,
+            CustomerRepository customerRepository,
+            SupportAgentRepository agentRepository,
+            TicketCategoryRepository categoryRepository,
+            TicketReplyRepository replyRepository,
+            TicketHistoryRepository historyRepository,
+            AttachmentRepository attachmentRepository,
+            UserRepository userRepository,
+            FeedbackRepository feedbackRepository,
+            NotificationService notificationService,
+            NotificationFactory notificationFactory) {
+        this(ticketRepository, customerRepository, agentRepository, categoryRepository,
+             replyRepository, historyRepository, attachmentRepository, userRepository,
+             feedbackRepository, notificationService, notificationFactory, null);
+    }
+
     @Override
     @Transactional
     public TicketDto createTicket(String customerEmail, CreateTicketRequest request, MultipartFile attachment) {

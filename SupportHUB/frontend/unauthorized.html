@@ -4,18 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>403 Access Denied - SupportHUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .error-card {
+      text-align: center;
+      max-width: 500px;
+      padding: 2.5rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.05);
+    }
+    .error-code {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: #dc2626;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .error-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 1rem 0 0.5rem;
+      color: #0f172a;
+    }
+    .error-desc {
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-bottom: 1.75rem;
+      line-height: 1.5;
+    }
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #000985;
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.15s ease;
+    }
+    .btn-return:hover {
+      background: #000766;
+    }
+  </style>
 </head>
-<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: var(--bg-body);">
-
-  <div style="text-align: center; max-width: 480px; padding: 2rem;">
-    <div style="font-size: 5rem; font-weight: 800; color: var(--danger); line-height: 1;">403</div>
-    <h2 style="margin-top: 1rem; margin-bottom: 0.5rem;">Access Denied</h2>
-    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">You do not have the necessary role permissions to access this module.</p>
-    <a href="login.html" class="btn btn-primary">Sign In with Authorized Account</a>
+<body>
+  <div class="error-card">
+    <div class="error-code">403</div>
+    <h2 class="error-title">Access Denied</h2>
+    <p class="error-desc">You do not have the required role privileges or credentials to access this section.</p>
+    <a href="/login.html" class="btn-return">Sign In with Authorized Account</a>
   </div>
-
 </body>
 </html>

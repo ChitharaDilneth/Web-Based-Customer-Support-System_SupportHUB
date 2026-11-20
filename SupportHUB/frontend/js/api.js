@@ -1,7 +1,29 @@
 /**
  * SupportHUB Enterprise Platform - Centralized API Client
+ *
+ * Configurable API Base URL resolution:
+ * 1. window.__SUPPORT_HUB_API_URL__ (runtime global override injected by hosting environment or config script)
+ * 2. localStorage.getItem('supporthub_api_url') (explicit admin/developer manual override via browser storage)
+ * 3. Default fallback: 'http://localhost:8080/api' for local development
  */
-const API_BASE_URL = 'http://localhost:8080/api';
+function resolveApiBaseUrl() {
+  if (typeof window !== 'undefined') {
+    if (window.__SUPPORT_HUB_API_URL__ && typeof window.__SUPPORT_HUB_API_URL__ === 'string') {
+      return window.__SUPPORT_HUB_API_URL__.trim().replace(/\/+$/, '');
+    }
+    try {
+      const stored = localStorage.getItem('supporthub_api_url');
+      if (stored && typeof stored === 'string' && stored.trim().length > 0) {
+        return stored.trim().replace(/\/+$/, '');
+      }
+    } catch (e) {
+      // Storage access may be restricted in private/sandboxed contexts
+    }
+  }
+  return 'http://localhost:8080/api';
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 function getAppBasePath() {
   const path = window.location.pathname;
@@ -12,6 +34,20 @@ function getAppBasePath() {
 }
 
 const API = {
+  getBaseUrl() {
+    return resolveApiBaseUrl();
+  },
+
+  setBackendUrl(url) {
+    if (typeof window !== 'undefined' && url) {
+      try {
+        localStorage.setItem('supporthub_api_url', url.trim().replace(/\/+$/, ''));
+      } catch (e) {
+        console.warn('Unable to persist API URL to localStorage:', e);
+      }
+    }
+  },
+
   async request(endpoint, options = {}) {
     const token = localStorage.getItem('jwt_token');
     
@@ -34,7 +70,8 @@ const API = {
     };
 
     try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+      const baseUrl = (this.getBaseUrl ? this.getBaseUrl() : API_BASE_URL);
+      const response = await fetch(`${baseUrl}${endpoint}`, config);
       let data = {};
       try {
         data = await response.json();
@@ -110,7 +147,8 @@ const API = {
     if (fileUrl.startsWith('blob:') || fileUrl.startsWith('data:')) {
       return fileUrl;
     }
-    const baseUrl = API_BASE_URL.replace(/\/api\/?$/, '');
+    const activeApi = (this.getBaseUrl ? this.getBaseUrl() : API_BASE_URL);
+    const baseUrl = activeApi.replace(/\/api\/?$/, '');
     const cleanPath = fileUrl.startsWith('/') ? fileUrl : `/${fileUrl}`;
     const token = (typeof Auth !== 'undefined' && Auth.getToken) ? Auth.getToken() : null;
     const separator = cleanPath.includes('?') ? '&' : '?';

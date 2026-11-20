@@ -4,18 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 Page Not Found - SupportHUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .error-card {
+      text-align: center;
+      max-width: 500px;
+      padding: 2.5rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 9, 133, 0.05);
+    }
+    .error-code {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: #000985;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .error-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 1rem 0 0.5rem;
+      color: #0f172a;
+    }
+    .error-desc {
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-bottom: 1.75rem;
+      line-height: 1.5;
+    }
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #000985;
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.15s ease;
+    }
+    .btn-return:hover {
+      background: #000766;
+    }
+  </style>
 </head>
-<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: var(--bg-body);">
-
-  <div style="text-align: center; max-width: 480px; padding: 2rem;">
-    <div style="font-size: 5rem; font-weight: 800; color: var(--navy-primary); line-height: 1;">404</div>
-    <h2 style="margin-top: 1rem; margin-bottom: 0.5rem;">Page Not Found</h2>
-    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">The page or resource you requested does not exist or has been moved.</p>
-    <a href="index.html" class="btn btn-primary">Return to System Home</a>
+<body>
+  <div class="error-card">
+    <div class="error-code">404</div>
+    <h2 class="error-title">Page Not Found</h2>
+    <p class="error-desc">The page or resource you requested could not be found on the SupportHUB portal.</p>
+    <a href="/index.html" class="btn-return">Return to SupportHUB</a>
   </div>
-
 </body>
 </html>

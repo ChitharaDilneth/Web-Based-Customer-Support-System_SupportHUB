@@ -1,5 +1,5 @@
 -- SupportHUB Database Complete Full Wipe / Reset Script
--- Target Database: MySQL 8.0+ / TiDB Cloud Starter & Serverless
+-- Target Database: MySQL 8.0+
 -- This script completely empties all 16 tables in supporthub
 
 USE supporthub;

@@ -1,5 +1,5 @@
 -- SE2030 Customer Support System Database Schema
--- Target Database: MySQL 8.0+ / TiDB Cloud Starter & Serverless
+-- Target Database: MySQL 8.0+
 
 CREATE DATABASE IF NOT EXISTS supporthub CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE supporthub;

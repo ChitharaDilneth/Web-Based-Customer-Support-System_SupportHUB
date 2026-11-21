@@ -1,8 +1,10 @@
 -- SE2030 Customer Support System Database Schema
--- Target Database: MySQL 8.0+
+-- Target Database: MySQL 8.0+ / TiDB Cloud Starter & Serverless
 
-CREATE DATABASE IF NOT EXISTS customer_support_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE customer_support_db;
+CREATE DATABASE IF NOT EXISTS supporthub CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE supporthub;
+
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- 1. Users Table
 CREATE TABLE IF NOT EXISTS users (
@@ -14,6 +16,11 @@ CREATE TABLE IF NOT EXISTS users (
     last_login_at DATETIME NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    full_name VARCHAR(150) NULL,
+    phone VARCHAR(50) NULL,
+    employee_code VARCHAR(50) NULL,
+    department VARCHAR(100) NULL,
+    designation VARCHAR(100) NULL,
     INDEX idx_user_email (email),
     INDEX idx_user_role (role)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -233,3 +240,11 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_audit_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 16. Ticket Sequences Table (Atomic Collision-Resistant Sequence Store)
+CREATE TABLE IF NOT EXISTS ticket_sequences (
+    sequence_year INT NOT NULL PRIMARY KEY,
+    current_value BIGINT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+SET FOREIGN_KEY_CHECKS = 1;

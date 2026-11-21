@@ -5,6 +5,8 @@ import com.customersupport.SupportHUB.category.TicketCategory;
 import com.customersupport.SupportHUB.customer.Customer;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
 
 @Entity
@@ -37,10 +39,12 @@ public class Ticket {
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false, length = 20)
     private TicketPriority priority = TicketPriority.MEDIUM;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false, length = 30)
     private TicketStatus status = TicketStatus.OPEN;
 
@@ -51,6 +55,7 @@ public class Ticket {
     private String trackingNumber;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "refund_status", nullable = false, length = 30)
     private RefundStatus refundStatus = RefundStatus.NONE;
 

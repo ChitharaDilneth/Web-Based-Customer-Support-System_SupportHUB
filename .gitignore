@@ -1,0 +1,19 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.credentials
+.credentials/
+
+# Build targets
+target/
+**/target/
+dist/
+build/
+
+# IDE & OS
+.idea/
+.DS_Store
+Thumbs.db

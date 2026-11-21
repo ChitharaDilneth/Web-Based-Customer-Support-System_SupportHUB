@@ -1,12 +1,13 @@
 -- SupportHUB Database Complete Full Wipe / Reset Script
--- Target Database: MySQL 8.0+
--- This script completely empties all 16 tables in customer_support_db
+-- Target Database: MySQL 8.0+ / TiDB Cloud Starter & Serverless
+-- This script completely empties all 16 tables in supporthub
 
-USE customer_support_db;
+USE supporthub;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
 TRUNCATE TABLE audit_logs;
+TRUNCATE TABLE ticket_sequences;
 TRUNCATE TABLE password_reset_tokens;
 TRUNCATE TABLE notifications;
 TRUNCATE TABLE feedback;

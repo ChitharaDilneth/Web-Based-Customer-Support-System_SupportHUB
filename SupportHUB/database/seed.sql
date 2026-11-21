@@ -5,29 +5,9 @@
 -- BCrypt Hash     : $2a$10$H0lLq2O4Z04TeIaIG5047u0vL9AorcXHgnm1wHCoCFW7YwzfQ5Wgy
 -- =====================================================================================
 
-USE customer_support_db;
+USE supporthub;
 
--- -------------------------------------------------------------------------------------
--- 0. Safely Clear Any Existing Data (Reset Foreign Key Checks)
--- -------------------------------------------------------------------------------------
 SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE TABLE audit_logs;
-TRUNCATE TABLE password_reset_tokens;
-TRUNCATE TABLE notifications;
-TRUNCATE TABLE feedback;
-TRUNCATE TABLE attachments;
-TRUNCATE TABLE ticket_history;
-TRUNCATE TABLE ticket_replies;
-TRUNCATE TABLE tickets;
-TRUNCATE TABLE support_agent_categories;
-TRUNCATE TABLE support_agents;
-TRUNCATE TABLE faq_articles;
-TRUNCATE TABLE knowledge_base_articles;
-TRUNCATE TABLE ticket_categories;
-TRUNCATE TABLE customer_orders;
-TRUNCATE TABLE customers;
-TRUNCATE TABLE users;
-SET FOREIGN_KEY_CHECKS = 1;
 
 -- -------------------------------------------------------------------------------------
 -- 1. USERS TABLE
@@ -328,3 +308,11 @@ INSERT INTO audit_logs (id, user_id, action, entity_name, entity_id, details, ti
 (5, 1, 'CATEGORY_CREATE', 'ticket_categories', 2, 'Created system category Payment & Refunds', '2026-09-01 08:00:00'),
 (6, 1, 'AGENT_ONBOARD', 'support_agents', 1, 'Onboarded Support Officer Nadeesha Fernando (AGT-1001)', '2026-09-01 08:00:00'),
 (7, 1, 'AGENT_ONBOARD', 'support_agents', 2, 'Onboarded Support Officer Kasun Perera (AGT-1002)', '2026-09-01 08:00:00');
+
+-- -------------------------------------------------------------------------------------
+-- 16. TICKET SEQUENCES TABLE (Synchronized with Seed Data High-Water Mark)
+-- -------------------------------------------------------------------------------------
+INSERT INTO ticket_sequences (sequence_year, current_value) VALUES (2026, 25)
+ON DUPLICATE KEY UPDATE current_value = GREATEST(current_value, VALUES(current_value));
+
+SET FOREIGN_KEY_CHECKS = 1;

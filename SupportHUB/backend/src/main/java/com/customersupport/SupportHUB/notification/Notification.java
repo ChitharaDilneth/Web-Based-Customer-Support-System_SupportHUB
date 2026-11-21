@@ -3,6 +3,8 @@ package com.customersupport.SupportHUB.notification;
 import com.customersupport.SupportHUB.common.User;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,6 +26,7 @@ public class Notification {
     private String message;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false, length = 50)
     private NotificationType type = NotificationType.SYSTEM;
 

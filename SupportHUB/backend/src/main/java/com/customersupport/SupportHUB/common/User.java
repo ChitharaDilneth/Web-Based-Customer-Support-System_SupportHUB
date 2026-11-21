@@ -1,6 +1,8 @@
 package com.customersupport.SupportHUB.common;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +20,7 @@ public class User {
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false, length = 50)
     private Role role;
 

@@ -20,8 +20,18 @@
         <p>Sign in to access your role-based dashboard</p>
       </div>
 
-      <!-- Public Demonstration Mode Showcase Card -->
-      <div class="demo-access-banner" style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #000985; border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.25rem;">
+      <!-- Sign In Mode Switcher (Standard Sign In vs Demo Mode) -->
+      <div class="mode-switcher-container" style="display: flex; background: #f1f5f9; border-radius: 999px; padding: 4px; margin-bottom: 1.25rem; border: 1px solid #e2e8f0;">
+        <button type="button" id="btn-mode-standard" class="mode-tab-btn" onclick="switchLoginMode('standard')" style="flex: 1; border: none; background: #ffffff; color: #000985; font-size: 0.8rem; font-weight: 700; padding: 0.45rem 0.75rem; border-radius: 999px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;">
+          <i class="fa-solid fa-lock" style="font-size: 0.75rem;"></i> Standard Sign In
+        </button>
+        <button type="button" id="btn-mode-demo" class="mode-tab-btn" onclick="switchLoginMode('demo')" style="flex: 1; border: none; background: transparent; color: #64748b; font-size: 0.8rem; font-weight: 700; padding: 0.45rem 0.75rem; border-radius: 999px; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;">
+          <i class="fa-solid fa-flask" style="color: #f59e0b; font-size: 0.75rem;"></i> Demo Mode
+        </button>
+      </div>
+
+      <!-- Public Demonstration Mode Showcase Card (Shown only when Demo Mode is chosen) -->
+      <div id="demo-showcase-card" class="demo-access-banner" style="display: none; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #000985; border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.25rem;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem;">
           <span style="font-size: 0.75rem; font-weight: 800; color: #000985; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 0.35rem;">
             <i class="fa-solid fa-flask" style="color: #d97706;"></i> PUBLIC DEMO MODE
@@ -109,6 +119,69 @@
 
     emailInput.addEventListener('input', clearPasswordError);
     passwordInput.addEventListener('input', clearPasswordError);
+
+    window.switchLoginMode = function(mode, autoPrefill = true) {
+      const demoCard = document.getElementById('demo-showcase-card');
+      const standardBtn = document.getElementById('btn-mode-standard');
+      const demoBtn = document.getElementById('btn-mode-demo');
+      clearPasswordError();
+
+      if (mode === 'demo') {
+        if (demoBtn) {
+          demoBtn.style.background = '#000985';
+          demoBtn.style.color = '#ffffff';
+          demoBtn.style.boxShadow = '0 1px 3px rgba(0, 9, 133, 0.25)';
+        }
+        if (standardBtn) {
+          standardBtn.style.background = 'transparent';
+          standardBtn.style.color = '#64748b';
+          standardBtn.style.boxShadow = 'none';
+        }
+        if (demoCard) {
+          demoCard.style.display = 'block';
+        }
+        if (autoPrefill) {
+          emailInput.value = 'supervisor@demo.com';
+          passwordInput.value = 'Demo@12345';
+        }
+        try {
+          const url = new URL(window.location);
+          url.searchParams.set('demo', 'true');
+          window.history.replaceState({}, '', url);
+        } catch (e) {}
+      } else {
+        if (standardBtn) {
+          standardBtn.style.background = '#ffffff';
+          standardBtn.style.color = '#000985';
+          standardBtn.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08)';
+        }
+        if (demoBtn) {
+          demoBtn.style.background = 'transparent';
+          demoBtn.style.color = '#64748b';
+          demoBtn.style.boxShadow = 'none';
+        }
+        if (demoCard) {
+          demoCard.style.display = 'none';
+        }
+        if (emailInput.value.endsWith('@demo.com')) {
+          emailInput.value = '';
+          passwordInput.value = '';
+        }
+        try {
+          const url = new URL(window.location);
+          url.searchParams.delete('demo');
+          window.history.replaceState({}, '', url);
+        } catch (e) {}
+      }
+    };
+
+    // Auto-detect mode on initial load
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('demo') === 'true' || window.location.hash === '#demo') {
+      window.switchLoginMode('demo', true);
+    } else {
+      window.switchLoginMode('standard', false);
+    }
 
     const quickDemoBtn = document.getElementById('btn-quick-demo-login');
     if (quickDemoBtn) {

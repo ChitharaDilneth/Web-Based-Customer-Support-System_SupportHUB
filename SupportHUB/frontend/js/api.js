@@ -1,3 +1,20 @@
+// Auto-load DemoService if not already in document
+(function ensureDemoService() {
+  if (typeof window !== 'undefined' && !window.DemoService) {
+    try {
+      const existing = document.querySelector('script[src*="demo-service.js"]');
+      if (!existing && document.head) {
+        const s = document.createElement('script');
+        const p = window.location.pathname;
+        const prefix = (p.includes('/customer/') || p.includes('/supervisor/') || p.includes('/officer/') || p.includes('/manager/') || p.includes('/qa/')) ? '../' : '';
+        s.src = `${prefix}js/demo-service.js`;
+        s.async = false;
+        document.head.appendChild(s);
+      }
+    } catch (e) {}
+  }
+})();
+
 /**
  * SupportHUB Enterprise Platform - Centralized API Client
  *
@@ -69,6 +86,11 @@ const API = {
       headers
     };
 
+    // 1. Direct Demo Mode Interception (100% frontend-only mock engine)
+    if (typeof DemoService !== 'undefined' && DemoService.canIntercept(endpoint)) {
+      return await DemoService.handleRequest(endpoint, options);
+    }
+
     try {
       const baseUrl = (this.getBaseUrl ? this.getBaseUrl() : API_BASE_URL);
       const response = await fetch(`${baseUrl}${endpoint}`, config);
@@ -101,6 +123,14 @@ const API = {
 
       return data;
     } catch (err) {
+      // If live backend server is unreachable (e.g. static Vercel deployment), fall back gracefully to DemoService
+      if (typeof DemoService !== 'undefined' && (err.name === 'TypeError' || (err.message && (err.message.includes('fetch') || err.message.includes('NetworkError'))))) {
+        try {
+          return await DemoService.handleRequest(endpoint, options);
+        } catch (demoErr) {
+          throw demoErr;
+        }
+      }
       console.error(`API Error [${endpoint}]:`, err);
       throw err;
     }

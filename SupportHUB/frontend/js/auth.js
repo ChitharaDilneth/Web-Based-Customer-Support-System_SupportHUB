@@ -31,6 +31,7 @@ const Auth = {
   logout() {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('user_info');
+    localStorage.removeItem('supporthub_demo_mode');
     window.location.href = `${this.getBasePath()}/login.html`;
   },
 
@@ -72,6 +73,10 @@ const Auth = {
     if (avatarEl) {
       const initials = (user.fullName || user.email).substring(0, 2).toUpperCase();
       avatarEl.textContent = initials;
+    }
+
+    if (typeof DemoService !== 'undefined') {
+      DemoService.renderBanner();
     }
   },
 

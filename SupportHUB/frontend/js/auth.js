@@ -28,6 +28,24 @@ const Auth = {
     return '';
   },
 
+  getRoleDashboard(role) {
+    switch (role) {
+      case 'CUSTOMER':
+        return '/customer/customer-dashboard.html';
+      case 'CUSTOMER_SERVICE_OFFICER':
+        return '/officer/officer-dashboard.html';
+      case 'OPERATIONS_SUPERVISOR':
+        return '/supervisor/supervisor-dashboard.html';
+      case 'CUSTOMER_SUPPORT_MANAGER':
+        return '/manager/manager-dashboard.html';
+      case 'QA_EXECUTIVE':
+      case 'QUALITY_ASSURANCE':
+        return '/qa/qa-dashboard.html';
+      default:
+        return '/index.html';
+    }
+  },
+
   logout() {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('user_info');
@@ -42,10 +60,15 @@ const Auth = {
     }
 
     const user = this.getUser();
+    if (!user) {
+      window.location.href = `${this.getBasePath()}/login.html`;
+      return false;
+    }
+
     const currentPath = window.location.pathname;
 
     // Specifically block Supervisor from accessing Manager Overview and QA Dashboard as requested
-    if (user && user.role === 'OPERATIONS_SUPERVISOR') {
+    if (user.role === 'OPERATIONS_SUPERVISOR') {
       if (currentPath.includes('manager-dashboard.html') || currentPath.includes('qa-dashboard.html')) {
         window.location.href = `${this.getBasePath()}/supervisor/supervisor-dashboard.html`;
         return false;
@@ -53,11 +76,45 @@ const Auth = {
       return true;
     }
 
-    if (!user || !allowedRoles.includes(user.role)) {
-      window.location.href = `${this.getBasePath()}/unauthorized.html`;
-      return false;
+    if (allowedRoles) {
+      const roles = Array.isArray(allowedRoles) ? [...allowedRoles] : [allowedRoles];
+      if (roles.includes('QA_EXECUTIVE') && !roles.includes('QUALITY_ASSURANCE')) roles.push('QUALITY_ASSURANCE');
+      if (roles.includes('QUALITY_ASSURANCE') && !roles.includes('QA_EXECUTIVE')) roles.push('QA_EXECUTIVE');
+      if (!roles.includes(user.role)) {
+        const roleDashboard = this.getRoleDashboard(user.role);
+        if (roleDashboard && !currentPath.includes(roleDashboard)) {
+          window.location.href = `${this.getBasePath()}${roleDashboard}`;
+          return false;
+        }
+        window.location.href = `${this.getBasePath()}/unauthorized.html`;
+        return false;
+      }
     }
     return true;
+  },
+
+  requireAuth(allowedRoles) {
+    if (!this.isLoggedIn()) {
+      window.location.href = `${this.getBasePath()}/login.html`;
+      return null;
+    }
+
+    const user = this.getUser();
+    if (!user) {
+      window.location.href = `${this.getBasePath()}/login.html`;
+      return null;
+    }
+
+    if (allowedRoles) {
+      const ok = this.requireRole(allowedRoles);
+      if (!ok) return null;
+    }
+    return user;
+  },
+
+  renderNav() {
+    this.renderSidebar();
+    this.renderUserHeader();
   },
 
   renderUserHeader() {
@@ -73,10 +130,6 @@ const Auth = {
     if (avatarEl) {
       const initials = (user.fullName || user.email).substring(0, 2).toUpperCase();
       avatarEl.textContent = initials;
-    }
-
-    if (typeof DemoService !== 'undefined') {
-      DemoService.renderBanner();
     }
   },
 
@@ -247,66 +300,27 @@ const Auth = {
       `;
     }).join('');
 
-    // Bottom actions: logout button with clean red hover styling
-    const bottomActionsHtml = hasSignOut ? `
-      <div class="sidebar-bottom-actions">
-        <button type="button" onclick="Auth.logout()" class="nav-item btn-sidebar-logout" aria-label="Sign Out" title="Sign Out">
-          <span class="nav-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
-          <span class="nav-tooltip">Sign Out</span>
-        </button>
-      </div>
-    ` : '';
+    // Set navigation HTML without bottom logout in sidebar
+    navContainer.innerHTML = navItemsHtml;
 
-    navContainer.innerHTML = navItemsHtml + bottomActionsHtml;
-
-    // Ensure circular user profile avatar footer
-    const sidebar = document.querySelector('.sidebar');
-    if (sidebar) {
-      let footer = document.getElementById('sidebar-user-footer');
-      if (!footer) {
-        footer = document.createElement('div');
-        footer.id = 'sidebar-user-footer';
-        footer.className = 'sidebar-user-footer';
-        sidebar.appendChild(footer);
-      }
-
-      if (user) {
-        const initials = (user.fullName || user.email).substring(0, 2).toUpperCase();
-        const profileUrl = this.getProfileUrl(user);
-        const roleMap = {
-          'CUSTOMER_SUPPORT_MANAGER': 'Support Manager',
-          'OPERATIONS_SUPERVISOR': 'Supervisor',
-          'CUSTOMER_SERVICE_OFFICER': 'Support Officer',
-          'QA_EXECUTIVE': 'QA Executive',
-          'QUALITY_ASSURANCE': 'QA Executive',
-          'CUSTOMER': 'Customer'
-        };
-        const displayRole = roleMap[user.role] || user.role.replaceAll('_', ' ');
-
-        footer.innerHTML = `
-          <a href="${profileUrl}" class="sidebar-avatar-wrap" aria-label="My Profile" title="${user.fullName || user.email}">
-            <div class="sidebar-avatar-circle">
-              <span>${initials}</span>
-              <span class="online-status-dot"></span>
-            </div>
-            <span class="nav-tooltip">${user.fullName || user.email} &bull; ${displayRole}</span>
-          </a>
-        `;
-      } else {
-        footer.innerHTML = `
-          <a href="${basePath}/login.html" class="sidebar-avatar-wrap" aria-label="Sign In" title="Sign In">
-            <div class="sidebar-avatar-circle" style="background: #e2e8f0; color: #64748b;">
-              <i class="fa-solid fa-user"></i>
-            </div>
-            <span class="nav-tooltip">Sign In</span>
-          </a>
-        `;
-      }
+    // Remove user profile avatar from sidebar as requested
+    const existingSidebarFooter = document.getElementById('sidebar-user-footer');
+    if (existingSidebarFooter) {
+      existingSidebarFooter.remove();
+    }
+    const legacySidebarFooter = document.querySelector('.sidebar-footer');
+    if (legacySidebarFooter) {
+      legacySidebarFooter.remove();
     }
 
-    // Automatically ensure SupportHUB Brand Logo Badge exists in top-header
-    const headerLeft = document.querySelector('.top-header .header-left');
+    // Automatically ensure SupportHUB Brand Logo Badge exists in top-header or topbar
+    const headerLeft = document.querySelector('.top-header .header-left, .topbar .topbar-left, .header-left, .topbar-left');
     if (headerLeft && !headerLeft.querySelector('.header-brand-pill')) {
+      const legacyCapsule = headerLeft.querySelector('.page-title-capsule');
+      if (legacyCapsule) legacyCapsule.remove();
+      const legacyToggle = headerLeft.querySelector('.btn-menu-toggle');
+      if (legacyToggle) legacyToggle.remove();
+
       const dashboardUrl = this.getDashboardUrl(user);
       const brandPill = document.createElement('a');
       brandPill.href = dashboardUrl;
@@ -396,7 +410,6 @@ const Auth = {
       capsule.innerHTML = '';
       return;
     }
-    const initials = (user.fullName || user.email || 'QA').substring(0, 2).toUpperCase();
     const profileUrl = this.getProfileUrl(user);
     const roleMap = {
       'CUSTOMER_SUPPORT_MANAGER': 'Support Manager',
@@ -409,11 +422,10 @@ const Auth = {
     const displayRole = roleMap[user.role] || user.role.replaceAll('_', ' ');
 
     capsule.innerHTML = `
-      <a href="${profileUrl}" class="header-profile-capsule-link" title="View Profile" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.35rem 0.75rem 0.35rem 0.45rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 9999px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
-        <span style="width: 32px; height: 32px; border-radius: 50%; background: #000985; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.5px;">${initials}</span>
-        <div style="display: flex; flex-direction: column; text-align: left; line-height: 1.15;">
-          <span style="font-size: 0.8rem; font-weight: 700; color: #0f172a; max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.fullName || user.email}</span>
-          <span style="font-size: 0.68rem; font-weight: 600; color: #64748b;">${displayRole}</span>
+      <a href="${profileUrl}" class="header-user-icon-btn" title="${user.fullName || user.email} (${displayRole})" aria-label="User Profile" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer;">
+        <div class="header-user-avatar-circle" style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #000985 0%, #050b2e 100%); border: 2px solid #F5CC00; color: #F5CC00; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; box-shadow: 0 4px 12px rgba(0, 9, 133, 0.25); position: relative; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
+          <i class="fa-solid fa-user"></i>
+          <span style="position: absolute; bottom: 1px; right: 1px; width: 9px; height: 9px; background: #10b981; border: 2px solid #ffffff; border-radius: 50%; box-shadow: 0 0 4px #10b981;"></span>
         </div>
       </a>
     `;
@@ -521,6 +533,10 @@ const Auth = {
 
 // Instantly auto-fix URLs with spaces
 Auth.fixUrlSpace();
+
+if (typeof window !== 'undefined') {
+  window.Auth = Auth;
+}
 
 // Auto-bind logo navigation on DOMContentLoaded
 if (typeof document !== 'undefined') {

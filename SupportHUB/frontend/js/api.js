@@ -87,8 +87,18 @@ const API = {
     };
 
     // 1. Direct Demo Mode Interception (100% frontend-only mock engine)
-    if (typeof DemoService !== 'undefined' && DemoService.canIntercept(endpoint)) {
-      return await DemoService.handleRequest(endpoint, options);
+    if (typeof DemoService === 'undefined' && typeof window !== 'undefined' && !window.DemoService) {
+      const isLikelyDemo = (token && token.startsWith('demo-')) || localStorage.getItem('supporthub_demo_mode') === 'true';
+      if (isLikelyDemo) {
+        for (let i = 0; i < 5; i++) {
+          await new Promise(r => setTimeout(r, 50));
+          if (window.DemoService) break;
+        }
+      }
+    }
+    const activeDemo = (typeof DemoService !== 'undefined') ? DemoService : (typeof window !== 'undefined' ? window.DemoService : null);
+    if (activeDemo && activeDemo.canIntercept(endpoint)) {
+      return await activeDemo.handleRequest(endpoint, options);
     }
 
     try {
@@ -102,6 +112,9 @@ const API = {
       }
 
       if (response.status === 401) {
+        if (activeDemo && (token?.startsWith('demo-') || localStorage.getItem('supporthub_demo_mode') === 'true')) {
+          return await activeDemo.handleRequest(endpoint, options);
+        }
         localStorage.removeItem('jwt_token');
         localStorage.removeItem('user_info');
         if (!window.location.pathname.endsWith('login.html') && !window.location.pathname.endsWith('index.html')) {
@@ -111,6 +124,10 @@ const API = {
       }
 
       if (response.status === 403) {
+        // Fall back to DemoService if demo session is active
+        if (activeDemo && (token?.startsWith('demo-') || localStorage.getItem('supporthub_demo_mode') === 'true')) {
+          return await activeDemo.handleRequest(endpoint, options);
+        }
         if (!window.location.pathname.endsWith('unauthorized.html')) {
           window.location.href = `${getAppBasePath()}/unauthorized.html`;
         }
@@ -124,9 +141,9 @@ const API = {
       return data;
     } catch (err) {
       // If live backend server is unreachable (e.g. static Vercel deployment), fall back gracefully to DemoService
-      if (typeof DemoService !== 'undefined' && (err.name === 'TypeError' || (err.message && (err.message.includes('fetch') || err.message.includes('NetworkError'))))) {
+      if (activeDemo && (err.name === 'TypeError' || (err.message && (err.message.includes('fetch') || err.message.includes('NetworkError') || err.message.includes('Access Denied'))))) {
         try {
-          return await DemoService.handleRequest(endpoint, options);
+          return await activeDemo.handleRequest(endpoint, options);
         } catch (demoErr) {
           throw demoErr;
         }

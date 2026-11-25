@@ -557,6 +557,8 @@
     </div>
   </div>
 
+  <script src="../js/demo-service.js"></script>
+
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/utils.js"></script>
@@ -599,17 +601,22 @@
           API.get('/tickets').catch(() => ({ data: [] }))
         ]);
 
-        currentCategories = catRes.data || [];
-        const tickets = ticketsRes.data || [];
+        currentCategories = Array.isArray(catRes.data) ? catRes.data : (catRes.data?.content || []);
+        const rawTickets = ticketsRes.data;
+        const tickets = Array.isArray(rawTickets) ? rawTickets : (rawTickets && Array.isArray(rawTickets.content) ? rawTickets.content : []);
 
         // Match active tickets per category
         currentCategories.forEach(c => {
-          c.activeTicketCount = tickets.filter(t => t.category && t.category.id === c.id && t.status !== 'RESOLVED' && t.status !== 'CLOSED').length;
+          c.activeTicketCount = tickets.filter(t => 
+            ((t.categoryId && t.categoryId === c.id) || (t.category && t.category.id === c.id)) && 
+            t.status !== 'RESOLVED' && t.status !== 'CLOSED'
+          ).length;
         });
 
         updateKpis(tickets.length);
         renderCardsView();
       } catch (err) {
+        console.error('Error in fetchCategories:', err);
         Utils.showToast('Failed to fetch categories', 'error');
       }
     }

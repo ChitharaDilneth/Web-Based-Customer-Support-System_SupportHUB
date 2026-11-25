@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -333,56 +333,36 @@
 </head>
 
 <body>
-  <div class="dashboard-layout">
+  <div class="app-container">
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <a href="manager-dashboard.html" class="sidebar-brand">
-          <div class="brand-icon"><i class="fa-solid fa-headset"></i></div>
-          <div class="brand-text">
-            <span class="brand-title">SupportHUB</span>
-            <span class="brand-subtitle">Executive Suite</span>
-          </div>
-        </a>
+        <div class="brand-logo"><span class="logo-support">Support</span><span class="logo-hub">HUB</span></div>
       </div>
-      <nav class="sidebar-nav" id="sidebar-nav"></nav>
-      <div class="sidebar-footer">
-        <button class="btn-logout" onclick="Auth.logout()">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <span>Sign Out</span>
-        </button>
-      </div>
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
     </aside>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <div class="main-content">
       <!-- Topbar Header -->
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="btn-menu-toggle" aria-label="Toggle menu">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-          <div class="page-title-capsule">
-            <i class="fa-solid fa-chart-pie"></i>
-            <span>Customer Support Manager Management</span>
-          </div>
-        </div>
-        <div class="topbar-right">
+      <header class="top-header">
+        <div class="header-left"></div>
+        <div class="header-right">
           <div class="header-profile-capsule" id="header-profile-capsule"></div>
           <div class="notif-bell-container" id="notif-bell">
             <div class="bell-icon" title="Notifications"><i class="fa-solid fa-bell"></i></div>
             <span class="notif-counter" id="notif-counter" style="display: none;">0</span>
             <div class="notif-dropdown" id="notif-dropdown">
-              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700; color: var(--primary-blue);">Notifications</div>
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); font-weight: 700;">Notifications</div>
               <div id="notif-dropdown-list"></div>
             </div>
           </div>
-          <button onclick="Auth.logout()" class="btn-logout-icon" title="Logout" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0.4rem;"><i class="fa-solid fa-right-from-bracket"></i></button>
+          <button onclick="Auth.logout()" class="btn-logout-icon" title="Sign Out"><i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
       </header>
 
       <!-- Workspace Content -->
-      <div class="content-container">
+      <div class="page-body">
         <!-- Page Header -->
         <div class="rpt-header-row">
           <div class="rpt-title-group">
@@ -553,11 +533,12 @@
         </div>
 
       </div>
-    </main>
+    </div>
   </div>
 
   <!-- Scripts -->
   <script src="../js/utils.js"></script>
+  <script src="../js/demo-service.js"></script>
   <script src="../js/api.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/notifications.js"></script>

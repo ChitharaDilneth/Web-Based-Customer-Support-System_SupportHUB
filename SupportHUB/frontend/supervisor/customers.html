@@ -664,7 +664,9 @@
     async function loadCustomers() {
       try {
         const res = await API.get('/customers');
-        allCustomers = res.data || [];
+        allCustomers = Array.isArray(res.data)
+          ? res.data
+          : (res && res.data && Array.isArray(res.data.content) ? res.data.content : []);
         updateMetrics();
         handleSearchCustomers();
       } catch (err) {
@@ -674,6 +676,7 @@
     }
 
     function updateMetrics() {
+      if (!Array.isArray(allCustomers)) allCustomers = [];
       document.getElementById('metric-total-customers').textContent = allCustomers.length;
       const activeCount = allCustomers.filter(c => c.active !== false).length;
       document.getElementById('metric-active-customers').textContent = activeCount;
@@ -690,7 +693,7 @@
     }
 
     function renderCustomers(searchFilter = '', statusFilter = 'ALL', sortFilter = 'NEWEST') {
-      let filtered = [...allCustomers];
+      let filtered = Array.isArray(allCustomers) ? [...allCustomers] : [];
 
       // Text search filter
       if (searchFilter) {
@@ -1066,7 +1069,7 @@
 
       try {
         await API.delete(`/customers/${id}`);
-        allCustomers = allCustomers.filter(c => c.id !== id);
+        allCustomers = Array.isArray(allCustomers) ? allCustomers.filter(c => c.id !== id) : [];
         updateMetrics();
         renderCustomers();
         Utils.showToast(`Customer "${name}" deleted successfully`, 'success');

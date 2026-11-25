@@ -4,12 +4,13 @@
    ========================================================================== */
 
 /* Top Navigation Header */
-.top-header {
+.top-header,
+.topbar {
   height: 72px;
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.80);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.90);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -20,7 +21,8 @@
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
 }
 
-.header-left {
+.header-left,
+.topbar-left {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -33,10 +35,11 @@
   color: var(--navy-dark);
 }
 
-.header-right {
+.header-right,
+.topbar-right {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 /* User Profile Badge */
@@ -276,9 +279,10 @@
 
   .header-brand-pill .header-logo-img,
   .brand-logo-img {
-    height: 38px;
+    height: 48px;
+    max-height: 52px;
     width: auto;
-    max-width: 160px;
+    max-width: 220px;
     object-fit: contain;
     display: block;
     filter: drop-shadow(0 2px 6px rgba(0, 9, 133, 0.08));
@@ -328,15 +332,15 @@
     font-size: 0.95rem;
   }
 
-  /* 2. Floating Minimalist Vertical Sidebar Capsule - Premium Blue & Yellow Glassmorphism */
+  /* 2. Floating Minimalist Vertical Sidebar Capsule - Vertically Centered Below Top Header */
   .sidebar {
     position: fixed;
-    top: 1.25rem;
+    top: calc(72px + (100vh - 72px) / 2) !important;
+    transform: translateY(-50%) !important;
     left: 1.25rem;
-    bottom: 1.25rem;
     width: 80px;
-    height: calc(100vh - 2.5rem);
-    max-height: calc(100vh - 2.5rem);
+    height: auto !important;
+    max-height: calc(100vh - 72px - 2rem) !important;
     background: linear-gradient(
       160deg,
       rgba(0, 9, 133, 0.88),
@@ -352,11 +356,18 @@
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    padding: 1.25rem 0 0.85rem 0 !important;
+    padding: 1.15rem 0 !important;
     z-index: 1000 !important;
     box-sizing: border-box !important;
-    overflow: visible !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto !important;
+    overflow-x: visible !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  }
+
+  .sidebar::-webkit-scrollbar {
+    display: none;
   }
 
   /* Sidebar Top Header is removed (SupportHUB brand logo is placed in top header) */
@@ -367,7 +378,7 @@
   /* Sidebar Navigation Items */
   .sidebar-nav {
     width: 100%;
-    flex: 1 1 auto;
+    flex: 0 0 auto !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -577,58 +588,52 @@
     display: none !important;
   }
 
-  /* Bottom Actions & Translucent Red Logout Button */
-  .sidebar-bottom-actions {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 0.45rem !important;
-    margin-top: auto !important;
-    padding-top: 0.65rem !important;
-    flex-shrink: 0 !important;
-    width: 100% !important;
-  }
-
+  /* Sidebar Bottom Actions & User Footer Removed from Sidebar as Requested */
+  .sidebar-bottom-actions,
   .btn-sidebar-logout,
-  .btn-sidebar-logout .nav-icon,
-  .btn-sidebar-logout i {
-    color: #f87171 !important;
-    background: rgba(239, 68, 68, 0.14) !important;
-    border: 1px solid rgba(239, 68, 68, 0.28) !important;
-    border-radius: 14px !important;
-    width: 44px !important;
-    height: 44px !important;
-    margin: 0 auto !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  .sidebar-user-footer,
+  .sidebar-footer,
+  .btn-logout {
+    display: none !important;
   }
 
-  .btn-sidebar-logout:hover,
-  .btn-sidebar-logout:hover .nav-icon,
-  .btn-sidebar-logout:hover i {
-    background: rgba(239, 68, 68, 0.28) !important;
-    color: #fca5a5 !important;
-    border-color: rgba(239, 68, 68, 0.50) !important;
-    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35) !important;
+  /* Hide legacy header elements in manager/qa pages */
+  .btn-menu-toggle,
+  .page-title-capsule {
+    display: none !important;
+  }
+
+  /* Support legacy .dashboard-layout wrapper */
+  .dashboard-layout {
+    min-height: 100vh;
+    display: block !important;
+    background: var(--canvas-bg, #f8fafc);
+  }
+
+  .dashboard-layout .main-content,
+  main.main-content {
+    margin-left: 96px !important;
+    padding: 1.5rem 2rem 3rem 1.5rem !important;
+    min-height: calc(100vh - 72px) !important;
+  }
+
+  /* Header User Icon in Top Bar */
+  .header-user-icon-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    cursor: pointer;
+  }
+
+  .header-user-icon-btn .header-user-avatar-circle {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease !important;
+  }
+
+  .header-user-icon-btn:hover .header-user-avatar-circle {
     transform: scale(1.08) !important;
-  }
-
-  /* Circular User Avatar Footer with Yellow Outer Border */
-  .sidebar-user-footer {
-    width: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    padding: 0.65rem 0 0.5rem 0 !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
-    background: transparent !important;
-    flex-shrink: 0 !important;
-    margin-top: 0.45rem !important;
-    z-index: 2 !important;
-    box-sizing: border-box !important;
+    box-shadow: 0 0 16px rgba(245, 204, 0, 0.5), 0 4px 18px rgba(0, 9, 133, 0.45) !important;
+    border-color: #ffffff !important;
   }
 
   .sidebar-avatar-wrap {
@@ -2345,107 +2350,5 @@
       max-height: 100vh;
       max-width: 100vw;
       border-radius: 0;
-    }
-  }
-
-  /* ==========================================================================
-     SupportHUB Demonstration Mode Components & Indicator Banner
-     ========================================================================== */
-  .demo-environment-banner {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 99999;
-    background: linear-gradient(90deg, #000985 0%, #171f7a 50%, #000766 100%);
-    border-bottom: 2px solid #F5CC00;
-    color: #ffffff;
-    font-family: 'Inter', -apple-system, sans-serif;
-    font-size: 0.815rem;
-    box-shadow: 0 4px 12px rgba(0, 9, 133, 0.15);
-  }
-  .demo-banner-inner {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0.5rem 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  .demo-banner-left {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .demo-pill {
-    background: #F5CC00;
-    color: #000985;
-    font-weight: 800;
-    font-size: 0.725rem;
-    letter-spacing: 0.04em;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-  .demo-msg {
-    color: #f1f5f9;
-    font-weight: 500;
-  }
-  .demo-msg strong {
-    color: #ffffff;
-    font-weight: 700;
-  }
-  .demo-banner-right {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .btn-demo-banner {
-    border: none;
-    cursor: pointer;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.3rem 0.75rem;
-    border-radius: 6px;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition: all 0.2s ease;
-  }
-  .btn-demo-reset {
-    background: rgba(255, 255, 255, 0.16);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-  }
-  .btn-demo-reset:hover {
-    background: rgba(255, 255, 255, 0.28);
-  }
-  .btn-demo-exit {
-    background: rgba(239, 68, 68, 0.25);
-    color: #fecaca;
-    border: 1px solid rgba(239, 68, 68, 0.4);
-  }
-  .btn-demo-exit:hover {
-    background: rgba(239, 68, 68, 0.4);
-    color: #ffffff;
-  }
-  body.has-demo-banner .top-header {
-    top: 42px !important;
-  }
-  @media (max-width: 768px) {
-    .demo-banner-inner {
-      padding: 0.45rem 0.75rem;
-      font-size: 0.75rem;
-    }
-    .demo-msg {
-      font-size: 0.725rem;
-    }
-    body.has-demo-banner .top-header {
-      top: 64px !important;
     }
   }

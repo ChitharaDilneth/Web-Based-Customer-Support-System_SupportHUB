@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>403 Access Denied - SupportHUB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/dashboard.css">
@@ -23,6 +26,7 @@
       background: #f8fafc;
       color: #0f172a;
     }
+
     .error-card {
       text-align: center;
       max-width: 500px;
@@ -32,6 +36,7 @@
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0, 9, 133, 0.05);
     }
+
     .error-code {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 5rem;
@@ -40,6 +45,7 @@
       line-height: 1;
       letter-spacing: -0.02em;
     }
+
     .error-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 1.5rem;
@@ -47,12 +53,14 @@
       margin: 1rem 0 0.5rem;
       color: #0f172a;
     }
+
     .error-desc {
       color: #64748b;
       font-size: 0.95rem;
       margin-bottom: 1.75rem;
       line-height: 1.5;
     }
+
     .btn-return {
       display: inline-flex;
       align-items: center;
@@ -66,17 +74,47 @@
       font-size: 0.9rem;
       transition: background 0.15s ease;
     }
+
     .btn-return:hover {
       background: #000766;
     }
   </style>
 </head>
+
 <body>
   <div class="error-card">
+    <div style="margin-bottom: 1.25rem;">
+      <a href="index.html" class="brand-logo" style="display: inline-block;">
+        <img src="images/supporthub-logo.png" alt="SupportHUB" style="max-height: 40px;">
+      </a>
+    </div>
     <div class="error-code">403</div>
     <h2 class="error-title">Access Denied</h2>
-    <p class="error-desc">You do not have the required role privileges or credentials to access this section.</p>
-    <a href="/login.html" class="btn-return">Sign In with Authorized Account</a>
+    <p class="error-desc" id="error-message">You do not have the required role privileges or credentials to access this
+      section.</p>
+    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+      <a id="btn-role-dash" href="index.html" class="btn-return" style="display: none;">Return to Dashboard</a>
+      <a href="login.html" class="btn-return"
+        style="background: #ffffff; color: #000985; border: 1px solid #cbd5e1;">Sign In with Authorized Account</a>
+    </div>
   </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = Auth.getUser();
+      if (user && user.role) {
+        const dashBtn = document.getElementById('btn-role-dash');
+        const roleName = user.role.replace(/_/g, ' ');
+        const dashUrl = Auth.getRoleDashboard(user.role);
+        if (dashBtn && dashUrl) {
+          dashBtn.style.display = 'inline-flex';
+          dashBtn.href = `${Auth.getBasePath()}${dashUrl}`;
+          dashBtn.textContent = `Return to ${roleName} Dashboard`;
+        }
+      }
+    });
+  </script>
 </body>
+
 </html>
